@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type GuildsOptions {
+  customOpponents               GuildsOptionsCustomOpponents[]
+  languageFilterOn              Boolean                        @default(false)
+  peopleAllowedToChangeSettings String[]
+}
+
+type GuildsOptionsCustomOpponents {
+  bonesInStomach  Int
+  difficultyLevel Int
+  id              String
+  name            String
+}
+
+type UsersBadges {
+  admin       Boolean @default(false)
+  contributor Boolean @default(false)
+  owner       Boolean @default(false)
+}
+
+type UsersColors {
+  acid    String @default("#336933")
+  skin    String @default("#000000")
+  stomach String @default("#ffc0cb")
+}
+
+type UsersItems {
+  predator UsersItemsPredator
+  prey     UsersItemsPrey
+}
+
+type UsersItemsPredator {
+  acid Int @default(0)
+}
+
+type UsersItemsPrey {
+  lube   Int @default(0)
+  poison Int @default(0)
+}
+
+type UsersPeopleInStomach {
+  amountOfPeopleInStomach BigInt
+  bonesInStomach          BigInt
+  id                      String
+  isAi                    Boolean
+}
+
+model guilds {
+  id           String        @id @map("_id")
+  logChannelId String?
+  options      GuildsOptions
+}
+
+model opponents {
+  id              String @id @map("_id")
+  bonesInStomach  Int    @default(0)
+  difficultyLevel Int
+  name            String
+}
+
+model shopItems {
+  id                   String  @id @map("_id")
+  addToInventory       Boolean @default(true)
+  canBeSold            Boolean @default(true)
+  description          String
+  isSinglePurchaseOnly Boolean @default(false)
+  name                 String
+  price                Int
+}
+
+model users {
+  id               String                 @id @map("_id")
+  badges           UsersBadges
+  blacklisted      Boolean                @default(false)
+  bonesCollected   Int                    @default(0)
+  bonesInStomach   Int                    @default(0)
+  colors           UsersColors
+  inHardcore       Boolean                @default(false)
+  inStomach        Boolean                @default(false)
+  items            UsersItems
+  languageFilterOn Boolean                @default(false)
+  peopleInStomach  UsersPeopleInStomach[]
+  pvpOn            Boolean                @default(false)
+  reportBanned     Boolean                @default(false)
+  stomachCapacity  Int                    @default(1)
+}

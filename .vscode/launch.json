@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "name": "Launch bot via pnpm",
+            "request": "launch",
+            "runtimeArgs": [
+                "start:no-nodemon" // We don't need the file watching nodemon gives for debugging.
+            ],
+            "runtimeExecutable": "pnpm",
+            "cwd": "${workspaceFolder}/bot",
+            "skipFiles": ["<node_internals>/**"],
+            "type": "node"
+        }
+    ]
+}

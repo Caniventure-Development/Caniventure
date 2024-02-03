@@ -1,0 +1,38 @@
+{
+    "name": "caniventure-bot",
+    "version": "1.0.0",
+    "description": "A caniballistic Discord bot",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon src/index.ts",
+        "start:no-nodemon": "ts-node src/index.ts",
+        "prisma": "prisma",
+        "tsc": "tsc",
+        "create-command": "powershell -Command \".\\scripts\\create-command.ps1 --command\"",
+        "create-command-group": "powershell -Command \".\\scripts\\create-command.ps1 --group\""
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Caniventure-Development/Caniventure.git"
+    },
+    "author": "Caniventure Development",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Caniventure-Development/Caniventure/issues"
+    },
+    "homepage": "https://github.com/Caniventure-Development/Caniventure#readme",
+    "dependencies": {
+        "@discordjs/builders": "^1.7.0",
+        "@prisma/client": "^5.9.1",
+        "discord.js": "^14.14.1",
+        "dotenv": "^16.4.1",
+        "picocolors": "^1.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.11.16",
+        "nodemon": "^3.0.3",
+        "prisma": "^5.9.1",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.3.3"
+    }
+}
