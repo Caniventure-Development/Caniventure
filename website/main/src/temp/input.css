@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply bg-black;
+    @apply text-white;
+    @apply font-body;
+    text-align: center;
+}
+
+code {
+    @apply font-code;
+}

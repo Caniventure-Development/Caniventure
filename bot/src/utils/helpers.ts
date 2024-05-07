@@ -1,5 +1,5 @@
-import { promisify } from "util";
 import type { ActionRowBuilder, ButtonBuilder } from "@discordjs/builders";
+import { cooldowns } from "../handlers/commandHandler";
 
 type DifficultyLevelName =
     | "Easy"
@@ -9,9 +9,17 @@ type DifficultyLevelName =
     | "Extremely Hard"
     | "Impossible";
 
-export const wait = promisify(setTimeout);
+export const wait = (timeoutMs: number): Promise<void> => {
+    return new Promise((resolve) => {
+        setTimeout(resolve, timeoutMs);
+    });
+};
 export const minutesToSeconds = (minutes: number) => minutes * 60;
 export const secondsToMilli = (seconds: number) => seconds * 1000;
+
+export function verifyHex(hex: string) {
+    return /^#(?:[0-9a-fA-F]{3}){1,2}$/.test(hex.trim());
+}
 
 export function hexToRgb(hex: string) {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -61,8 +69,17 @@ export function getRandomMilliTimeFromSecondsRange(
     minSeconds: number,
     maxSeconds: number
 ) {
-    return (
-        Math.floor(Math.random() * (maxSeconds - minSeconds) + minSeconds) *
-        1000
-    );
+    return getRandomNumber(minSeconds, maxSeconds) * 1000;
+}
+
+export function getRandomNumber(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min) + min);
+}
+
+export function deleteCooldown(commandName: string, userId: string) {
+    const timestamps = cooldowns.get(commandName);
+
+    if (timestamps?.has(userId)) {
+        timestamps.delete(userId);
+    }
 }

@@ -1,0 +1,24 @@
+<%- include("../include/base.ejs", { title: "Guides" }) %> <%-
+include("../include/header.ejs", { user }) %> <% const guides = [{ title:
+"Predator Guide", link: "/guides/predator" }, { title: "Prey Guide", link:
+"/guides/prey" }] %>
+
+<main
+    class="mt-10 flex w-full flex-col items-center justify-center rounded-3xl bg-gray-500 p-4 text-center text-2xl text-white md:text-3xl"
+>
+    <h1 class="mb-5 text-3xl font-bold">Guides</h1>
+    <p class="mb-5 text-xl">
+        Welcome to the guides page, here you can find all of the guides written
+        by us!
+    </p>
+    <div class="grid grid-cols-2 gap-5">
+        <% guides.forEach(guide => { %>
+        <a
+            href="<%= guide.link %>"
+            class="mb-5 rounded-3xl border-4 border-blue-500 px-5 py-3 text-base font-semibold text-white duration-700 hover:translate-y-1 hover:scale-110 hover:bg-blue-500"
+        >
+            <%= guide.title %>
+        </a>
+        <% }) %>
+    </div>
+</main>

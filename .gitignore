@@ -10,9 +10,6 @@
 # build output
 **/dist/
 
-# generated types
-**/.astro/
-
 # logs
 **/npm-debug.log*
 **/yarn-debug.log*
@@ -36,3 +33,4 @@
 # Misc
 **/.fleet
 **/.idea
+**/spoilers

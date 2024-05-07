@@ -1,0 +1,129 @@
+<% const links = [ { url: "/", text: "Home" }, /*{ url: "/about", text: "About" },*/
+{ url: "/links/invite", text: "Invite", externalLink: true } ] %> <% const dropdownLinks = [ { url:
+"/profile", text: "Profile" }, /* { url: "/dashboard", text: "Dashboard" }, */ { url:
+"/auth/logout", text: "Logout" }, ]; %>
+
+<style>
+    .dropdown-menu {
+        min-width: 16rem;
+    }
+
+    .dropdown button {
+        transition: all 0.3s ease;
+    }
+
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-menu li {
+        list-style: none;
+    }
+
+    svg {
+        transition: all 0.3s ease-out;
+    }
+
+    .dropdown button.hovered svg.icon-tabler-arrow-down {
+        transform: rotate(180deg);
+    }
+</style>
+
+<header
+    class="flex w-full flex-row items-center justify-between rounded-b-3xl bg-gray-700 p-4 text-white shadow-2xl"
+>
+    <a href="/" class="flex items-center">
+        <img
+            src="/images/icon.png"
+            alt="Caniventure Logo"
+            class="h-12 w-12 rounded-2xl object-contain shadow-lg"
+        />
+        <span class="ml-2 text-2xl font-bold">Caniventure</span>
+    </a>
+    <nav
+        class="flex flex-row items-center justify-center gap-4"
+        role="navigation"
+    >
+        <% links.forEach((item) => { %>
+        <a href="<%= item.url %>" target="<%= item.externalLink ? "_blank" : "_self" %>" class="no-underline hover:underline"><%= item.text %></a>
+        <% }) %>
+    </nav>
+    <div class="flex flex-row items-center justify-center gap-4">
+        <% if (user) { %>
+        <div class="dropdown relative inline-block">
+            <button
+                class="inline-flex items-center rounded-2xl px-4 py-2 font-semibold text-gray-300 duration-500"
+                onmouseover="this.classList.add('hovered')"
+                onmouseleave="this.classList.remove('hovered')"
+            >
+                <img
+                    src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png"
+                    class="mr-3 h-14 w-14 rounded-full"
+                />
+                <span class="mr-1 text-xl font-bold"><%= user.username %></span>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-down"
+                >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 5l0 14" />
+                    <path d="M18 13l-6 6" />
+                    <path d="M6 13l6 6" />
+                </svg>
+            </button>
+            <ul
+                class="dropdown-menu absolute hidden rounded-3xl bg-gray-400 pt-1 text-gray-700"
+            >
+                <% dropdownLinks.forEach((item) => { %> <% if (item.url ===
+                "/auth/logout") { %>
+                <li class="m-5">
+                    <a
+                        href="<%= item.url %>"
+                        class="rounded-2xl px-4 py-2 font-semibold text-bright-red no-underline duration-500 hover:bg-primary-700"
+                    >
+                        <%= item.text %>
+                    </a>
+                </li>
+                <% } else { %>
+                <li class="m-3">
+                    <a
+                        href="<%= item.url %>"
+                        class="m-3 rounded-2xl px-4 py-2 font-semibold text-gray-300 no-underline duration-500 hover:bg-primary-300"
+                    >
+                        <%= item.text %>
+                    </a>
+                </li>
+                <% } %> <% }) %>
+            </ul>
+        </div>
+        <% } else { %>
+        <a
+            href="/auth/discord"
+            class="inline-flex items-center justify-center gap-2 rounded-2xl border-2 border-primary-300 px-4 py-2 duration-700 hover:bg-primary-300"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="icon icon-tabler icons-tabler-filled icon-tabler-brand-discord"
+            >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path
+                    d="M14.983 3l.123 .006c2.014 .214 3.527 .672 4.966 1.673a1 1 0 0 1 .371 .488c1.876 5.315 2.373 9.987 1.451 12.28c-1.003 2.005 -2.606 3.553 -4.394 3.553c-.732 0 -1.693 -.968 -2.328 -2.045a21.512 21.512 0 0 0 2.103 -.493a1 1 0 1 0 -.55 -1.924c-3.32 .95 -6.13 .95 -9.45 0a1 1 0 0 0 -.55 1.924c.717 .204 1.416 .37 2.103 .494c-.635 1.075 -1.596 2.044 -2.328 2.044c-1.788 0 -3.391 -1.548 -4.428 -3.629c-.888 -2.217 -.39 -6.89 1.485 -12.204a1 1 0 0 1 .371 -.488c1.439 -1.001 2.952 -1.459 4.966 -1.673a1 1 0 0 1 .935 .435l.063 .107l.651 1.285l.137 -.016a12.97 12.97 0 0 1 2.643 0l.134 .016l.65 -1.284a1 1 0 0 1 .754 -.54l.122 -.009zm-5.983 7a2 2 0 0 0 -1.977 1.697l-.018 .154l-.005 .149l.005 .15a2 2 0 1 0 1.995 -2.15zm6 0a2 2 0 0 0 -1.977 1.697l-.018 .154l-.005 .149l.005 .15a2 2 0 1 0 1.995 -2.15z"
+                />
+            </svg>
+            Login with Discord</a
+        >
+        <% } %>
+    </div>
+</header>

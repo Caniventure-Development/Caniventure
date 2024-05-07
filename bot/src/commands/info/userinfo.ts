@@ -6,14 +6,30 @@ import {
     SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
 import { ButtonStyle, ComponentType } from "discord.js";
-import type { APIEmbedField, ChatInputCommandInteraction } from "discord.js";
-import { getUser, getUserOrCreate } from "../../utils/prismaUtils";
-import { BADGES } from "../../emojis";
+import type {
+    APIEmbedField,
+    ButtonInteraction,
+    ChatInputCommandInteraction,
+} from "discord.js";
+import { getUser, getUserOrCreate } from "../../utils/databaseUtils";
 import {
     disableAllButtons,
     hexToRgb,
     secondsToMilli,
 } from "../../utils/helpers";
+
+async function replyWithInvalidColor(interaction: ButtonInteraction) {
+    if (!interaction.replied && !interaction.deferred) {
+        await interaction.reply({
+            content: "Invalid color. Please re-execute the command.",
+            ephemeral: true,
+        });
+    } else {
+        await interaction.editReply({
+            content: "Invalid color. Please re-execute the command.",
+        });
+    }
+}
 
 export default {
     data: new SlashCommandSubcommandBuilder()
@@ -49,14 +65,6 @@ export default {
             return;
         }
 
-        const badges = [
-            userData?.badges.admin ? `${BADGES.Moderator} Admin` : "",
-            userData?.badges.owner ? `${BADGES.Owner} Owner` : "",
-            userData?.badges.contributor
-                ? `${BADGES.Contributor} Contributor`
-                : "",
-        ];
-
         const peopleInUser: APIEmbedField[] = userData.peopleInStomach.map(
             (person) => {
                 return {
@@ -66,6 +74,23 @@ export default {
                 };
             }
         );
+        const badges: APIEmbedField[] = userData.badges.map((badge) => {
+            if (badge.owned) {
+                return {
+                    name: `${badge.ownedIcon} ${badge.name}`,
+                    value: badge.description,
+                    inline: true,
+                };
+            } else {
+                return {
+                    name: `${badge.unownedIcon} ${badge.name}`,
+                    value: `**UNOWNED** - ${badge.description}`,
+                    inline: true,
+                };
+            }
+        });
+
+        const id = Math.ceil(Math.random() * 1000000); // To separate interactions
 
         const pages: PageData[] = [
             {
@@ -79,11 +104,6 @@ export default {
                     {
                         name: "ID",
                         value: user.id,
-                        inline: true,
-                    },
-                    {
-                        name: "Bot Badges",
-                        value: badges.join("\n"),
                         inline: true,
                     },
                     {
@@ -114,6 +134,10 @@ export default {
                 ],
             },
             {
+                embedTitle: "Badges",
+                embedFields: badges,
+            },
+            {
                 embedTitle: "Color Information",
                 embedFields: [
                     {
@@ -132,15 +156,15 @@ export default {
                 components: [
                     new ActionRowBuilder<ButtonBuilder>().addComponents(
                         new ButtonBuilder()
-                            .setCustomId("preview-skin-color")
+                            .setCustomId(`preview-skin-color-${id}`)
                             .setLabel("Preview Skin Color")
                             .setStyle(ButtonStyle.Primary),
                         new ButtonBuilder()
-                            .setCustomId("preview-stomach-color")
+                            .setCustomId(`preview-stomach-color-${id}`)
                             .setLabel("Preview Stomach Color")
                             .setStyle(ButtonStyle.Primary),
                         new ButtonBuilder()
-                            .setCustomId("preview-acid-color")
+                            .setCustomId(`preview-acid-color-${id}`)
                             .setLabel("Preview Acid Color")
                             .setStyle(ButtonStyle.Primary)
                     ),
@@ -193,7 +217,16 @@ export default {
             },
             {
                 embedTitle: "People Inside of Stomach",
-                embedFields: peopleInUser,
+                embedFields:
+                    peopleInUser.length === 0
+                        ? [
+                              {
+                                  name: "None",
+                                  value: `There are no people inside of ${user}`,
+                                  inline: true,
+                              },
+                          ]
+                        : peopleInUser,
             },
         ];
 
@@ -219,7 +252,7 @@ export default {
 
         const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
             new ButtonBuilder()
-                .setCustomId("previous-page")
+                .setCustomId(`previous-page-${id}`)
                 .setLabel("Previous")
                 .setStyle(ButtonStyle.Danger)
                 .setDisabled(currentPageNumber === 1)
@@ -227,7 +260,7 @@ export default {
                     name: "⬅️",
                 }),
             new ButtonBuilder()
-                .setCustomId("next-page")
+                .setCustomId(`next-page-${id}`)
                 .setLabel("Next")
                 .setStyle(ButtonStyle.Success)
                 .setDisabled(currentPageNumber === maxPages)
@@ -258,7 +291,7 @@ export default {
         });
 
         collector.on("collect", async (i) => {
-            if (i.customId === "previous-page") {
+            if (i.customId === `previous-page-${id}`) {
                 await i.deferUpdate();
                 if (currentPageNumber !== 1) {
                     currentPageNumber--;
@@ -283,7 +316,7 @@ export default {
 
                     await i.editReply({ embeds: [embed], components });
                 }
-            } else if (i.customId === "next-page") {
+            } else if (i.customId === `next-page-${id}`) {
                 await i.deferUpdate();
 
                 if (currentPageNumber !== maxPages) {
@@ -309,17 +342,13 @@ export default {
 
                     await i.editReply({ embeds: [embed], components });
                 }
-            } else if (i.customId === "preview-skin-color") {
+            } else if (i.customId === `preview-skin-color-${id}`) {
                 await i.deferReply({ ephemeral: true });
 
                 const color = hexToRgb(userData.colors.skin);
 
                 if (!color) {
-                    await i.reply({
-                        content:
-                            "Invalid color. Please re-execute the command.",
-                        ephemeral: true,
-                    });
+                    await replyWithInvalidColor(i);
                     return;
                 }
 
@@ -331,17 +360,13 @@ export default {
                     );
 
                 await i.editReply({ embeds: [embed] });
-            } else if (i.customId === "preview-stomach-color") {
+            } else if (i.customId === `preview-stomach-color-${id}`) {
                 await i.deferReply({ ephemeral: true });
 
                 const color = hexToRgb(userData.colors.stomach);
 
                 if (!color) {
-                    await i.reply({
-                        content:
-                            "Invalid color. Please re-execute the command.",
-                        ephemeral: true,
-                    });
+                    await replyWithInvalidColor(i);
                     return;
                 }
 
@@ -352,17 +377,13 @@ export default {
                     );
 
                 await i.editReply({ embeds: [embed] });
-            } else if (i.customId === "preview-acid-color") {
+            } else if (i.customId === `preview-acid-color-${id}`) {
                 await i.deferReply({ ephemeral: true });
 
                 const color = hexToRgb(userData.colors.acid);
 
                 if (!color) {
-                    await i.reply({
-                        content:
-                            "Invalid color. Please re-execute the command.",
-                        ephemeral: true,
-                    });
+                    await replyWithInvalidColor(i);
                     return;
                 }
 

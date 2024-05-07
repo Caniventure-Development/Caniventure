@@ -7,13 +7,13 @@ import {
 } from "@discordjs/builders";
 import { ButtonStyle, ComponentType } from "discord.js";
 import type { ChatInputCommandInteraction } from "discord.js";
-import { createGuild, getGuild } from "../../utils/prismaUtils";
+import { createGuild, getGuild } from "../../utils/databaseUtils";
 
 export default {
     data: new SlashCommandSubcommandBuilder()
         .setName("register-guild")
         .setDescription(
-            "Registers this guild in the database, needs to be executed by the server owner to work."
+            "Registers this guild in the database, this needs to be executed by the server owner to work."
         ),
     execute: async (interaction: ChatInputCommandInteraction) => {
         await interaction.deferReply({ ephemeral: true });

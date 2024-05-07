@@ -9,7 +9,6 @@ import { ButtonStyle, ComponentType } from "discord.js";
 import type { ChatInputCommandInteraction } from "discord.js";
 import os from "os";
 import { commands } from "../../handlers/commandHandler";
-import packageJson from "../../../package.json";
 import { disableAllButtons, secondsToMilli } from "../../utils/helpers";
 
 export default {
@@ -20,7 +19,6 @@ export default {
         await interaction.deferReply();
 
         let embed = new EmbedBuilder().setColor(0x00ffff);
-        const prismaClientVersion = packageJson.dependencies["@prisma/client"];
 
         const dataPieces: PageData[] = [
             {
@@ -54,15 +52,6 @@ export default {
                     {
                         name: "Node.js Version",
                         value: `${process.version}`,
-                        inline: true,
-                    },
-                    {
-                        name: "Prisma Client Version",
-                        value: `v${
-                            prismaClientVersion.startsWith("^")
-                                ? prismaClientVersion.slice(1)
-                                : prismaClientVersion
-                        }`,
                         inline: true,
                     },
                 ],

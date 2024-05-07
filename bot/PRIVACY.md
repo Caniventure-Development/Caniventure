@@ -41,7 +41,7 @@ We use the User ID to create your data in the database as a part of the main fun
 
 We use this data to create your profile and store your data in the database, it is required to effectively use the bot.
 
-A good side note, when using PvP, we do not create a document in the database for the target player against their will. The target player has to run one of the commands that creates a document in the database _(for example `/predator eat`)_ before you can target them.
+A good side note, when using PvP _(which is not ready yet)_ (or another example: the `userinfo` command), we do not create a document in the database for the target player against their will. The target player has to run one of the commands that creates a document in the database _(for example `/predator eat`)_ before you can target them.
 
 ### Does anybody else see my data?
 
@@ -82,9 +82,9 @@ You can contact the team in the [Official Discord Server](https://discord.gg/HQn
 
 ### Can my data be deleted for guilds?
 
-Yes, you can have all your guild data deleted and optionally request a backup of your guild data by getting in contact with the team.
+Yes, you can have all your guild data deleted and optionally request a backup of your guild data by getting in contact with the team. You may have to go through a bit of extra authentication to verify that you are the owner of the server _(such as sending the Guild ID and us checking if you are the owner via the Discord API)_.
 
-Rest assured, soon after you file the request _(and we receive it)_, your guild data will be deleted from the database.
+Rest assured, soon after you file the request _(and we receive it and verify that you are the owner of said guild)_, your guild data will be deleted from the database.
 
 ---
 

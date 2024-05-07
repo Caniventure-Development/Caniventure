@@ -1,15 +1,16 @@
 {
     "name": "caniventure-bot",
-    "version": "1.0.0",
+    "private": true,
+    "version": "0.0.1",
     "description": "A caniballistic Discord bot",
-    "main": "index.js",
     "scripts": {
-        "start": "nodemon src/index.ts",
-        "start:no-nodemon": "ts-node src/index.ts",
-        "prisma": "prisma",
+        "start": "ts-node ./src/index.ts",
         "tsc": "tsc",
-        "create-command": "powershell -Command \".\\scripts\\create-command.ps1 --command\"",
-        "create-command-group": "powershell -Command \".\\scripts\\create-command.ps1 --group\""
+        "enable-scripts": "chmod +x ./scripts/* && echo \"Done\"",
+        "create-command:unix": "./scripts/create-command.sh --command",
+        "create-command-group:unix": "./scripts/create-command.sh --group",
+        "create-command:win": "powershell -Command \".\\scripts\\create-command.ps1 --command\"",
+        "create-command-group:win": "powershell -Command \".\\scripts\\create-command.ps1 --group\""
     },
     "repository": {
         "type": "git",
@@ -23,15 +24,14 @@
     "homepage": "https://github.com/Caniventure-Development/Caniventure#readme",
     "dependencies": {
         "@discordjs/builders": "^1.7.0",
-        "@prisma/client": "^5.9.1",
+        "canvas": "^2.11.2",
         "discord.js": "^14.14.1",
-        "dotenv": "^16.4.1",
+        "dotenv": "^16.4.5",
+        "mongoose": "^8.2.2",
         "picocolors": "^1.0.0"
     },
     "devDependencies": {
         "@types/node": "^20.11.16",
-        "nodemon": "^3.0.3",
-        "prisma": "^5.9.1",
         "ts-node": "^10.9.2",
         "typescript": "^5.3.3"
     }

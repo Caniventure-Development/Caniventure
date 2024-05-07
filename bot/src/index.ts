@@ -1,8 +1,14 @@
 import "dotenv/config";
 
 import { Client, GatewayIntentBits, Partials } from "discord.js";
+import mongoose from "mongoose";
 
 import setupEvents from "./handlers/eventHandler";
+
+// Environment Variable Checks
+if (!process.env.DATABASE_URL) throw new Error("Missing DATABASE_URL");
+if (!process.env.BOT_TOKEN && !process.env.DEV_BOT_TOKEN)
+    throw new Error("Missing BOT_TOKEN/DEV_BOT_TOKEN");
 
 const client = new Client({
     intents: [GatewayIntentBits.Guilds],
@@ -12,6 +18,7 @@ const client = new Client({
     },
     partials: [Partials.User, Partials.GuildMember, Partials.Channel],
 });
+mongoose.connect(process.env.DATABASE_URL);
 
 setupEvents(client);
 

@@ -8,8 +8,12 @@ import {
 } from "@discordjs/builders";
 import { ButtonStyle, ComponentType } from "discord.js";
 import type { ChatInputCommandInteraction } from "discord.js";
-import { getAllOpponents, getUserOrCreate } from "../../utils/prismaUtils";
-import { getDifficultyLevelName, minutesToSeconds } from "../../utils/helpers";
+import { getAllOpponents, getUserOrCreate } from "../../utils/databaseUtils";
+import {
+    deleteCooldown,
+    getDifficultyLevelName,
+    minutesToSeconds,
+} from "../../utils/helpers";
 import { swallowOpponentMinigame } from "../../game-logic/predator/swallow-minigame";
 
 export default {
@@ -38,6 +42,8 @@ export default {
         const mainUser = await getUserOrCreate(interaction.user.id);
 
         if (mainUser.peopleInStomach.length >= mainUser.stomachCapacity) {
+            deleteCooldown("eat", mainUser.id);
+
             const embed = new EmbedBuilder()
                 .setColor(0xff0000)
                 .setTitle("Looks like your stomach is full!")
@@ -52,10 +58,11 @@ export default {
         }
 
         if (!user) {
-            // TODO: Implement eating AI
             const opponents = await getAllOpponents(interaction.guildId!);
 
             if (opponents.length === 0) {
+                deleteCooldown("eat", mainUser.id);
+
                 const embed = new EmbedBuilder()
                     .setColor(0xff0000)
                     .setTitle("Huh, that's weird...")
@@ -69,6 +76,10 @@ export default {
                 return;
             }
 
+            for (const opponent of opponents) {
+                console.log(opponent);
+            }
+
             const embed = new EmbedBuilder()
                 .setColor(0x00ffff)
                 .setTitle("Select an opponent")
@@ -77,7 +88,7 @@ export default {
                 );
 
             const selectMenu = new SelectMenuBuilder()
-                .setCustomId("opponent-select-menu")
+                .setCustomId("predator-opponent-select-menu")
                 .setPlaceholder("Select an opponent")
                 .addOptions(
                     opponents.map((opponent) => ({
@@ -124,6 +135,8 @@ export default {
                 );
 
                 if (!opponent) {
+                    deleteCooldown("eat", mainUser.id);
+
                     const embed = new EmbedBuilder()
                         .setColor(0xff0000)
                         .setTitle("Invalid Choice")
@@ -188,13 +201,15 @@ export default {
                             interaction
                         );
                     } else if (i.customId === "cancel") {
+                        deleteCooldown("eat", mainUser.id);
+
                         const cancelledEmbed = new EmbedBuilder()
                             .setColor(0xff0000)
                             .setTitle(
                                 "All right, no problem. Operation cancelled."
                             )
                             .setDescription(
-                                "You don't have to do this if you don't want to. Feel free to come back at any time."
+                                "You don't have to do this if you don't want to. Feel free to come back at any time. You do not have a cooldown from this, don't worry."
                             );
 
                         await interaction.editReply({
@@ -208,6 +223,7 @@ export default {
             return;
         }
 
+        deleteCooldown("eat", mainUser.id);
         await interaction.editReply({
             content:
                 "PvP is not here yet! Stay tuned for Alpha, where the PvP system will come so you can have fun eating your friends!",

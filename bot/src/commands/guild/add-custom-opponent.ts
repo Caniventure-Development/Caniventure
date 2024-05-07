@@ -4,7 +4,8 @@ import {
     SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
 import type { ChatInputCommandInteraction } from "discord.js";
-import { prisma, getGuild } from "../../utils/prismaUtils";
+import { getGuild } from "../../utils/databaseUtils";
+import { guilds } from "../../models/";
 
 export default {
     data: new SlashCommandSubcommandBuilder()
@@ -105,7 +106,7 @@ export default {
             true
         );
         const bonesInStomach =
-            interaction.options.getInteger("bones_in_stomach") || 0;
+            interaction.options.getInteger("bones_in_stomach", false) || 0;
 
         if (
             guildData.options.customOpponents.some(
@@ -129,14 +130,17 @@ export default {
             bonesInStomach,
         });
 
-        await prisma.guilds.update({
-            where: {
+        await guilds.findOneAndUpdate(
+            {
                 id: guild.id,
             },
-            data: {
-                options: guildData.options,
-            },
-        });
+            {
+                $set: {
+                    "options.customOpponents":
+                        guildData.options.customOpponents,
+                },
+            }
+        );
 
         const embed = new EmbedBuilder()
             .setColor(0x00ff00)

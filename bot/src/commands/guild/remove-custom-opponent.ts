@@ -4,7 +4,8 @@ import {
     SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
 import type { ChatInputCommandInteraction } from "discord.js";
-import { prisma, getGuild } from "../../utils/prismaUtils";
+import { getGuild } from "../../utils/databaseUtils";
+import { guilds } from "../../models";
 
 export default {
     data: new SlashCommandSubcommandBuilder()
@@ -63,22 +64,19 @@ export default {
             return;
         }
 
-        await prisma.guilds.update({
-            where: {
+        await guilds.findOneAndUpdate(
+            {
                 id: guild.id,
             },
-            data: {
-                options: {
-                    update: {
-                        customOpponents: {
-                            set: guildData.options.customOpponents.filter(
-                                (opponent) => opponent.id !== id
-                            ),
-                        },
-                    },
+            {
+                $set: {
+                    "options.customOpponents":
+                        guildData.options.customOpponents.filter(
+                            (opponent) => opponent.id !== id
+                        ),
                 },
-            },
-        });
+            }
+        );
 
         const embed = new EmbedBuilder()
             .setColor(0x00ff00)

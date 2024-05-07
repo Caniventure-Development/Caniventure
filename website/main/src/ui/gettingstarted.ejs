@@ -1,0 +1,39 @@
+<%- include("include/base.ejs", { title: "Getting Started" }) %> <%-
+include("include/header.ejs", { user }) %> <% const features = [{ title:
+"Be\u00A0part\u00A0of\u00A0the\u00A0Predators", description: "Become a <strong>Predator</strong> and eat and digest AI and players and extract their bones as currency to become even stronger!" }, { title:
+"Be\u00A0part\u00A0of\u00A0the\u00A0Prey", description: "Be with the <strong>Prey</strong> and hide, evade and escape from the Predators while also earning bones from your fallen comrades to avenge them!" }, {
+title: "Vibe\u00A0out\u00A0with\u00A0your\u00A0friends", description:
+"<strong>Caniventure is meant to be a fun Discord bot to play with.</strong> Enjoy the random Predator and Prey moments you get with your friends!" }] %> <% const nextSteps = [ { title: "Check\u00A0out\u00A0our\u00A0guides\u00A0(coming\u00A0soon)", link: "#", externalLink: false }, { title: "Join\u00A0our\u00A0support\u00A0server", link: "https://discord.gg/HQn5cyrG3a", externalLink: true } ] %> <% const baseGithubUrl = "https://github.com/Caniventure-Development/Caniventure" %>
+
+<main
+    class="mt-10 flex flex-col items-center justify-center rounded-3xl bg-gray-700 p-4 text-white"
+>
+    <h1 class="mb-2 text-4xl font-extrabold text-green-500">Success!</h1>
+    <p class="mb-4 text-xl">
+        You have successfully added Caniventure to your server
+        <code class="font-bold text-cyan-500"><%= guild.name %></code>!
+    </p>
+    <h2 class="text-2xl font-bold">Here's what you can do now after adding:</h2>
+    <div class="m-5 grid grid-cols-3 gap-5 text-center">
+        <% features.forEach(feature => { %>
+        <div class="flex flex-col items-center">
+            <h3 class="text-xl font-bold text-cyan-500">
+                <%= feature.title %>
+            </h3>
+            <p class="text-lg text-sky-600 text-wrap"><%- feature.description %></p>
+        </div>
+        <% }) %>
+    </div>
+    <p class="mb-4 text-xl">And even more!</p>
+    <h2 class="mb-3 text-2xl font-bold">What now?</h2>
+    <p class="mb-4 text-xl">Here are some great next steps you can take:</p>
+    <div class="m-5 grid grid-cols-2 gap-5 text-center">
+        <% nextSteps.forEach(step => { %>
+            <a href="<%= step.link %>" target="<%= step.externalLink ? "_blank" : "_self" %>" class="flex flex-col items-center justify-center rounded-3xl bg-gray-800 p-4 text-white hover:bg-white hover:text-black duration-1000" rel="noopener noreferrer">
+                <h3 class="text-xl font-bold"><%= step.title %></h3>
+            </a>
+        <% }) %>
+    </div>
+    <p class="mb-4 text-xl">Caniventure is currently in <code><%= botStage %></code>, so bugs may occur. If you have any bugs you've found or just have any general questions, please join our <a href="https://discord.gg/HQn5cyrG3a" class="underline font-bold hover:text-cyan-500">support server</a>, we can help you.</p>
+    <p class="text-lg">By using Caniventure, you agree to our <a href="<%= baseGithubUrl %>/blob/main/bot/TOS.md" target="_blank" rel="noopener noreferrer" class="underline font-bold hover:text-cyan-500">Terms of Service</a> and <a href="<%= baseGithubUrl %>/blob/main/bot/PRIVACY.md" target="_blank" rel="noopener noreferrer" class="underline font-bold hover:text-cyan-500">Privacy Policy</a>. <strong>If you do not agree, do not use Caniventure.</strong></p>
+</main>

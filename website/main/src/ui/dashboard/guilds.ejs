@@ -1,0 +1,31 @@
+<%- include("../include/base.ejs", { title: "Guilds" }) %> <%-
+include("../include/header.ejs", { user: user }) %>
+
+<main
+    class="mt-10 flex w-full flex-col items-center justify-center rounded-3xl bg-gray-700 p-4 text-center text-2xl text-white md:text-3xl"
+>
+    <%# This file is not supposed to be used yet. Just ignore this file. %>
+    <h1 class="mb-2 text-5xl font-black">Select a guild</h1>
+    <p class="mb-4 text-xl font-semibold underline">
+        This list only includes guilds where you have the
+        <code>Manage Server</code> or <code>Administrator</code> permission(s).
+    </p>
+    <div class="overflow-auto">
+        <div class="m-3 grid w-full grid-cols-3 flex-wrap gap-4 md:grid-cols-6">
+            <% guilds.forEach((guild) => { %> <% const permissions = new
+            PermissionsBitField( BigInt(guild.permissions), ) %> <% if (
+            permissions.has(PermissionsBitField.Flags.ManageServer) ||
+            permissions.has(PermissionsBitField.Flags.Administrator) ) { %>
+            <div class="m-3">
+                <div
+                    class="h-40 w-60 rounded-3xl bg-gray-500 p-4 text-center text-white shadow-xl shadow-gray-600"
+                >
+                    <h2 class="text-wrap text-lg font-bold">
+                        <%= guild.name %>
+                    </h2>
+                </div>
+            </div>
+            <% } %> <% }) %>
+        </div>
+    </div>
+</main>

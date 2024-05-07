@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "esbenp.prettier-vscode", // Best JavaScript/TypeScript formatter
+        "bradlc.vscode-tailwindcss" // For Tailwind CSS
+    ],
+    "unwantedRecommendations": []
+}

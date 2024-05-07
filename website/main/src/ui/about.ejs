@@ -1,0 +1,51 @@
+<%- include("include/base.ejs", { title: "About" }) %> <%-
+include("include/header.ejs", { user }) %>
+
+<main
+    class="mt-10 flex flex-col items-center justify-center rounded-3xl bg-gray-500 p-4 text-white"
+>
+    <div class="m-5 flex items-center justify-center">
+        <div class="mr-20 flex w-full flex-col justify-center text-center">
+            <h1 class="text-4xl font-extrabold text-white">
+                About Caniventure
+            </h1>
+            <p class="mb-6 text-2xl">
+                Here's some information you might want to know about
+                Caniventure.
+            </p>
+
+            <h2 class="mb-3 text-2xl font-bold">
+                The Backstory of the bots' creation
+            </h2>
+            <p class="mb-6 text-sm">
+                Caniventure started as <code class="font-bold">Thing Bot</code>,
+                a bot made by
+                <a
+                    href="https://yoshiboi18303.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-white underline"
+                    >Yoshiboi18303</a
+                >
+                to attempt to make Discord Economy bots more unique. Thing Bot
+                was originally made in <strong>C#</strong>, then got moved to
+                TypeScript then got discontinued. It was then revived as
+                <code class="font-bold">EconoFeast</code>, which also soon met
+                the same fate. Nowadays, the bot is called
+                <code class="font-bold">Caniventure</code> and is currently in
+                <code><%= botStage %></code>.
+            </p>
+
+            <h2 class="mb-3 text-2xl font-bold">Lore Starting Point</h2>
+            <div>
+                <i class="text-2xl font-bold"
+                    >(Please note that this is a story of fiction, any
+                    co-relation of this to the real world is purely
+                    coincidental)</i
+                >
+                <br />
+                <%- loreStartingPoint %>
+            </div>
+        </div>
+    </div>
+</main>

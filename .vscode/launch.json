@@ -10,6 +10,18 @@
             "cwd": "${workspaceFolder}/bot",
             "skipFiles": ["<node_internals>/**"],
             "type": "node"
+        },
+        {
+            "name": "Launch documentation development server",
+            "command": "./website/docs/node_modules/.bin/astro dev",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+        {
+            "name": "Launch website development server",
+            "command": "./website/main/node_modules/.bin/nuxt dev",
+            "request": "launch",
+            "type": "node-terminal"
         }
     ]
 }

@@ -1,0 +1,110 @@
+<%- include("../include/base.ejs", { title: "Profile" }) %> <%-
+include("../include/header.ejs", { user: user }) %> <% const stats = [ { name:
+"Bones Collected", value: userDbData.bonesCollected, }, { name:
+"Bones\u00A0In\u00A0Stomach", value: userDbData.bonesInStomach, }, { name:
+"Stomach\u00A0Capacity", value: userDbData.stomachCapacity, } ] %>
+
+<main
+    class="mt-10 flex w-full flex-col items-center justify-center rounded-3xl bg-gray-500 p-4 text-center text-2xl text-white md:text-3xl"
+>
+    <div class="flex w-full flex-col items-center justify-center">
+        <img
+            src="https://cdn.discordapp.com/avatars/<%= discordUser.id %>/<%= discordUser.avatar %>.png"
+            alt="<%= discordUser.username %> avatar"
+            class="mb-4 h-32 w-32 rounded-3xl object-cover"
+        />
+        <h1
+            class="<%= userDbData.id === user?.id ? 'mb-5' : 'mb-3' %> text-3xl font-bold"
+        >
+            <span
+                ><%= discordUser.username %><% if (userDbData.blacklisted) {
+                %><span class="text-bright-red"> (BLACKLISTED)</span><% } %>
+                ></span
+            >
+        </h1>
+        <%#
+        <button
+            disabled="true"
+            class="mb-5 rounded-3xl border-4 border-gray-600 px-5 py-3 text-sm font-semibold text-white duration-700 hover:cursor-not-allowed hover:bg-gray-600"
+        >
+            Edit Profile (coming soon!)
+        </button>
+        %> <%# Profile editing is coming in a future update %>
+        <p class="mb-5 text-lg font-medium">
+            <% const remainingRoomInStomach = userDbData.stomachCapacity -
+            userDbData.peopleInStomach.length; %> <% if
+            (userDbData.peopleInStomach.length >= userDbData.stomachCapacity) {
+            %> <% if (user?.id !== userDbData.id) { %>
+            <span
+                >Don't worry, this user is full. You should be safe,
+                hopefully.</span
+            >
+            <% } else { %>
+            <span
+                >Your stomach is full. You might want to start digesting your
+                prey if you plan to eat anyone else.</span
+            >
+            <% } %> <% } else { %> <% if (user?.id !== userDbData.id) { %>
+            <span
+                >Hmm... seems like this user isn't full at the moment. You might
+                want to watch yourself. They can fit <%= remainingRoomInStomach
+                %> more <%= remainingRoomInStomach === 1 ? "person" : "people"
+                %> in their stomach.</span
+            >
+            <% } else { %>
+            <span
+                >You aren't full yet, you can eat anyone you feel like. Up to
+                you. You can fit <%= remainingRoomInStomach %> more <%=
+                remainingRoomInStomach === 1 ? "person" : "people" %> in your
+                stomach.</span
+            >
+            <% } %> <% } %>
+        </p>
+        <h2 class="mb-3 text-xl font-bold">Stats</h2>
+        <div class="mb-7 grid grid-cols-3 gap-4">
+            <% stats.forEach((item) => { %>
+            <div class="flex flex-col items-center justify-center">
+                <h3 class="mb-2"><%= item.name %></h3>
+                <code><%= item.value %></code>
+            </div>
+            <% }) %>
+        </div>
+        <h2 class="mb-3 text-xl font-bold">People In Stomach</h2>
+        <% if (userDbData.peopleInStomach.length > 0) { %> <% if
+        (userDbData.peopleInStomach.length === 1) { %> <% const item =
+        userDbData.peopleInStomach[0]; %>
+        <div class="flex flex-col items-center justify-center">
+            <h3 class="mb-2 text-3xl">
+                <%= item.id[0].toUpperCase() %><%= item.id.slice(1) %>
+            </h3>
+            <% if (item.isAi) { %>
+            <p class="text-xl text-cyan-400">AI</p>
+            <% } else { %>
+            <p class="text-xl text-primary-200">Human</p>
+            <% } %>
+        </div>
+        <% } else { %>
+        <div class="mb-7 grid grid-cols-3 gap-4">
+            <% userDbData.peopleInStomach.forEach((item) => { %>
+            <div class="flex flex-col items-center justify-center">
+                <h3 class="mb-2 text-3xl">
+                    <%= item.id[0].toUpperCase() %><%= item.id.slice(1) %>
+                </h3>
+                <% if (item.isAi) { %>
+                <p class="text-xl text-cyan-400">AI</p>
+                <% } else { %>
+                <p class="text-xl text-primary-200">Human</p>
+                <% } %>
+            </div>
+            <% }) %>
+        </div>
+        <% } %> <% } else { %>
+        <span class="mb-7 text-lg">
+            <% if (user?.id === userDbData.id) { %> Seems like you're running on
+            empty, you want to eat someone? <% } else { %> This user doesn't
+            have anybody in their stomach, you definitely might want to watch
+            yourself. You could be their first meal. <% } %>
+        </span>
+        <% } %>
+    </div>
+</main>

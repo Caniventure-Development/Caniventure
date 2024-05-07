@@ -1,4 +1,3 @@
-import type { users, GuildsOptionsCustomOpponents } from "@prisma/client";
 import type {
     ButtonInteraction,
     ChatInputCommandInteraction,
@@ -10,17 +9,19 @@ import {
     EmbedBuilder,
 } from "@discordjs/builders";
 import { ButtonStyle, ComponentType } from "discord.js";
-import { prisma } from "../../utils/prismaUtils";
+import { users } from "../../models/";
 import {
     disableAllButtons,
     enableAllButtons,
     getRandomMilliTimeFromSecondsRange,
     wait,
 } from "../../utils/helpers";
+import type { UserObject } from "../../models/users";
+import { OpponentObject } from "../../models/opponents";
 
 export async function swallowOpponentMinigame(
-    predator: users, // User document
-    prey: GuildsOptionsCustomOpponents, // Any opponent, since both the `opponents` model and `customOpponents` follow a similar structure.
+    predator: UserObject, // User document
+    prey: OpponentObject, // Any opponent, since both the `opponents` model and `customOpponents` follow a similar structure.
     interaction: ChatInputCommandInteraction
 ) {
     const timeToReact =
@@ -67,7 +68,7 @@ export async function swallowOpponentMinigame(
 
         if (reason === "Win" || reason === "Pause") {
             // End gets executed when the collector.stop is called
-            // If the reason is "Win", we don't need to do anything
+            // If the reason is "Win" or "Pause", we don't need to do anything
             return;
         }
 
@@ -170,23 +171,22 @@ export async function swallowOpponentMinigame(
 
                 collector.stop("Win");
 
-                predator.peopleInStomach.push({
-                    amountOfPeopleInStomach: 0n,
-                    bonesInStomach: BigInt(prey.bonesInStomach),
-                    id: prey.id,
-                    isAi: true,
-                });
-
-                await prisma.users.update({
-                    where: {
+                const updatedData = await users.findOneAndUpdate(
+                    {
                         id: predator.id,
                     },
-                    data: {
-                        peopleInStomach: {
-                            set: predator.peopleInStomach,
+                    {
+                        $push: {
+                            peopleInStomach: {
+                                amountOfPeopleInStomach: 0,
+                                bonesInStomach: prey.bonesInStomach,
+                                id: prey.id,
+                                isAi: true,
+                            },
                         },
-                    },
-                });
+                    }
+                );
+                updatedData?.save();
                 return;
             }
 

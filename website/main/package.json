@@ -1,17 +1,45 @@
 {
-  "name": "nuxt-app",
+  "name": "main-caniventure-website",
+  "version": "1.0.0",
   "private": true,
-  "type": "module",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "start": "nodemon src/api/index.ts"
+  },
+  "author": "Yoshiboi18303",
+  "dependencies": {
+    "axios": "^1.6.7",
+    "body-parser": "^1.20.2",
+    "connect-mongo": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.9",
+    "express": "^4.18.3",
+    "express-session": "^1.18.0",
+    "markdown-it": "^14.0.0",
+    "mongoose": "^8.3.3",
+    "passport": "^0.7.0",
+    "passport-discord": "^0.1.4",
+    "passport-oauth2-refresh": "^2.2.0",
+    "picocolors": "^1.0.0"
   },
   "devDependencies": {
-    "nuxt": "^3.10.0",
-    "vue": "^3.4.15",
-    "vue-router": "^4.2.5"
+    "@types/body-parser": "^1.19.5",
+    "@types/cookie-parser": "^1.4.7",
+    "@types/express": "^4.17.21",
+    "@types/express-session": "^1.18.0",
+    "@types/markdown-it": "^13.0.7",
+    "@types/node": "^20.11.25",
+    "@types/passport": "^1.0.16",
+    "@types/passport-discord": "^0.1.13",
+    "autoprefixer": "^10.4.18",
+    "nodemon": "^3.1.0",
+    "postcss": "^8.4.35",
+    "prettier": "^3.2.5",
+    "prettier-plugin-ejs": "^1.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.12",
+    "tailwindcss": "^3.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.2"
   }
 }

@@ -1,0 +1,18 @@
+<%- include("include/base.ejs", { title: "404" }) %> <%-
+include("include/header.ejs", { user, }) %>
+
+<h1 class="my-3 text-5xl font-black">404</h1>
+<p class="mb-5">Could not find <code><%= path %></code></p>
+<div class="flex items-center justify-center">
+    <a
+        class="mr-3 rounded-2xl border-2 border-primary-300 px-4 py-2 text-primary-300 duration-700 hover:translate-y-1 hover:scale-110 hover:bg-primary-300 hover:text-white"
+        href="javascript:history.back()"
+    >
+        Go Back
+    </a>
+    <a
+        href="/"
+        class="rounded-2xl border-2 border-accent-300 px-4 py-2 text-accent-300 duration-700 hover:translate-y-1 hover:scale-110 hover:bg-accent-300 hover:text-white"
+        >Go Home</a
+    >
+</div>

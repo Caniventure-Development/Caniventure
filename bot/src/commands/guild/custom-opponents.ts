@@ -7,7 +7,7 @@ import {
 } from "@discordjs/builders";
 import { ButtonStyle, ComponentType } from "discord.js";
 import type { ChatInputCommandInteraction } from "discord.js";
-import { getGuild } from "../../utils/prismaUtils";
+import { getGuild } from "../../utils/databaseUtils";
 import { getDifficultyLevelName, secondsToMilli } from "../../utils/helpers";
 
 export default {

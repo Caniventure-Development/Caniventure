@@ -47,7 +47,7 @@ export default {
                         const expiredTimestamp = Math.round(
                             expirationTime / 1000
                         );
-                        const expiredDate = new Date(expirationTime);
+                        const expiredDate = new Date(expiredTimestamp);
 
                         return await interaction.reply({
                             content:
@@ -62,13 +62,13 @@ export default {
                     }
                 }
 
-                await command.execute(interaction);
-
                 timestamps.set(interaction.user.id, now);
                 setTimeout(
                     () => timestamps.delete(interaction.user.id),
                     cooldownAmount
                 );
+
+                await command.execute(interaction);
             } catch (error) {
                 console.error(error);
 
