@@ -1,0 +1,50 @@
+{
+  "name": "caniventure",
+  "version": "1.0.0",
+  "description": "The cannibalistic economy bot",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "lint": "xo",
+    "mikro-orm": "mikro-orm-esm",
+    "setup": "bun run setup.ts"
+  },
+  "devDependencies": {
+    "@mikro-orm/cli": "^6.6.4",
+    "@types/bun": "latest",
+    "@types/common-tags": "^1.8.4",
+    "prettier": "^3.8.0",
+    "ts-node": "^10.9.2",
+    "xo": "^1.2.3"
+  },
+  "dependencies": {
+    "@discord-ui-kit/seyfert": "npm:@jsr/discord-ui-kit__seyfert@0.0.7",
+    "@luca/cases": "npm:@jsr/luca__cases",
+    "@mikro-orm/core": "^6.6.4",
+    "@mikro-orm/postgresql": "^6.6.4",
+    "@mikro-orm/reflection": "^6.6.4",
+    "@sapphire/discord-utilities": "^4.0.0",
+    "@sapphire/result": "^2.8.0",
+    "@sapphire/stopwatch": "^1.5.4",
+    "@sapphire/timestamp": "^1.0.5",
+    "@sapphire/utilities": "^3.18.2",
+    "@slipher/cooldown": "^0.0.6",
+    "common-tags": "^1.8.2",
+    "dayjs": "^1.11.19",
+    "dotenv": "^17.2.3",
+    "picocolors": "^1.1.1",
+    "redis": "^5.10.0",
+    "redis-om": "^0.4.7",
+    "seyfert": "^4.1.0",
+    "ts-morph": "^27.0.2"
+  },
+  "imports": {
+    "#base/*": "./src/*",
+    "#entities/*": "./src/entities/*",
+    "#subcommands/*": "./src/subcommands/*",
+    "#utilities/*": "./src/utilities/*"
+  },
+  "trustedDependencies": [
+    "unrs-resolver"
+  ]
+}

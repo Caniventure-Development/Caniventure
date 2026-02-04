@@ -1,0 +1,5 @@
+**/cache/
+**/temp/
+**/dist/
+**/node_modules/
+**/bun.lock
