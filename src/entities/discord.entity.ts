@@ -1,6 +1,5 @@
 import { Check, Entity, Property } from '@mikro-orm/core'
-import { Schema } from 'redis-om'
-import { BaseBotEntity, baseSchema } from './base.entity'
+import { BaseBotEntity } from './base.entity'
 
 @Entity({ abstract: true })
 @Check({ expression: "discord_id <> ''" })
@@ -19,8 +18,3 @@ export abstract class DiscordEntity<
     this.discordId = discordId
   }
 }
-
-export const discordSchema = new Schema('discord', {
-  ...baseSchema,
-  discordId: { type: 'string', indexed: true },
-})

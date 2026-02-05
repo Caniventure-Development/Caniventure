@@ -2,5 +2,6 @@
 **/cache/
 **/temp/
 certs/
+**/.idea/
 **/.env*
 !**/.env.example

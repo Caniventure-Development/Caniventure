@@ -1,7 +1,8 @@
 import { env } from 'node:process'
 import 'dotenv/config' // eslint-disable-line import-x/no-unassigned-import
-import { defineConfig } from '@mikro-orm/postgresql'
+import { defineConfig, MemoryCacheAdapter } from '@mikro-orm/postgresql'
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection'
+import { Time } from '@sapphire/timestamp'
 
 const isDevelopment =
   (env.NODE_ENV ?? 'production').toLowerCase() === 'development'
@@ -28,4 +29,9 @@ export default defineConfig({
   debug: isDevelopment,
   entities: ['dist/entities/**/*.entity.js'],
   entitiesTs: ['src/entities/**/*.entity.ts'],
+  resultCache: {
+    adapter: MemoryCacheAdapter,
+    expiration: Time.Minute * 2.5,
+    global: 250, // 250ms
+  },
 })

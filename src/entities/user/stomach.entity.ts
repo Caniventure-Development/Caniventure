@@ -19,6 +19,7 @@ export class UserStomach extends BaseBotEntity<
   declare user: User
 
   @Property({ type: 'bigint', name: 'capacity', default: 1 })
+  @Index()
   declare capacity: number
 
   @Property({ type: 'bigint', name: 'amount_of_people_inside', default: 0 })

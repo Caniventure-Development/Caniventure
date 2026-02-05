@@ -7,25 +7,6 @@ import { ResultsUtility } from '#utilities/results'
 export class UserDocumentsUtility extends BaseUtility {
   public async getUser(userId: string) {
     return this.em.findOne(User, { discordId: userId })
-    /*
-    TODO: Rewrite this to include Redis.
-
-    ---
-
-    const { userRepo } = this.context.client.redis
-
-    const cached = await userRepo.fetch(userId)
-
-    if (!cached) {
-      const user = await this.em.findOne(User, { discordId: userId })
-
-      if (user) await this.addUserToRedis(user)
-
-      return user
-    }
-
-    return cached as User
-    */
   }
 
   public async createUser(userId: string, activeCharacter: PartialCharacter) {
@@ -33,7 +14,6 @@ export class UserDocumentsUtility extends BaseUtility {
       const user = new User(userId, activeCharacter)
 
       await this.em.persist(user).flush()
-      await this.addUserToRedis(user)
 
       return user
     })
@@ -61,19 +41,8 @@ export class UserDocumentsUtility extends BaseUtility {
     return [true, null]
   }
 
-  private async addUserToRedis(user: User) {
-    const { userRepo } = this.context.client.redis
-    const id = user.discordId
-
-    const cached = await userRepo.fetch(id)
-
-    if (cached) return
-
-    await userRepo.save(id, user)
-  }
-
   private get em() {
-    return this.context.client.orm.em.fork()
+    return this.context.client.em
   }
 
   private get results() {

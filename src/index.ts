@@ -1,21 +1,19 @@
+import os from 'node:os'
 import path from 'node:path'
-import { env } from 'node:process'
 import {
   Client,
   type ParseClient,
   type ParseMiddlewares,
   type UsingClient,
 } from 'seyfert'
-import { CooldownManager } from '@slipher/cooldown'
-import { MikroORM } from '@mikro-orm/postgresql'
 import { UiClient, ProgressBarType } from '@discord-ui-kit/seyfert'
+import { CooldownManager } from '@slipher/cooldown'
+import { type EntityManager, MikroORM } from '@mikro-orm/postgresql'
 import { MessageFlags } from 'seyfert/lib/types/index'
-import { Repository } from 'redis-om'
-import { createClient } from 'redis'
 import context from './context.ts'
 import { Colors } from './colors.ts'
+import { startPresence } from './presence.ts'
 import middlewares from './middleware/index.ts'
-import { blacklistSchema, userSchema } from '#entities/schemas.ts'
 
 const client = new Client({
   context,
@@ -29,6 +27,13 @@ const client = new Client({
       },
     },
   },
+  gateway: {
+    properties: {
+      os: os.platform(),
+      browser: 'Seyfert Bot',
+      device: 'desktop',
+    },
+  },
 }) as UsingClient & Client
 
 client.setServices({
@@ -36,22 +41,11 @@ client.setServices({
 })
 
 client.start().then(async () => {
-  const redis = createClient({
-    url: env['REDIS_URL'],
-  })
-
-  redis.on('error', (error) => {
-    client.logger.error(`Redis Client Error: ${error}`)
-  })
-
-  await redis.connect()
+  startPresence(client)
 
   client.cooldown = new CooldownManager(client)
   client.orm = await MikroORM.init()
-  client.redis = {
-    blacklistRepo: new Repository(blacklistSchema, redis),
-    userRepo: new Repository(userSchema, redis),
-  }
+  client.em = client.orm.em.fork()
   client.ui = new UiClient({
     colors: new Colors(),
     progressBar: {
@@ -69,10 +63,7 @@ declare module 'seyfert' {
   interface UsingClient extends ParseClient<Client<true>> {
     cooldown: CooldownManager
     orm: MikroORM
-    redis: {
-      blacklistRepo: Repository
-      userRepo: Repository
-    }
+    em: EntityManager
     ui: UiClient
   }
 

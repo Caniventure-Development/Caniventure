@@ -1,5 +1,5 @@
 import { env } from 'node:process'
-import { Declare, Command, AutoLoad } from 'seyfert'
+import { Command, Declare, AutoLoad } from 'seyfert'
 
 @Declare({
   name: 'economy',

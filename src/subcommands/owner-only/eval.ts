@@ -17,12 +17,12 @@ export class EvalSubcommand extends BaseBotChatInputSubcommand {
 
       if (code.includes('await') && variableRegex.test(code)) {
         // eslint-disable-next-line no-return-await, @typescript-eslint/no-unsafe-return
-        return await eval(`(async (ctx) => {${code}})(ctx)`)
+        return await eval(`(async () => {${code}})()`)
       }
 
       if (code.includes('await')) {
         // eslint-disable-next-line no-return-await, @typescript-eslint/no-unsafe-return
-        return await eval(`(async (ctx) => ${code})(ctx)`)
+        return await eval(`(async () => ${code})()`)
       }
 
       if (variableRegex.test(code)) {
@@ -67,7 +67,7 @@ export class EvalSubcommand extends BaseBotChatInputSubcommand {
     } else if (output === undefined) output = 'undefined'
     else output ??= 'null'
 
-    const secrets = [env['BOT_TOKEN'], env['DATABASE_PASSWORD']]
+    const secrets = [env['TOKEN'], env['DATABASE_PASSWORD']]
 
     for (const secret of secrets) {
       if (!secret) continue

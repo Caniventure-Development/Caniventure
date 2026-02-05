@@ -33,8 +33,6 @@
     "dayjs": "^1.11.19",
     "dotenv": "^17.2.3",
     "picocolors": "^1.1.1",
-    "redis": "^5.10.0",
-    "redis-om": "^0.4.7",
     "seyfert": "^4.1.0",
     "ts-morph": "^27.0.2"
   },

@@ -8,8 +8,7 @@ import {
   OneToOne,
   Property,
 } from '@mikro-orm/core'
-import { Schema } from 'redis-om'
-import { DiscordEntity, discordSchema } from '../discord.entity'
+import { DiscordEntity } from '../discord.entity'
 import { UserBalance } from './balance.entity'
 import { UserBio } from './bio.entity'
 import { UserCharacter } from './character.entity'
@@ -21,6 +20,7 @@ import type { PartialCharacter } from '#base/types.ts'
 @Entity({ tableName: 'users' })
 export class User extends DiscordEntity<
   | 'activeCharacterId'
+  | 'doubleBonesActive'
   | 'hasDoneTutorial'
   | 'level'
   | 'experience'
@@ -53,6 +53,12 @@ export class User extends DiscordEntity<
   declare experience: number
 
   /**
+   * Whether this user has gotten close to their limit during blackjack or not.
+   */
+  @Property({ type: 'boolean', name: 'double_bones_active', default: false })
+  declare doubleBonesActive: boolean
+
+  /**
    * Whether the user has finished the tutorial or not.
    */
   @Property({ type: 'boolean', name: 'has_done_tutorial', default: false })
@@ -80,6 +86,7 @@ export class User extends DiscordEntity<
     nullable: true,
     default: null,
   })
+  @Index()
   declare captorId: string | null
 
   @Property({
@@ -150,6 +157,10 @@ export class User extends DiscordEntity<
 
   // Extra methods and shit
 
+  /**
+   * Gets the characters collections ready to use and returns it.
+   * @returns The ready to use characters Collection.
+   */
   public async getCharacters() {
     return this.internalCharacters.isInitialized()
       ? this.internalCharacters.load()
@@ -183,61 +194,3 @@ export class User extends DiscordEntity<
     this.activeCharacterId = character.characterId
   }
 }
-
-export const userSchema = new Schema('user', {
-  ...discordSchema,
-  level: { type: 'number', indexed: true },
-  experience: { type: 'number', indexed: true },
-  isBlacklisted: { type: 'boolean' },
-  isInStomach: { type: 'boolean' },
-  captorId: { type: 'string' },
-  activeCharacterId: { type: 'string' },
-
-  // Balance
-  bonesCollected: {
-    type: 'number',
-    indexed: true,
-    path: '$.balance.bonesCollected',
-  },
-  bonesInStomach: {
-    type: 'number',
-    indexed: true,
-    path: '$.balance.bonesInStomach',
-  },
-  money: { type: 'number', indexed: true, path: '$.balance.money' },
-
-  // Bio
-  content: { type: 'string', path: '$.bio.content' },
-
-  // Characters
-  characters: { type: 'string[]' }, // Array of JSON Strings
-
-  // Settings
-  pvpOn: { type: 'boolean', path: '$.settings.pvpOn' },
-  colorblindModeOn: { type: 'boolean', path: '$.settings.colorblindModeOn' },
-  permadeathModeOn: { type: 'boolean', path: '$.settings.permadeathModeOn' },
-  allowMentions: { type: 'boolean', path: '$.settings.allowMentions' },
-
-  // States
-  isDigesting: { type: 'boolean', path: '$.states.isDigesting' },
-  isInEndo: { type: 'boolean', path: '$.states.isInEndo' },
-  isInPvp: { type: 'boolean', path: '$.states.isInPvp' },
-
-  // Stomach
-  capacity: { type: 'number', path: '$.stomach.capacity' },
-  amountOfPeopleInside: {
-    type: 'number',
-    indexed: true,
-    path: '$.stomach.amountOfPeopleInside',
-  },
-  opponentsInside: { type: 'string[]', path: '$.stomach.opponentsInside' },
-  usersInside: {
-    type: 'string[]',
-    path: '$.stomach.usersInside',
-  },
-  digestionTime: {
-    type: 'number',
-    indexed: true,
-    path: '$.stomach.digestionTime',
-  },
-})

@@ -1,17 +1,9 @@
-/* eslint-disable @stylistic/quotes */
 import type { CommandContext, Interaction } from 'seyfert'
 import { CooldownType } from '@slipher/cooldown'
 import type {
   CollectorInteraction,
   CreateComponentCollectorResult,
 } from 'seyfert/lib/components/handler'
-import { CONSTANTS } from '../constants.ts'
-import { CHECK_FAILED_EMBED_TITLES } from '../check_failed_embed_titles.constant.ts'
-
-type TimedOutEmbedOptions = {
-  title?: string
-  description?: string
-}
 
 type EnsureAgreedOptions = {
   agreeCustomId?: string
@@ -44,34 +36,6 @@ abstract class BaseBotSubcommand {
     ctx.client.cooldown.resource.remove(
       `${this.#commandName}:${cooldownType}:${id}`
     )
-  }
-
-  public async handleCollectorStop<T extends Interaction>(
-    ctx: CommandContext,
-    context: T,
-    reason: string,
-    options?: TimedOutEmbedOptions
-  ) {
-    if (context.isAutocomplete()) return
-
-    if (reason === CONSTANTS['COLLECTOR_TIMED_OUT']) {
-      const timedOutEmbed = ctx.utilities.collectors.timedOutEmbed(
-        options?.title ?? 'Timed Out',
-        options?.description ??
-          "Sorry, you didn't respond in time. You'll have to re-run the command."
-      )
-      const payload = {
-        attachments: [],
-        components: [],
-        embeds: [timedOutEmbed],
-      }
-
-      await context.editOrReply(payload)
-    }
-  }
-
-  public getRandomCheckEmbedFailedTitle(ctx: CommandContext) {
-    return ctx.utilities.random.item(CHECK_FAILED_EMBED_TITLES)
   }
 
   public async notImplemented<T extends Interaction>(

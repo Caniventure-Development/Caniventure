@@ -1,3 +1,4 @@
+import { ensureBellyEmptyMiddleware } from './ensure-belly-empty.middleware.ts'
 import { ensureBellyOccupiedMiddleware } from './ensure-belly-occupied.middleware.ts'
 import { ensureDocumentMiddleware } from './ensure-document.middleware.ts'
 import { ensureNoDocumentMiddleware } from './ensure-no-document.middleware.ts'
@@ -7,6 +8,7 @@ import { ensureTutorialNotDoneMiddleware } from './ensure-tutorial-not-done.midd
 import { ownerOnlyMiddleware } from './owner-only.middleware.ts'
 
 const middlewares = {
+  ensureBellyEmpty: ensureBellyEmptyMiddleware,
   ensureBellyOccupied: ensureBellyOccupiedMiddleware,
   ensureDocument: ensureDocumentMiddleware,
   ensureNoDocument: ensureNoDocumentMiddleware,

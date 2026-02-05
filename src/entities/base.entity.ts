@@ -6,7 +6,6 @@ import {
   PrimaryKey,
   Property,
 } from '@mikro-orm/core'
-import { Schema } from 'redis-om'
 
 @Entity({ abstract: true })
 export abstract class BaseBotEntity<Optional = never> extends BaseEntity {
@@ -37,9 +36,3 @@ export abstract class BaseBotEntity<Optional = never> extends BaseEntity {
   @Index()
   updatedAt: Date = new Date()
 }
-
-export const baseSchema = new Schema('base', {
-  id: { type: 'number', indexed: true },
-  createdAt: { type: 'date', indexed: true },
-  updatedAt: { type: 'date', indexed: true },
-})

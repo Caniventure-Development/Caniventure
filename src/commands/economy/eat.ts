@@ -4,8 +4,8 @@ import {
   Declare,
   Middlewares,
   Options,
-  SubCommand,
 } from 'seyfert'
+import { SubCommandWithLeveling } from '../base_with_leveling.ts'
 import {
   EatSubcommandWithUser,
   EatSubcommandWithoutUser,
@@ -24,8 +24,10 @@ const options = {
 })
 @Options(options)
 @Middlewares(['ensureDocument', 'ensureTutorialDone', 'ensureNotFull'])
-export default class EatSubCommand extends SubCommand {
+export default class EatSubCommand extends SubCommandWithLeveling {
   public override async run(ctx: CommandContext<typeof options>) {
+    this.exclude()
+
     const commandName = 'eat'
     await (ctx.options.user
       ? new EatSubcommandWithUser(commandName).run(ctx, ctx.options.user)

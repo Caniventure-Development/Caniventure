@@ -1,8 +1,10 @@
 # Caniventure Privacy Policy
 
-Caniventure collects some data about its users and guilds that it's a part of. This should explain **what** and **why** we collect what we do.
+Caniventure collects some data about its users and guilds that it's a part of.
+This should explain **what** and **why** we collect what we do.
 
-**By using Caniventure or logging into its website, you agree to this policy. If you do not agree, please discontinue use of Caniventure!**
+**By using Caniventure or logging into its website, you agree to this policy. If
+you do not agree, please discontinue use of Caniventure!**
 
 <details>
     <summary>Users</summary>
@@ -11,7 +13,7 @@ Caniventure collects some data about its users and guilds that it's a part of. T
     <ul>
         <li><strong>Your user ID on Discord</strong></li>
         <li><strong>Public information on your profile <i>(username, banner, etc.)</i></strong></li>
-        <li><strong>When logged into the site, we collect what guilds you're in</strong></li>
+        <li><strong>When logged into the site (coming soon, maybe), we collect what guilds you're in</strong></li>
     </ul>
     <h2>Why do we collect this data?</h2>
     <p>We collect this data so you can be able to use Caniventure as the economy bot it is, without it, the bot would just be a glorified <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program" target="_blank" rel="noopener noreferrer">ping bot</a>.</p>
@@ -35,4 +37,5 @@ Caniventure collects some data about its users and guilds that it's a part of. T
 
 ## I have a concern regarding my data
 
-Concerns are valid. Please feel free to reach out to us via the [Support Server](https://discord.gg/HQn5cyrG3a) if you have any questions.
+Concerns are valid. Please feel free to reach out to us via the
+[Support Server](https://discord.gg/HQn5cyrG3a) if you have any questions.
