@@ -173,8 +173,8 @@ export class TutorialSubcommand extends BaseBotChatInputSubcommand {
       new TutorialCharacterSection(),
       new TutorialStomachSection(),
       new TutorialVoraciousSection(),
-      new TutorialPreySection(),
       new TutorialHuntingSection(),
+      new TutorialPreySection(),
     ]
   }
 
