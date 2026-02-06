@@ -1,7 +1,7 @@
 import type { CommandContext, InteractionGuildMember, User } from 'seyfert'
 import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
 
-export class EatSubcommandWithUser extends BaseBotChatInputSubcommand {
+export class EatSubcommand extends BaseBotChatInputSubcommand {
   public override async run(
     ctx: CommandContext,
     _user: InteractionGuildMember | User

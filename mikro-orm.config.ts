@@ -1,8 +1,9 @@
 import { env } from 'node:process'
-import 'dotenv/config' // eslint-disable-line import-x/no-unassigned-import
 import { defineConfig, MemoryCacheAdapter } from '@mikro-orm/postgresql'
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection'
+import { SqlHighlighter } from '@mikro-orm/sql-highlighter'
 import { Time } from '@sapphire/timestamp'
+import 'dotenv/config' // eslint-disable-line import-x/no-unassigned-import
 
 const isDevelopment =
   (env.NODE_ENV ?? 'production').toLowerCase() === 'development'
@@ -32,6 +33,7 @@ export default defineConfig({
   resultCache: {
     adapter: MemoryCacheAdapter,
     expiration: Time.Minute * 2.5,
-    global: 250, // 250ms
+    global: Time.Second * 5,
   },
+  highlighter: new SqlHighlighter(),
 })

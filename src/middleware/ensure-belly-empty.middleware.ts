@@ -4,7 +4,9 @@ export const ensureBellyEmptyMiddleware = createMiddleware<void>(
   async ({ context, next, stop }) => {
     const { author, utilities } = context
 
-    const user = await utilities.userDocuments.getUser(author.id)
+    const user = await utilities.userDocuments.getUser(author.id, {
+      populate: ['stomach'],
+    })
 
     if (!user) {
       stop('User was not found in the database!')

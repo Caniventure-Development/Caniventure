@@ -32,6 +32,8 @@ export class TutorialPreySection extends TutorialSection {
 
         If you're caught and released, you just might want to watch your back next time.
         Just to make sure you don't end up as another layer of pudge on someone.
+
+        **Next is one small thing, permadeath mode. What it is, and what it provides...**
       `,
     }
   }

@@ -40,9 +40,9 @@ abstract class BaseBotSubcommand {
 
   public async notImplemented<T extends Interaction>(
     ctx: CommandContext,
-    context: T
+    interaction: T
   ) {
-    await ctx.utilities.helpers.handleNotImplemented(context)
+    await ctx.utilities.helpers.handleNotImplemented(interaction)
   }
 
   public async ensureAgreed(

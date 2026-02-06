@@ -119,6 +119,6 @@ export class CollectorsUtility extends BaseUtility {
   }
 
   private get embeds() {
-    return this.context.client.ui.embeds
+    return this.ui.embeds
   }
 }

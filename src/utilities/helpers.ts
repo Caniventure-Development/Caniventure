@@ -4,7 +4,7 @@ import { BaseUtility } from './base.ts'
 
 export class HelpersUtility extends BaseUtility {
   public async handleNotImplemented<T extends Interaction>(
-    context: T,
+    interaction: T,
     message = 'Sorry, this method was not implemented yet! It should be ready soon though, maybe!'
   ) {
     const notImplementedEmbed = this.ui.embeds.danger('Not Implemented', {
@@ -15,7 +15,7 @@ export class HelpersUtility extends BaseUtility {
       embeds: [notImplementedEmbed],
     }
 
-    await context.editOrReply({
+    await interaction.editOrReply({
       ...basePayload,
       flags: MessageFlags.Ephemeral,
     })

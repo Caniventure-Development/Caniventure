@@ -21,7 +21,9 @@ export abstract class SubCommandWithLeveling extends SubCommand {
     const { author, ui, utilities } = context
     const { em } = context.client
 
-    const user = await utilities.userDocuments.getUser(author.id)
+    const user = await utilities.userDocuments.getUser(author.id, {
+      populate: ['stomach'],
+    })
 
     if (!user) return
 

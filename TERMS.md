@@ -17,7 +17,7 @@ Caniventure is a free-to-use bot, but due to its niche nature and the fact it ta
 - Exploiting any unintended mechanics of the bot.
 - Harassment, witch hunting or otherwise hurting people for using the bot. **Everyone who uses the bot is a person, remember that.**
 - Being Xenophobic or Discriminatory against people who use the bot. **Again, same rule applies!**
-- Violating the GPL license on the source code, or using the source code to make a blatant copy/malware.
+- Violating the GPL license on the source code, or using the source code to make a blatant copy _(without credit/attribution)_/malware.
 - Using the bot if you're underage for Discord.
 
 ---

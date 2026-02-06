@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/no-restricted-types */
+import type { FindOneOptions } from '@mikro-orm/postgresql'
 import type { PartialCharacter } from '#base/types.ts'
 import { User } from '#entities/user/user.entity.ts'
 import { BaseUtility } from '#utilities/base.ts'
 import { ResultsUtility } from '#utilities/results'
 
 export class UserDocumentsUtility extends BaseUtility {
-  public async getUser(userId: string) {
-    return this.em.findOne(User, { discordId: userId })
+  public async getUser(
+    userId: string,
+    options?: FindOneOptions<User, ''>
+  ) {
+    return this.em.findOne(User, { discordId: userId }, options)
   }
 
   public async createUser(userId: string, activeCharacter: PartialCharacter) {

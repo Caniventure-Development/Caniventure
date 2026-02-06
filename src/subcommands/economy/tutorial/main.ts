@@ -10,6 +10,7 @@ import {
   TutorialCharacterSection,
   TutorialHuntingSection,
   TutorialIntroSection,
+  TutorialPermadeathSection,
   TutorialPreySection,
   TutorialStomachSection,
   TutorialVoraciousSection,
@@ -175,6 +176,7 @@ export class TutorialSubcommand extends BaseBotChatInputSubcommand {
       new TutorialVoraciousSection(),
       new TutorialHuntingSection(),
       new TutorialPreySection(),
+      new TutorialPermadeathSection(),
     ]
   }
 
