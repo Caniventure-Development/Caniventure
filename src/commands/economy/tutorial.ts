@@ -6,9 +6,9 @@ import { TutorialSubcommand } from '#subcommands/economy/tutorial.ts'
   description:
     'Learn how Caniventure actually works, or just skip if you know already.',
 })
-@Middlewares(['ensureDocument', 'ensureTutorialNotDone'])
+@Middlewares(['hasDocument', 'hasTutorialNotDone'])
 export default class TutorialSubCommand extends SubCommand {
   async run(ctx: CommandContext) {
-    await new TutorialSubcommand('tutorial').run(ctx)
+    await new TutorialSubcommand().run(ctx)
   }
 }

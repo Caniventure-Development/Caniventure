@@ -1,8 +1,9 @@
-import type { Interaction } from 'seyfert'
+import { CooldownType } from '@slipher/cooldown'
+import type { AnyContext, Interaction } from 'seyfert'
 import { MessageFlags } from 'seyfert/lib/types'
-import { BaseUtility } from './base.ts'
+import { BaseUtilityWithContext } from './base.ts'
 
-export class HelpersUtility extends BaseUtility {
+export class HelpersUtility extends BaseUtilityWithContext {
   public async handleNotImplemented<T extends Interaction>(
     interaction: T,
     message = 'Sorry, this method was not implemented yet! It should be ready soon though, maybe!'
@@ -30,11 +31,27 @@ export class HelpersUtility extends BaseUtility {
     return new Promise((resolve) => setTimeout(resolve, ms))
   }
 
-  public msToUnixTimestamp(ms: number): number {
-    return Math.floor((Date.now() + ms) / 1000)
-  }
+  public removeCooldown(
+    ctx: AnyContext,
+    id: string,
+    cooldownType: CooldownType = CooldownType.User
+  ) {
+    if (!('fullCommandName' in ctx)) return
 
-  public getCodeBlockText(language: string, content: string): string {
-    return `\`\`\`${language}\n${content}\n\`\`\``
+    const { fullCommandName } = ctx.client.handleCommand.getCommandFromContent(
+      ctx.fullCommandName.split(' ').filter(Boolean).slice(0, 3) // eslint-disable-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-call
+    )
+
+    if (
+      !ctx.client.cooldown.has({
+        name: fullCommandName,
+        target: id,
+      })
+    )
+      return
+
+    ctx.client.cooldown.resource.remove(
+      `${fullCommandName}:${cooldownType}:${id}`
+    )
   }
 }

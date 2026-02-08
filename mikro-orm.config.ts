@@ -32,8 +32,8 @@ export default defineConfig({
   entitiesTs: ['src/entities/**/*.entity.ts'],
   resultCache: {
     adapter: MemoryCacheAdapter,
-    expiration: Time.Minute * 2.5,
-    global: Time.Second * 5,
+    expiration: Time.Minute * 7.5,
+    global: Time.Second * 10,
   },
   highlighter: new SqlHighlighter(),
 })

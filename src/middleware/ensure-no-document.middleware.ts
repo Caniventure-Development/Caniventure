@@ -7,7 +7,10 @@ export const ensureNoDocumentMiddleware = createMiddleware<void>(
     const [doesNotExist, error] =
       await utilities.userDocuments.ensureUserDoesNotExist(author.id)
 
-    if (!doesNotExist) stop(error!)
+    if (!doesNotExist) {
+      context.utilities.helpers.removeCooldown(context, author.id)
+      stop(error!)
+    }
 
     next()
   }

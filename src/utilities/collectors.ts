@@ -9,11 +9,11 @@ import type {
   WebhookMessage,
 } from 'seyfert'
 import { MessageFlags } from 'seyfert/lib/types/index'
-import { BaseUtility } from './base.ts'
+import { BaseUtilityWithContext } from './base.ts'
 
 type ComponentType = 'button' | 'select'
 
-export class CollectorsUtility extends BaseUtility {
+export class CollectorsUtility extends BaseUtilityWithContext {
   public timedOutEmbed(
     title: string | undefined = 'Timed Out',
     description: string | undefined = 'This collector has timed out.'

@@ -9,16 +9,19 @@ export const ensureBellyEmptyMiddleware = createMiddleware<void>(
     })
 
     if (!user) {
+      context.utilities.helpers.removeCooldown(context, author.id)
       stop('User was not found in the database!')
       return // Useless, but helps TypeScript.
     }
 
     const { stomach } = user
 
-    if (stomach.amountOfPeopleInside > 0)
+    if (stomach.currentSize > 0) {
+      context.utilities.helpers.removeCooldown(context, author.id)
       stop(
         'This command requires an empty stomach, get rid of your current prey. Then try again.'
       )
+    }
 
     next()
   }

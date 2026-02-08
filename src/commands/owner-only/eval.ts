@@ -23,6 +23,6 @@ const options = {
 @Options(options)
 export default class EvalSubCommand extends SubCommand {
   async run(ctx: CommandContext<typeof options>) {
-    await new EvalSubcommand('eval').run(ctx, ctx.options.code)
+    await new EvalSubcommand().run(ctx, ctx.options.code)
   }
 }

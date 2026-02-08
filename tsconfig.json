@@ -38,6 +38,7 @@
     "baseUrl": ".",
     "paths": {
       "#base/*": ["src/*"],
+      "#components": ["./src/components/*"],
       "#entities/*": ["src/entities/*"],
       "#subcommands/*": ["src/subcommands/*"],
       "#utilities/*": ["src/utilities/*"]

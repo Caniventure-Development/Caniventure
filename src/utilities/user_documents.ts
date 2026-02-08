@@ -2,10 +2,10 @@
 import type { FindOneOptions } from '@mikro-orm/postgresql'
 import type { PartialCharacter } from '#base/types.ts'
 import { User } from '#entities/user/user.entity.ts'
-import { BaseUtility } from '#utilities/base.ts'
+import { BaseUtilityWithContext } from '#utilities/base.ts'
 import { ResultsUtility } from '#utilities/results'
 
-export class UserDocumentsUtility extends BaseUtility {
+export class UserDocumentsUtility extends BaseUtilityWithContext {
   public async getUser(
     userId: string,
     options?: FindOneOptions<User, ''>
@@ -50,6 +50,6 @@ export class UserDocumentsUtility extends BaseUtility {
   }
 
   private get results() {
-    return new ResultsUtility(this.context)
+    return new ResultsUtility()
   }
 }

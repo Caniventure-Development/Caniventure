@@ -8,9 +8,24 @@ type CaniventureLevel = {
 const levels: CaniventureLevel[] = [
   {
     number: 2,
-    experienceRequired: 500,
-    capacityIncrease: 5,
+    experienceRequired: 1000,
+    capacityIncrease: 1,
   },
+  {
+    number: 3,
+    experienceRequired: 2000,
+    capacityIncrease: 1,
+  },
+  {
+    number: 4,
+    experienceRequired: 3000,
+    capacityIncrease: 1,
+  },
+  {
+    number: 5,
+    experienceRequired: 4500,
+    capacityIncrease: 2
+  }
 ]
 
 export default levels

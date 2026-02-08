@@ -16,12 +16,13 @@
         "@sapphire/stopwatch": "^1.5.4",
         "@sapphire/timestamp": "^1.0.5",
         "@sapphire/utilities": "^3.18.2",
-        "@slipher/cooldown": "^0.0.7",
         "common-tags": "^1.8.2",
         "dotenv": "^17.2.3",
+        "@slipher/cooldown": "https://pkg.pr.new/tiramisulabs/extra/@slipher/cooldown@91dc6b4",
         "picocolors": "^1.1.1",
         "seyfert": "^4.1.0",
         "ts-morph": "^27.0.2",
+        "zod": "^4.3.6",
       },
       "devDependencies": {
         "@mikro-orm/cli": "^6.6.4",
@@ -133,7 +134,7 @@
 
     "@sindresorhus/tsconfig": ["@sindresorhus/tsconfig@7.0.0", "", {}, "sha512-i5K04hLAP44Af16zmDjG07E1NHuDgCM07SJAT4gY0LZSRrWYzwt4qkLem6TIbIVh0k51RkN2bF+lP+lM5eC9fw=="],
 
-    "@slipher/cooldown": ["@slipher/cooldown@0.0.7", "", { "dependencies": { "seyfert": "4.1.0" } }, "sha512-6JVCs5cr8FuCRGZg4dIpNoHjDYZksfId7Kq39714qq72wuW/QwcZsB5WfZvym9wKpDXrRNGAycJvrRFV+9z72A=="],
+    "@slipher/cooldown": ["@slipher/cooldown@https://pkg.pr.new/tiramisulabs/extra/@slipher/cooldown@91dc6b4", { "dependencies": { "seyfert": "4.1.0" } }],
 
     "@stylistic/eslint-plugin": ["@stylistic/eslint-plugin@4.4.1", "", { "dependencies": { "@typescript-eslint/utils": "^8.32.1", "eslint-visitor-keys": "^4.2.0", "espree": "^10.3.0", "estraverse": "^5.3.0", "picomatch": "^4.0.2" }, "peerDependencies": { "eslint": ">=9.0.0" } }, "sha512-CEigAk7eOLyHvdgmpZsKFwtiqS2wFwI1fn4j09IU9GmD4euFM4jEBAViWeCqaNLlbX2k2+A/Fq9cje4HQBXuJQ=="],
 
@@ -1000,6 +1001,8 @@
     "yocto-queue": ["yocto-queue@0.1.0", "", {}, "sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q=="],
 
     "yoctocolors": ["yoctocolors@2.1.2", "", {}, "sha512-CzhO+pFNo8ajLM2d2IW/R93ipy99LWjtwblvC1RsoSUMZgyLbYFr221TnSNT7GjGdYui6P459mw9JH/g/zW2ug=="],
+
+    "zod": ["zod@4.3.6", "", {}, "sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg=="],
 
     "@eslint-community/eslint-utils/eslint-visitor-keys": ["eslint-visitor-keys@3.4.3", "", {}, "sha512-wpc+LXeiyiisxPlEkUzU6svyS1frIO3Mgxj1fdy7Pm8Ygzguax2N3Fa/D/ag1WqbOprdI+uY6wMUl8/a2G+iag=="],
 

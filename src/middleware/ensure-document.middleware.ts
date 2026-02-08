@@ -8,7 +8,10 @@ export const ensureDocumentMiddleware = createMiddleware<void>(
       author.id
     )
 
-    if (!exists) stop(error!)
+    if (!exists) {
+      context.utilities.helpers.removeCooldown(context, author.id)
+      stop(error!)
+    }
 
     next()
   }

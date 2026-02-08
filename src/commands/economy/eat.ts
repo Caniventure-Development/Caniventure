@@ -17,21 +17,30 @@ const options = {
   }),
 }
 
+@Declare({
+  name: 'eat',
+  description: 'Attempt to swallow another user',
+})
 @Cooldown({
   type: 'user',
   uses: { default: 1 },
   interval: Time.Minute * 5,
 })
-@Declare({
-  name: 'eat',
-  description: 'Attempt to swallow another user',
-})
 @Options(options)
-@Middlewares(['ensureDocument', 'ensureTutorialDone', 'ensureNotFull'])
+@Middlewares([
+  'cooldown',
+  'hasDocument',
+  'hasTutorialDone',
+  'isNotFull',
+  'isNotRegurgitating',
+  'isNotDigesting',
+  'isNotInPvp',
+  'isNotSwallowed',
+])
 export default class EatSubCommand extends SubCommandWithLeveling {
   public override async run(ctx: CommandContext<typeof options>) {
     this.exclude()
 
-    await new EatSubcommand('eat').run(ctx, ctx.options.user)
+    await new EatSubcommand().run(ctx, ctx.options.user)
   }
 }

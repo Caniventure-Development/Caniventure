@@ -29,15 +29,17 @@
     "@sapphire/stopwatch": "^1.5.4",
     "@sapphire/timestamp": "^1.0.5",
     "@sapphire/utilities": "^3.18.2",
-    "@slipher/cooldown": "^0.0.7",
+    "@slipher/cooldown": "https://pkg.pr.new/tiramisulabs/extra/@slipher/cooldown@91dc6b4",
     "common-tags": "^1.8.2",
     "dotenv": "^17.2.3",
     "picocolors": "^1.1.1",
     "seyfert": "^4.1.0",
-    "ts-morph": "^27.0.2"
+    "ts-morph": "^27.0.2",
+    "zod": "^4.3.6"
   },
   "imports": {
     "#base/*": "./src/*",
+    "#components/*": "./src/components/*",
     "#entities/*": "./src/entities/*",
     "#subcommands/*": "./src/subcommands/*",
     "#utilities/*": "./src/utilities/*"

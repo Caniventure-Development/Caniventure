@@ -4,6 +4,7 @@ import type {
   CollectorInteraction,
   CreateComponentCollectorResult,
 } from 'seyfert/lib/components/handler'
+import type { Awaitable } from '@sapphire/utilities'
 
 type EnsureAgreedOptions = {
   agreeCustomId?: string
@@ -14,28 +15,12 @@ type EnsureAgreedOptions = {
 }
 
 abstract class BaseBotSubcommand {
-  readonly #commandName: string
-
-  constructor(commandName: string) {
-    this.#commandName = commandName
-  }
-
   public removeCooldown(
     ctx: CommandContext,
     id: string,
     cooldownType: CooldownType = CooldownType.User
   ) {
-    if (
-      !ctx.client.cooldown.has({
-        name: this.#commandName,
-        target: id,
-      })
-    )
-      return
-
-    ctx.client.cooldown.resource.remove(
-      `${this.#commandName}:${cooldownType}:${id}`
-    )
+    ctx.utilities.helpers.removeCooldown(ctx, id, cooldownType)
   }
 
   public async notImplemented<T extends Interaction>(
@@ -93,15 +78,15 @@ abstract class BaseBotSubcommand {
 }
 
 export abstract class BaseBotChatInputSubcommand extends BaseBotSubcommand {
-  public abstract run(ctx: CommandContext, ...args: unknown[]): Promise<void>
+  public abstract run(ctx: CommandContext, ...args: unknown[]): Awaitable<void>
 }
 
 export abstract class BaseBotContextMenuSubcommand extends BaseBotSubcommand {
-  public abstract run(ctx: CommandContext, ...args: unknown[]): Promise<void>
+  public abstract run(ctx: CommandContext, ...args: unknown[]): Awaitable<void>
 }
 
 export abstract class BaseBotMinigame<
   T extends Interaction,
 > extends BaseBotSubcommand {
-  public abstract run(interaction: T, ...args: unknown[]): Promise<void>
+  public abstract run(interaction: T, ...args: unknown[]): Awaitable<void>
 }

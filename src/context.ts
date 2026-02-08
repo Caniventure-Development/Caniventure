@@ -29,8 +29,8 @@ export default extendContext(
     utilities: {
       collectors: new CollectorsUtility(interaction),
       helpers: new HelpersUtility(interaction),
-      random: new RandomUtility(interaction),
-      results: new ResultsUtility(interaction),
+      random: new RandomUtility(),
+      results: new ResultsUtility(),
       userDocuments: new UserDocumentsUtility(interaction),
     },
     ui: new UiClient({

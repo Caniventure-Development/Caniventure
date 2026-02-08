@@ -7,6 +7,6 @@ import { PingSubcommand } from '#subcommands/info/ping.ts'
 })
 export default class PingSubCommand extends SubCommand {
   async run(ctx: CommandContext) {
-    await new PingSubcommand('ping').run(ctx)
+    await new PingSubcommand().run(ctx)
   }
 }

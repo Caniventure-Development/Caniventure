@@ -5,9 +5,9 @@ import { StartSubcommand } from '#subcommands/economy/start.ts'
   name: 'start',
   description: 'Start your cannibalistic adventure on Caniventure!',
 })
-@Middlewares(['ensureNoDocument'])
+@Middlewares(['hasNoDocument'])
 export default class StartSubCommand extends SubCommand {
   async run(ctx: CommandContext) {
-    await new StartSubcommand('start').run(ctx)
+    await new StartSubcommand().run(ctx)
   }
 }

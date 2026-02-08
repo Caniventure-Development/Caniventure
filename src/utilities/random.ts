@@ -39,7 +39,7 @@ export class RandomUtility extends BaseUtility {
 
     if (min > maxValue) [min, maxValue] = [maxValue, min]
 
-    return Math.floor((Math.random() * (maxValue - min)) + min)
+    return Math.floor(Math.random() * (maxValue - min) + min)
   }
 
   public nextFloat(max: number): number
@@ -60,6 +60,17 @@ export class RandomUtility extends BaseUtility {
 
     if (min > maxValue) [min, maxValue] = [maxValue, min]
 
-    return (Math.random() * (maxValue - min)) + min
+    return Math.random() * (maxValue - min) + min
+  }
+
+  public catchAttemptSuccess(npcSize: number, userLevel: number) {
+    const baseChance = 0.7
+    const sizePenalty = (npcSize - 1) * 0.1 // -10% per space taken
+    const levelBonus = userLevel * 0.01 // +1% per level
+
+    const calculated = baseChance - sizePenalty + levelBonus
+    const chance = Math.min(0.95, Math.max(0.3, calculated))
+
+    return Math.random() <= chance
   }
 }

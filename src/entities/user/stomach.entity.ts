@@ -5,15 +5,15 @@ import { User } from './user.entity'
 @Entity({ tableName: 'user_stomachs' })
 @Check({ expression: 'capacity > 0', name: 'capacity_check' })
 @Check({
-  expression: 'amount_of_people_inside <= capacity',
-  name: 'amount_of_people_inside_check_not_full',
+  expression: 'current_size <= capacity',
+  name: 'current_size_check_not_full',
 })
 @Check({
-  expression: 'amount_of_people_inside >= 0',
-  name: 'amount_of_people_inside_check_positive',
+  expression: 'current_size >= 0',
+  name: 'current_size_check_positive',
 })
 export class UserStomach extends BaseBotEntity<
-  'capacity' | 'amountOfPeopleInside' | 'opponentsInside' | 'usersInside'
+  'capacity' | 'currentSize' | 'opponentsInside' | 'usersInside'
 > {
   @OneToOne(() => User, (user) => user.stomach)
   declare user: User
@@ -22,9 +22,9 @@ export class UserStomach extends BaseBotEntity<
   @Index()
   declare capacity: number
 
-  @Property({ type: 'bigint', name: 'amount_of_people_inside', default: 0 })
+  @Property({ type: 'bigint', name: 'current_size', default: 0 })
   @Index()
-  declare amountOfPeopleInside: number
+  declare currentSize: number
 
   @Property({ type: 'array', name: 'opponents_inside', default: [] })
   declare opponentsInside: string[]

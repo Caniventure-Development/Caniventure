@@ -1,27 +1,38 @@
 import os from 'node:os'
 import path from 'node:path'
+import { UiClient, ProgressBarType } from '@discord-ui-kit/seyfert'
+import { type EntityManager, MikroORM } from '@mikro-orm/postgresql'
+import { CooldownManager } from '@slipher/cooldown'
 import {
   Client,
   type ParseClient,
   type ParseMiddlewares,
   type UsingClient,
 } from 'seyfert'
-import { UiClient, ProgressBarType } from '@discord-ui-kit/seyfert'
-import { CooldownManager } from '@slipher/cooldown'
-import { type EntityManager, MikroORM } from '@mikro-orm/postgresql'
 import { MessageFlags } from 'seyfert/lib/types/index'
+import { CHECK_FAILED_EMBED_TITLES } from './check_failed_embed_titles.constant.ts'
 import context from './context.ts'
 import { Colors } from './colors.ts'
-import { startPresence } from './presence.ts'
 import middlewares from './middleware/index.ts'
+import { startPresence } from './presence.ts'
 
 const client = new Client({
   context,
   commands: {
     defaults: {
       async onMiddlewaresError(context, error) {
+        const { ui, utilities } = context
+        const { random } = utilities
+
+        const failureEmbed = ui.embeds.error(
+          random.item(CHECK_FAILED_EMBED_TITLES),
+          {
+            description: error,
+          }
+        )
+
         await context.editOrReply({
-          content: error,
+          embeds: [failureEmbed],
           flags: MessageFlags.Ephemeral,
         })
       },

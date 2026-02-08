@@ -1,23 +1,26 @@
 import { createMiddleware } from 'seyfert'
 
-export const ensureNotFullMiddleware = createMiddleware<void>(
+export const ensureNotDigestingMiddleware = createMiddleware<void>(
   async ({ context, next, stop }) => {
     const { author, utilities } = context
 
     const user = await utilities.userDocuments.getUser(author.id, {
-      populate: ['stomach'],
+      populate: ['states'],
     })
 
     if (!user) {
+      context.utilities.helpers.removeCooldown(context, author.id)
       stop('User was not found in the database!')
       return // Useless, but helps TypeScript.
     }
 
-    const { stomach } = user
+    const { states } = user
 
-    if (stomach.currentSize >= stomach.capacity) {
+    if (states.isDigesting) {
       context.utilities.helpers.removeCooldown(context, author.id)
-      stop("You're full, don't try eating anything at your belly size!") // eslint-disable-line @stylistic/quotes
+      stop(
+        'Your stomach is literally full of acids, hold off on that command for a moment!'
+      )
     }
 
     next()

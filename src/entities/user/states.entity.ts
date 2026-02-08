@@ -12,8 +12,8 @@ export class UserStates extends BaseBotEntity<
   @Property({ type: 'boolean', name: 'is_digesting', default: false })
   declare isDigesting: boolean
 
-  @Property({ type: 'boolean', name: 'is_in_endo', default: false })
-  declare isInEndo: boolean
+  @Property({ type: 'boolean', name: 'is_regurgitating', default: false })
+  declare isRegurgitating: boolean
 
   @Property({ type: 'boolean', name: 'is_in_pvp', default: false })
   declare isInPvp: boolean

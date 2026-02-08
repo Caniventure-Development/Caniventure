@@ -18,14 +18,14 @@ export abstract class SubCommandWithLeveling extends SubCommand {
     if (error) return
     if (this.excluded) return
 
-    const { author, ui, utilities } = context
-    const { em } = context.client
+    const { author, client, ui, utilities } = context
+    const em = client.em.fork()
 
-    const user = await utilities.userDocuments.getUser(author.id, {
-      populate: ['stomach'],
-    })
+    const user = await utilities.userDocuments.getUser(author.id)
 
     if (!user) return
+
+    em.persist(user)
 
     const minExperience = 20
     const maxExperience = 101 // (exclusive, so... 100)
@@ -42,6 +42,7 @@ export abstract class SubCommandWithLeveling extends SubCommand {
     )
 
     if (nextLevel && user.experience >= nextLevel.experienceRequired) {
+      await user.populate(['stomach'])
       const { capacityIncrease, number } = nextLevel
 
       user.level += 1
@@ -49,7 +50,7 @@ export abstract class SubCommandWithLeveling extends SubCommand {
 
       const levelUpEmbed = ui.embeds.info('Level Up!', {
         description: stripIndents`
-        You have leveled up from level ${currentUserLevel} to ${number}! Your stomach has gotten bigger and can hold ${capacityIncrease} more people!
+        You have leveled up from level ${currentUserLevel} to ${number}! Your stomach has gotten bigger and can hold ${capacityIncrease} more ${capacityIncrease === 1 ? 'person' : 'people'}!
 
         **Well done ${author.name}!**`,
         footer: {
