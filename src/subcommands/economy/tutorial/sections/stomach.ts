@@ -15,7 +15,7 @@ export class TutorialStomachSection extends TutorialSection {
 
         **Checking Your Stomach:**
 
-        Use the \`/stomach check\` _(coming soon)_ command to check your stomach and its food (although it might feel weird the first time, just saying...)
+        Use the \`/stomach status\` _(coming soon)_ command to check your stomach and its food (although it might feel weird the first time, just saying...)
 
         **Fate Decision:**
 

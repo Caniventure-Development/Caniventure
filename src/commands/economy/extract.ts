@@ -1,5 +1,5 @@
 import { type CommandContext, Declare, Middlewares } from 'seyfert'
-import { SubCommandWithLeveling } from '../base_with_leveling.ts'
+import { ExtendedSubCommand } from '../extended_base.ts'
 import { ExtractSubcommand } from '#subcommands/economy/extract.ts'
 
 @Declare({
@@ -16,7 +16,7 @@ import { ExtractSubcommand } from '#subcommands/economy/extract.ts'
   'isNotInPvp',
   'isNotSwallowed',
 ])
-export default class ExtractSubCommand extends SubCommandWithLeveling {
+export default class ExtractSubCommand extends ExtendedSubCommand {
   public override async run(ctx: CommandContext) {
     await new ExtractSubcommand().run(ctx)
   }

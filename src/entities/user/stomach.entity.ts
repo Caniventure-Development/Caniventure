@@ -35,4 +35,20 @@ export class UserStomach extends BaseBotEntity<
   @Property({ type: 'decimal', name: 'digestion_time', default: 180 })
   @Index()
   declare digestionTime: number
+
+  public addOpponent(name: string, size: number) {
+    this.currentSize += size
+    this.opponentsInside.push(name)
+  }
+
+  public addUser(id: string) {
+    this.currentSize += 1
+    this.usersInside.push(id)
+  }
+
+  public emptyOut() {
+    this.currentSize = 0
+    this.opponentsInside = []
+    this.usersInside = []
+  }
 }

@@ -7,7 +7,7 @@ import {
   Middlewares,
   Options,
 } from 'seyfert'
-import { SubCommandWithLeveling } from '../base_with_leveling.ts'
+import { ExtendedSubCommand } from '../extended_base.ts'
 import { EatSubcommand } from '#subcommands/economy/eat.ts'
 
 const options = {
@@ -37,7 +37,7 @@ const options = {
   'isNotInPvp',
   'isNotSwallowed',
 ])
-export default class EatSubCommand extends SubCommandWithLeveling {
+export default class EatSubCommand extends ExtendedSubCommand {
   public override async run(ctx: CommandContext<typeof options>) {
     this.exclude()
 

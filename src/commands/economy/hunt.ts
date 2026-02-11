@@ -7,10 +7,10 @@ import {
   Options,
   createStringOption,
 } from 'seyfert'
-import { SubCommandWithLeveling } from '../base_with_leveling.ts'
+import { ExtendedSubCommand } from '../extended_base.ts'
 import { HuntSubcommand } from '#subcommands/economy/hunt.ts'
 import npcs from '#base/npcs.ts'
-import HuntingTargetAutocomplete from '#base/components/autocomplete/hunting_target_autocomplete.ts'
+import HuntingTargetAutocomplete from '#components/autocomplete/hunting_target_autocomplete.ts'
 
 const options = {
   target: createStringOption({
@@ -43,7 +43,7 @@ const options = {
   'isNotSwallowed',
 ])
 @Options(options)
-export default class HuntSubCommand extends SubCommandWithLeveling {
+export default class HuntSubCommand extends ExtendedSubCommand {
   public override async run(ctx: CommandContext<typeof options>) {
     const selectedNpcSpecies = ctx.options.target.toLowerCase()
 

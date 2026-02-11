@@ -24,8 +24,13 @@ const levels: CaniventureLevel[] = [
   {
     number: 5,
     experienceRequired: 4500,
-    capacityIncrease: 2
-  }
+    capacityIncrease: 2,
+  },
+  {
+    number: 6,
+    experienceRequired: 7500,
+    capacityIncrease: 3,
+  },
 ]
 
 export default levels

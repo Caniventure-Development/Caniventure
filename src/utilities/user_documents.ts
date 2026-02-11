@@ -6,10 +6,7 @@ import { BaseUtilityWithContext } from '#utilities/base.ts'
 import { ResultsUtility } from '#utilities/results'
 
 export class UserDocumentsUtility extends BaseUtilityWithContext {
-  public async getUser(
-    userId: string,
-    options?: FindOneOptions<User, ''>
-  ) {
+  public async getUser(userId: string, options?: FindOneOptions<User, ''>) {
     return this.em.findOne(User, { discordId: userId }, options)
   }
 

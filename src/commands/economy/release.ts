@@ -1,7 +1,7 @@
 import { Time } from '@sapphire/timestamp'
 import { Cooldown } from '@slipher/cooldown'
 import { type CommandContext, Declare, Middlewares } from 'seyfert'
-import { SubCommandWithLeveling } from '../base_with_leveling.ts'
+import { ExtendedSubCommand } from '../extended_base.ts'
 import { ReleaseSubcommand } from '#subcommands/economy/release.ts'
 
 @Declare({
@@ -24,7 +24,7 @@ import { ReleaseSubcommand } from '#subcommands/economy/release.ts'
   'bellyOccupied',
   'isNotSwallowed',
 ])
-export default class ReleaseSubCommand extends SubCommandWithLeveling {
+export default class ReleaseSubCommand extends ExtendedSubCommand {
   public override async run(ctx: CommandContext) {
     await new ReleaseSubcommand().run(ctx)
   }

@@ -1,18 +1,10 @@
-import { env } from 'node:process'
-import {
-  Declare,
-  Command,
-  AutoLoad,
-  Middlewares,
-} from 'seyfert'
+import { AutoLoad, Command, Declare, Middlewares } from 'seyfert'
+import { getGuildIds } from '#utilities/base.ts'
 
 @Declare({
   name: 'owner-only',
   description: 'Owner Only commands',
-  guildId:
-    env['NODE_ENV'] === 'development' && env['DEV_GUILD_ID']
-      ? [env['DEV_GUILD_ID']]
-      : [],
+  guildId: getGuildIds(),
 })
 @AutoLoad()
 @Middlewares(['ownerOnly'])

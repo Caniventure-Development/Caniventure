@@ -1,3 +1,4 @@
+/* eslint-disable @stylistic/no-mixed-operators */
 import { BaseUtility } from './base.ts'
 
 export class RandomUtility extends BaseUtility {

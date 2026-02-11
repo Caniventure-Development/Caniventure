@@ -23,7 +23,7 @@ export class DigestSubcommand extends BaseBotChatInputSubcommand {
     }))!
     em.persist(user)
 
-    const { balance, states, stomach } = user
+    const { states, stomach } = user
 
     states.isDigesting = true
 
@@ -135,11 +135,7 @@ export class DigestSubcommand extends BaseBotChatInputSubcommand {
       `,
     })
 
-    balance.bonesInStomach += bonesEarned
-    states.isDigesting = false
-    stomach.currentSize = 0
-    stomach.opponentsInside = []
-    stomach.usersInside = []
+    user.endDigestion(bonesEarned)
 
     await ctx.editOrReply({
       embeds: [doneEmbed],

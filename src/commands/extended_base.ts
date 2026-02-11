@@ -3,7 +3,7 @@ import { stripIndents } from 'common-tags'
 import { SubCommand, type CommandContext } from 'seyfert'
 import levels from '#base/levels.ts'
 
-export abstract class SubCommandWithLeveling extends SubCommand {
+export abstract class ExtendedSubCommand extends SubCommand {
   // Useful for while I'm testing the command. :)
   private excluded = false
 
@@ -12,13 +12,18 @@ export abstract class SubCommandWithLeveling extends SubCommand {
   }
 
   public override async onAfterRun(
-    context: CommandContext,
+    ctx: CommandContext,
     error: unknown | undefined
   ) {
     if (error) return
+
+    await this.handleLeveling(ctx)
+  }
+
+  private async handleLeveling(ctx: CommandContext) {
     if (this.excluded) return
 
-    const { author, client, ui, utilities } = context
+    const { author, client, ui, utilities } = ctx
     const em = client.em.fork()
 
     const user = await utilities.userDocuments.getUser(author.id)
@@ -58,7 +63,7 @@ export abstract class SubCommandWithLeveling extends SubCommand {
         },
       })
 
-      const message = await context.followup({
+      const message = await ctx.followup({
         embeds: [levelUpEmbed],
       })
 

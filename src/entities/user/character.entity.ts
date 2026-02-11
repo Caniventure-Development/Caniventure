@@ -10,6 +10,8 @@ import { kebabCase } from '@luca/cases'
 import { BaseBotEntity } from '../base.entity'
 import type { User } from './user.entity'
 
+const defaultBio = 'A mysterious yet intriguing character'
+
 @Entity({ tableName: 'user_characters' })
 @Check({ expression: "character_id <> ''", name: 'id_not_empty_check' })
 @Check({ expression: "name <> ''", name: 'name_not_empty_check' })
@@ -36,7 +38,7 @@ export class UserCharacter extends BaseBotEntity<'bio' | 'weight'> {
     type: 'varchar',
     length: 256,
     name: 'bio',
-    default: 'A mysterious yet intriguing character',
+    default: defaultBio,
   })
   bio: string
 
@@ -48,6 +50,9 @@ export class UserCharacter extends BaseBotEntity<'bio' | 'weight'> {
   @Index()
   declare weight: number
 
+  @Property({ type: 'boolean', name: 'is_permad', default: false })
+  declare isPermad: boolean
+
   constructor(owner: User, name: string, species: string, bio?: string) {
     super()
 
@@ -55,10 +60,6 @@ export class UserCharacter extends BaseBotEntity<'bio' | 'weight'> {
     this.characterId = kebabCase(name)
     this.name = name
     this.species = species
-    this.bio = bio ?? this.defaultBio
-  }
-
-  private get defaultBio() {
-    return 'A mysterious yet intriguing character'
+    this.bio = bio ?? defaultBio
   }
 }

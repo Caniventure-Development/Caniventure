@@ -193,4 +193,16 @@ export class User extends DiscordEntity<
 
     this.activeCharacterId = character.characterId
   }
+
+  public endDigestion(bonesEarned: number) {
+    this.balance.bonesInStomach += bonesEarned
+    this.states.isDigesting = false
+    this.stomach.emptyOut()
+  }
+
+  public endRelease(moneyEarned: number) {
+    this.balance.money += moneyEarned
+    this.states.isRegurgitating = false
+    this.stomach.emptyOut()
+  }
 }

@@ -23,7 +23,8 @@ export class ReleaseSubcommand extends BaseBotChatInputSubcommand {
     }))!
     em.persist(user)
 
-    const { balance, states, stomach } = user
+    const { states, stomach } = user
+
     states.isRegurgitating = true
     await em.flush()
 
@@ -93,11 +94,7 @@ export class ReleaseSubcommand extends BaseBotChatInputSubcommand {
       `,
     })
 
-    balance.money += moneyEarned
-    states.isRegurgitating = false
-    stomach.currentSize = 0
-    stomach.opponentsInside = []
-    stomach.usersInside = []
+    user.endRelease(moneyEarned)
 
     await ctx.editOrReply({
       embeds: [doneEmbed],

@@ -12,7 +12,7 @@ export class TutorialPermadeathSection extends TutorialSection {
         All right, what happens when you tell the bot to turn on permadeath mode? You're gonna get warned, mainly about a couple things:
 
         - 1. This mode **CANNOT** be turned off once turned on.
-        - 2. Once you're digested by another pred, your entire save is wiped. For good.
+        - 2. Once you're digested by another pred, your entire save is wiped. For good. (this is subject to change)
 
         However this does come with a nice benefit, 2x the bones/money you would've normally gotten (although more benefits may come later)!
 

@@ -1,7 +1,7 @@
 import { Time } from '@sapphire/timestamp'
 import { Cooldown } from '@slipher/cooldown'
 import { type CommandContext, Declare, Middlewares } from 'seyfert'
-import { SubCommandWithLeveling } from '../base_with_leveling.ts'
+import { ExtendedSubCommand } from '../extended_base.ts'
 import { DigestSubcommand } from '#subcommands/economy/digest.ts'
 
 @Declare({
@@ -22,9 +22,9 @@ import { DigestSubcommand } from '#subcommands/economy/digest.ts'
   'isNotRegurgitating',
   'isNotInPvp',
   'bellyOccupied',
-  'isNotSwallowed'
+  'isNotSwallowed',
 ])
-export default class DigestSubCommand extends SubCommandWithLeveling {
+export default class DigestSubCommand extends ExtendedSubCommand {
   public override async run(ctx: CommandContext) {
     await new DigestSubcommand().run(ctx)
   }

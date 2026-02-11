@@ -5,7 +5,7 @@ export const RULES: Readonly<string> = Object.freeze(stripIndents`
         # Caniventure Rules
 
         Welcome to Caniventure, the cannibalistic economy bot. This is a bot meant
-        to bring some uniqueness to economy bots on Discord, by being a bot based around eating people (aka vore), this bot is absolutely not
+        to bring some uniqueness to economy bots on Discord, by being a bot based around eating living things (aka vore), this bot is absolutely not
         for everyone, and has some rules. You are able to decline, and you won't be bothered by this bot until you agree.
 
         If you do not like the idea of this bot,
