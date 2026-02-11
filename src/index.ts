@@ -1,3 +1,4 @@
+import { env } from 'node:process'
 import os from 'node:os'
 import path from 'node:path'
 import { UiClient, ProgressBarType } from '@discord-ui-kit/seyfert'
@@ -64,8 +65,13 @@ client.start().then(async () => {
     },
   })
 
+  const baseCachePath = path.join(import.meta.dirname, '..', 'cache')
+  const isDevelopment = env['NODE_ENV'] === 'development'
+
   await client.uploadCommands({
-    cachePath: path.join(import.meta.dirname, '..', 'cache', 'commands.json'),
+    cachePath: isDevelopment
+      ? path.join(baseCachePath, 'commands.dev.json')
+      : path.join(baseCachePath, 'commands.prod.json'),
   })
   client.logger.info('All commands uploaded')
 })
