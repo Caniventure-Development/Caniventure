@@ -7,6 +7,7 @@
       "dependencies": {
         "@discord-ui-kit/seyfert": "npm:@jsr/discord-ui-kit__seyfert@0.0.7",
         "@luca/cases": "npm:@jsr/luca__cases",
+        "@lunaradev/statfert": "^0.0.1",
         "@mikro-orm/core": "^6.6.4",
         "@mikro-orm/postgresql": "^6.6.4",
         "@mikro-orm/reflection": "^6.6.4",
@@ -94,6 +95,8 @@
     "@jsr/discord-ui-kit__core": ["@jsr/discord-ui-kit__core@0.0.5", "https://npm.jsr.io/~/11/@jsr/discord-ui-kit__core/0.0.5.tgz", {}, "sha512-EBNI0vhWDutQ0sozQQfcZ5L9mby7vV0JE23q4DdFMycKcwvUUQqMOwzl5c5LCis10l+4r/0JDHZ6dg5v2mdXIw=="],
 
     "@luca/cases": ["@jsr/luca__cases@1.0.0", "https://npm.jsr.io/~/11/@jsr/luca__cases/1.0.0.tgz", {}, "sha512-h3nOT3+JVCXBsLd+st9cytZO+iqJYTTsm3rOrtZZXBgJ0nzBA5mDR9dI3k8wBDQ5AAqqJjD3UkhLxoRCEKwzgg=="],
+
+    "@lunaradev/statfert": ["@lunaradev/statfert@0.0.1", "", { "dependencies": { "seyfert": "^4.1", "tslib": "^2.8.1", "undici": "^7.21.0" } }, "sha512-q7Bch2dz/J9Hl1F9FQxrHxMZjMZcbjolGyJjykBAPCi+387JlCtmUt5KXxWVVvzzkBRDtVlxVcDxyZ5rr4fRGg=="],
 
     "@mikro-orm/cli": ["@mikro-orm/cli@6.6.4", "", { "dependencies": { "@jercle/yargonaut": "1.1.5", "@mikro-orm/core": "6.6.4", "@mikro-orm/knex": "6.6.4", "fs-extra": "11.3.3", "tsconfig-paths": "4.2.0", "yargs": "17.7.2" }, "bin": { "mikro-orm": "cli", "mikro-orm-esm": "esm" } }, "sha512-QGEGatXTebvrXAmy2KXm5p+o0NGNdzTRxP7NndlMolDjTVq36KSzjFTsqK1r5PV4lgJUbudglL8bmDRilhICAA=="],
 
@@ -954,6 +957,8 @@
     "typescript-eslint": ["typescript-eslint@8.53.0", "", { "dependencies": { "@typescript-eslint/eslint-plugin": "8.53.0", "@typescript-eslint/parser": "8.53.0", "@typescript-eslint/typescript-estree": "8.53.0", "@typescript-eslint/utils": "8.53.0" }, "peerDependencies": { "eslint": "^8.57.0 || ^9.0.0", "typescript": ">=4.8.4 <6.0.0" } }, "sha512-xHURCQNxZ1dsWn0sdOaOfCSQG0HKeqSj9OexIxrz6ypU6wHYOdX2I3D2b8s8wFSsSOYJb+6q283cLiLlkEsBYw=="],
 
     "unbox-primitive": ["unbox-primitive@1.1.0", "", { "dependencies": { "call-bound": "^1.0.3", "has-bigints": "^1.0.2", "has-symbols": "^1.1.0", "which-boxed-primitive": "^1.1.1" } }, "sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw=="],
+
+    "undici": ["undici@7.21.0", "", {}, "sha512-Hn2tCQpoDt1wv23a68Ctc8Cr/BHpUSfaPYrkajTXOS9IKpxVRx/X5m1K2YkbK2ipgZgxXSgsUinl3x+2YdSSfg=="],
 
     "undici-types": ["undici-types@7.16.0", "", {}, "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="],
 

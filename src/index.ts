@@ -2,6 +2,7 @@ import { env } from 'node:process'
 import os from 'node:os'
 import path from 'node:path'
 import { UiClient, ProgressBarType } from '@discord-ui-kit/seyfert'
+import { ShardedStatfert, StatfertPostable } from '@lunaradev/statfert'
 import { type EntityManager, MikroORM } from '@mikro-orm/postgresql'
 import { CooldownManager } from '@slipher/cooldown'
 import {
@@ -53,7 +54,21 @@ client.setServices({
 })
 
 client.start().then(async () => {
+  const statcordApiKey = env['STATCORD_KEY']
   startPresence(client)
+
+  if (statcordApiKey) {
+    client.statfert = new ShardedStatfert(client, statcordApiKey)
+    await client.statfert.start([
+      StatfertPostable.CpuUsage,
+      StatfertPostable.GuildCount,
+      StatfertPostable.MemInformation,
+      StatfertPostable.UserCount,
+    ])
+  } else
+    client.logger.warn(
+      'No Statcord API key was provided. Statfert will not be initialized.'
+    )
 
   client.cooldown = new CooldownManager(client)
   client.orm = await MikroORM.init()
@@ -81,6 +96,7 @@ declare module 'seyfert' {
     cooldown: CooldownManager
     orm: MikroORM
     em: EntityManager
+    statfert: ShardedStatfert
     ui: UiClient
   }
 

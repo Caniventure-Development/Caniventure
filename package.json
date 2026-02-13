@@ -20,6 +20,7 @@
   "dependencies": {
     "@discord-ui-kit/seyfert": "npm:@jsr/discord-ui-kit__seyfert@0.0.7",
     "@luca/cases": "npm:@jsr/luca__cases",
+    "@lunaradev/statfert": "^0.0.1",
     "@mikro-orm/core": "^6.6.4",
     "@mikro-orm/postgresql": "^6.6.4",
     "@mikro-orm/reflection": "^6.6.4",
