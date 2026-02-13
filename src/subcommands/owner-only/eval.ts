@@ -2,7 +2,7 @@
 import { Buffer } from 'node:buffer'
 import { env } from 'node:process'
 import util from 'node:util'
-import { AttachmentBuilder, type CommandContext } from 'seyfert'
+import { AttachmentBuilder, Formatter, type CommandContext } from 'seyfert'
 import { Stopwatch } from '@sapphire/stopwatch'
 import type { APIEmbedFooter } from 'seyfert/lib/types/index'
 import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
@@ -49,10 +49,7 @@ export class EvalSubcommand extends BaseBotChatInputSubcommand {
       const error = evaluationResult.unwrapErr()
 
       const failureEmbed = ctx.ui.embeds.error('EVALUATION FAILED', {
-        description: ctx.utilities.helpers.getCodeBlockText(
-          'typescript',
-          error.stack ?? error.message
-        ),
+        description: Formatter.codeBlock(error.message, 'typescript'),
         footer,
       })
 
@@ -75,10 +72,7 @@ export class EvalSubcommand extends BaseBotChatInputSubcommand {
       output = output.replaceAll(secret, '[REDACTED]')
     }
 
-    const outputCodeBlock = ctx.utilities.helpers.getCodeBlockText(
-      'typescript',
-      output
-    )
+    const outputCodeBlock = Formatter.codeBlock(output, 'typescript')
 
     if (outputCodeBlock.length > 4096) {
       const evaluationAttachment = new AttachmentBuilder()
