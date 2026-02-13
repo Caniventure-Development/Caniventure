@@ -2,7 +2,7 @@ import { env } from 'node:process'
 import os from 'node:os'
 import path from 'node:path'
 import { UiClient, ProgressBarType } from '@discord-ui-kit/seyfert'
-import { ShardedStatfert, StatfertPostable } from '@lunaradev/statfert'
+import { ShardedStatfert, Statfert, StatfertPostable } from 'statfert'
 import { type EntityManager, MikroORM } from '@mikro-orm/postgresql'
 import { CooldownManager } from '@slipher/cooldown'
 import {
@@ -96,7 +96,7 @@ declare module 'seyfert' {
     cooldown: CooldownManager
     orm: MikroORM
     em: EntityManager
-    statfert: ShardedStatfert
+    statfert: ShardedStatfert | Statfert
     ui: UiClient
   }
 

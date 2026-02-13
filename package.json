@@ -18,9 +18,8 @@
     "xo": "^1.2.3"
   },
   "dependencies": {
-    "@discord-ui-kit/seyfert": "npm:@jsr/discord-ui-kit__seyfert@0.0.7",
+    "@discord-ui-kit/seyfert": "npm:@jsr/discord-ui-kit__seyfert@0.0.8",
     "@luca/cases": "npm:@jsr/luca__cases",
-    "@lunaradev/statfert": "^0.0.1",
     "@mikro-orm/core": "^6.6.4",
     "@mikro-orm/postgresql": "^6.6.4",
     "@mikro-orm/reflection": "^6.6.4",
@@ -34,7 +33,8 @@
     "common-tags": "^1.8.2",
     "dotenv": "^17.2.3",
     "picocolors": "^1.1.1",
-    "seyfert": "^4.1.0",
+    "seyfert": "^4.2.0",
+    "statfert": "^0.0.2",
     "ts-morph": "^27.0.2"
   },
   "imports": {
