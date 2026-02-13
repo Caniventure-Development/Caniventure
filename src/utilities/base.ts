@@ -8,7 +8,7 @@ import type {
 export function getGuildIds() {
   return env['NODE_ENV'] === 'development' && env['DEV_GUILD_ID']
     ? [env['DEV_GUILD_ID']]
-    : undefined
+    : []
 }
 
 export abstract class BaseUtility {
