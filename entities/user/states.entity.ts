@@ -1,15 +1,12 @@
 import { Entity, OneToOne, Property } from '@mikro-orm/core'
 import { BaseBotEntity } from '../base.entity.ts'
-import { User } from './user.entity.ts'
+import type { User } from './user.entity.ts'
 
 @Entity({ tableName: 'user_states' })
 export class UserStates extends BaseBotEntity<
   'isDigesting' | 'isInEndo' | 'isInPvp'
 > {
-  @OneToOne(
-    () => User,
-    (user) => user.states
-  )
+  @OneToOne('User', (user: User) => user.states)
   declare user: User
 
   @Property({ type: 'boolean', name: 'is_digesting', default: false })

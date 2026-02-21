@@ -1,6 +1,6 @@
 import { Check, Entity, Index, OneToOne, Property } from '@mikro-orm/core'
 import { BaseBotEntity } from '../base.entity.ts'
-import { User } from './user.entity.ts'
+import type { User } from './user.entity.ts'
 
 @Entity({ tableName: 'user_balances' })
 @Check({ expression: 'bones_collected >= 0', name: 'bones_collected_check' })
@@ -9,10 +9,7 @@ import { User } from './user.entity.ts'
 export class UserBalance extends BaseBotEntity<
   'bonesCollected' | 'bonesInStomach' | 'money'
 > {
-  @OneToOne(
-    () => User,
-    (user) => user.balance
-  )
+  @OneToOne('User', (user: User) => user.balance)
   declare user: User
 
   @Property({ type: 'bigint', name: 'bones_collected', default: 0 })
