@@ -1,6 +1,7 @@
 import { RuleConfigSeverity, type UserConfig } from '@commitlint/types'
 
 export default {
+  extends: ['@commitlint/config-conventional'],
   parserPreset: 'conventional-changelog-conventionalcommits',
   rules: {
     'type-enum': [
@@ -11,7 +12,7 @@ export default {
     'scope-case': [RuleConfigSeverity.Error, 'always', 'lower-case'],
     'body-case': [RuleConfigSeverity.Error, 'always', 'sentence-case'],
     'body-leading-blank': [RuleConfigSeverity.Warning, 'always'],
-    'body-max-line-length': [RuleConfigSeverity.Error, 'always', 100],
+    'body-max-line-length': [RuleConfigSeverity.Error, 'always', 400],
     'footer-leading-blank': [RuleConfigSeverity.Warning, 'always'],
     'footer-max-line-length': [RuleConfigSeverity.Error, 'always', 100],
     'header-max-length': [RuleConfigSeverity.Error, 'always', 100],

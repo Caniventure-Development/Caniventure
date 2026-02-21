@@ -57,5 +57,12 @@
     "#subcommands/*": "./src/subcommands/*",
     "#utilities/*": "./src/utilities/*"
   },
-  "trustedDependencies": ["unrs-resolver"]
+  "trustedDependencies": [
+    "unrs-resolver"
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/@commitlint/cz-commitlint"
+    }
+  }
 }
