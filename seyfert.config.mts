@@ -1,5 +1,6 @@
 import { env } from 'node:process'
 import { config } from 'seyfert'
+import 'dotenv/config'
 
 if (!env['TOKEN']) {
   throw new Error('TOKEN is not set, make sure to set it in .env!')

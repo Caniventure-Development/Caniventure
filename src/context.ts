@@ -1,6 +1,7 @@
 import { env } from 'node:process'
-import { extendContext } from 'seyfert'
 import { UiClient } from '@discord-ui-kit/seyfert'
+import { extendContext } from 'seyfert'
+import { Colors } from './colors.ts'
 import {
   CollectorsUtility,
   HelpersUtility,
@@ -8,9 +9,8 @@ import {
   ResultsUtility,
   UserDocumentsUtility,
 } from './utilities/index.ts'
-import { Colors } from './colors.ts'
 
-type ExtendedContext = Record<string, any> & {
+type ExtendedContext = Record<string, unknown> & {
   utilities: Utilities
   ui: UiClient
   ownerId?: string

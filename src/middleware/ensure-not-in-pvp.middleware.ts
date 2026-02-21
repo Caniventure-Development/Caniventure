@@ -18,7 +18,7 @@ export const ensureNotInPvpMiddleware = createMiddleware<void>(
 
     if (states.isInPvp) {
       context.utilities.helpers.removeCooldown(context, author.id)
-      stop("You can't do that while you're fighting someone!") // eslint-disable-line @stylistic/quotes
+      stop("You can't do that while you're fighting someone!")
     }
 
     next()

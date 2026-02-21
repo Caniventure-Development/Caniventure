@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-extraneous-class */
 import { RandomUtility } from './random.ts'
 
 export default abstract class StomachCharacter {
@@ -12,7 +11,7 @@ export default abstract class StomachCharacter {
       '*mournful growl...*',
     ]
 
-    return this.random.item(sadSounds)
+    return StomachCharacter.random.item(sadSounds)
   }
 
   public static happy(): string {
@@ -26,7 +25,7 @@ export default abstract class StomachCharacter {
       '*cheerful gurgle!*',
     ]
 
-    return this.random.item(happySounds)
+    return StomachCharacter.random.item(happySounds)
   }
 
   public static hungry(): string {
@@ -40,7 +39,7 @@ export default abstract class StomachCharacter {
       '*insistent growl...*',
     ]
 
-    return this.random.item(hungrySounds)
+    return StomachCharacter.random.item(hungrySounds)
   }
 
   public static full(): string {
@@ -54,7 +53,7 @@ export default abstract class StomachCharacter {
       '*warm rumble~*',
     ]
 
-    return this.random.item(fullSounds)
+    return StomachCharacter.random.item(fullSounds)
   }
 
   public static atePlayer(): string {
@@ -67,7 +66,7 @@ export default abstract class StomachCharacter {
       '*victorious rumble!* Caught!',
     ]
 
-    return this.random.item(atePlayerSounds)
+    return StomachCharacter.random.item(atePlayerSounds)
   }
 
   public static digesting(): string {
@@ -81,7 +80,7 @@ export default abstract class StomachCharacter {
       '*steady rumble... gurgle...*',
     ]
 
-    return this.random.item(digestingSounds)
+    return StomachCharacter.random.item(digestingSounds)
   }
 
   public static digested(): string {
@@ -94,7 +93,7 @@ export default abstract class StomachCharacter {
       '*satisfied churn~* Done!',
     ]
 
-    return this.random.item(digestedSounds)
+    return StomachCharacter.random.item(digestedSounds)
   }
 
   private static readonly random = new RandomUtility()

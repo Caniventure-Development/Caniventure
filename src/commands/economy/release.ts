@@ -1,8 +1,8 @@
 import { Time } from '@sapphire/timestamp'
 import { Cooldown } from '@slipher/cooldown'
 import { type CommandContext, Declare, Middlewares } from 'seyfert'
-import { ExtendedSubCommand } from '../extended_base.ts'
 import { ReleaseSubcommand } from '#subcommands/economy/release.ts'
+import { ExtendedSubCommand } from '../extended_base.ts'
 
 @Declare({
   name: 'release',

@@ -1,3 +1,4 @@
+import { kebabCase } from '@luca/cases'
 import {
   Check,
   Entity,
@@ -6,7 +7,6 @@ import {
   Property,
   Unique,
 } from '@mikro-orm/core'
-import { kebabCase } from '@luca/cases'
 import { BaseBotEntity } from '../base.entity'
 import type { User } from './user.entity'
 
@@ -52,6 +52,14 @@ export class UserCharacter extends BaseBotEntity<'bio' | 'weight'> {
 
   @Property({ type: 'boolean', name: 'is_permad', default: false })
   declare isPermad: boolean
+
+  @Property({
+    type: 'string',
+    name: 'digested_by',
+    nullable: true,
+    default: null,
+  })
+  declare digestedBy: string | null
 
   constructor(owner: User, name: string, species: string, bio?: string) {
     super()

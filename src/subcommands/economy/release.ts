@@ -1,13 +1,10 @@
-/* eslint-disable @stylistic/quotes */
-/* eslint-disable no-await-in-loop */
-/* eslint-disable capitalized-comments */
 import { Time } from '@sapphire/timestamp'
 import { stripIndents } from 'common-tags'
-import { Formatter, type CommandContext } from 'seyfert'
+import { type CommandContext, Formatter } from 'seyfert'
 import { TimestampStyle } from 'seyfert/lib/common'
-import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
 import npcs from '#base/npcs.ts'
 import StomachCharacter from '#base/utilities/stomach_character.ts'
+import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
 
 export class ReleaseSubcommand extends BaseBotChatInputSubcommand {
   public override async run(ctx: CommandContext) {
@@ -18,9 +15,9 @@ export class ReleaseSubcommand extends BaseBotChatInputSubcommand {
     const { helpers, random, userDocuments } = utilities
     const { wait } = helpers
 
-    const user = (await userDocuments.getUser(author.id, {
+    const user = await userDocuments.forceGetUser(author.id, {
       populate: ['balance', 'states', 'stomach'],
-    }))!
+    })
     em.persist(user)
 
     const { states, stomach } = user
@@ -78,7 +75,11 @@ export class ReleaseSubcommand extends BaseBotChatInputSubcommand {
 
       if (!user) continue
 
+      em.persist(user)
+
       moneyEarned += random.next(50, user.balance.money + 1)
+      user.isInStomach = false
+      user.captorId = null
     }
 
     const doneEmbed = ui.embeds.success(null, {

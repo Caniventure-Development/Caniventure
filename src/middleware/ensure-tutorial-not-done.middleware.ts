@@ -14,7 +14,7 @@ export const ensureTutorialNotDoneMiddleware = createMiddleware<void>(
 
     if (user.hasDoneTutorial) {
       context.utilities.helpers.removeCooldown(context, author.id)
-      stop("You have already done the tutorial, you don't need to do it again!") // eslint-disable-line @stylistic/quotes
+      stop("You have already done the tutorial, you don't need to do it again!")
     }
 
     next()

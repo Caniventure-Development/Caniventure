@@ -1,15 +1,15 @@
 import { Buffer } from 'node:buffer'
+import { Time } from '@sapphire/timestamp'
 import {
-  type CommandContext,
   AttachmentBuilder,
+  type CommandContext,
   StringSelectOption,
 } from 'seyfert'
-import { ButtonStyle, TextInputStyle } from 'seyfert/lib/types'
-import { Time } from '@sapphire/timestamp'
 import type { CollectorInteraction } from 'seyfert/lib/components/handler'
-import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
+import { ButtonStyle, TextInputStyle } from 'seyfert/lib/types'
 import { RULES } from '#base/bot_rules.constant.ts'
 import { CONSTANTS } from '#base/constants.ts'
+import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
 
 export class StartSubcommand extends BaseBotChatInputSubcommand {
   public override async run(ctx: CommandContext) {
@@ -74,7 +74,7 @@ export class StartSubcommand extends BaseBotChatInputSubcommand {
     })
 
     const actionRow = ui.actionRows.multiComponents(
-      ui.buttons.checkMarked('agree', "I'm sure, let me in!"), // eslint-disable-line @stylistic/quotes
+      ui.buttons.checkMarked('agree', "I'm sure, let me in!"),
       ui.buttons.crossed(
         'disagree',
         'Nope, I changed my mind!',
@@ -112,9 +112,9 @@ export class StartSubcommand extends BaseBotChatInputSubcommand {
 
     const creatingEmbed = ui.embeds.info('Character Creation', {
       description:
-        "All right! You've been warned, let's get through the rest of the setup. Next, you must set up a character! Click the button below to open a modal!", // eslint-disable-line @stylistic/quotes
+        "All right! You've been warned, let's get through the rest of the setup. Next, you must set up a character! Click the button below to open a modal!",
       footer: {
-        text: "You have 10 minutes to run through the modal. This message will update when you're done.", // eslint-disable-line @stylistic/quotes
+        text: "You have 10 minutes to run through the modal. This message will update when you're done.",
       },
     })
 
@@ -126,7 +126,6 @@ export class StartSubcommand extends BaseBotChatInputSubcommand {
         'Caniventure Character Creation'
       )
       .withTextDisplay(
-        // eslint-disable-next-line @stylistic/quotes
         "Welcome to Caniventure, creating a character is very important to distinguish from small, simple minded humans! Let's create one!"
       )
       .withTextInput(characterCreationModalConstants['NAME_FIELD_ID'], {

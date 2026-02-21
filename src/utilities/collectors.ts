@@ -1,13 +1,13 @@
 import type {
-  CollectorInteraction,
-  CreateComponentCollectorResult,
-} from 'seyfert/lib/components/handler'
-import type {
   Interaction,
   ListenerOptions,
   Message,
   WebhookMessage,
 } from 'seyfert'
+import type {
+  CollectorInteraction,
+  CreateComponentCollectorResult,
+} from 'seyfert/lib/components/handler'
 import { MessageFlags } from 'seyfert/lib/types/index'
 import { BaseUtilityWithContext } from './base.ts'
 
@@ -47,7 +47,6 @@ export class CollectorsUtility extends BaseUtilityWithContext {
     expectedMessageId: string,
     expectedUserId: string,
     componentType: ComponentType,
-    // eslint-disable-next-line @stylistic/quotes
     failureMessage = "That's not yours!"
   ) {
     if (interaction.message.id !== expectedMessageId) return false
@@ -91,8 +90,7 @@ export class CollectorsUtility extends BaseUtilityWithContext {
     expectedUserId: string,
     componentType: ComponentType,
     refreshOnStop = false,
-    // eslint-disable-next-line @stylistic/quotes
-    failureMessage = "That's not yours!",
+    failureMessage = "That's not yours!"
   ): ListenerOptions {
     const timedOutEmbed = this.timedOutEmbed()
 

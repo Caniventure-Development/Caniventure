@@ -6,7 +6,10 @@ import { User } from './user.entity'
 export class UserStates extends BaseBotEntity<
   'isDigesting' | 'isInEndo' | 'isInPvp'
 > {
-  @OneToOne(() => User, (user) => user.states)
+  @OneToOne(
+    () => User,
+    (user) => user.states
+  )
   declare user: User
 
   @Property({ type: 'boolean', name: 'is_digesting', default: false })

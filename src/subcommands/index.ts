@@ -1,10 +1,16 @@
-import type { CommandContext, Interaction } from 'seyfert'
+import type { Awaitable } from '@sapphire/utilities'
 import { CooldownType } from '@slipher/cooldown'
+import {
+  type CommandContext,
+  Formatter,
+  type Interaction,
+  type InteractionGuildMember,
+  type User,
+} from 'seyfert'
 import type {
   CollectorInteraction,
   CreateComponentCollectorResult,
 } from 'seyfert/lib/components/handler'
-import type { Awaitable } from '@sapphire/utilities'
 
 type EnsureAgreedOptions = {
   agreeCustomId?: string
@@ -15,6 +21,10 @@ type EnsureAgreedOptions = {
 }
 
 abstract class BaseBotSubcommand {
+  public getUserMention(user: InteractionGuildMember | User) {
+    return Formatter.userMention(user.id)
+  }
+
   public removeCooldown(
     ctx: CommandContext,
     id: string,
@@ -49,6 +59,7 @@ abstract class BaseBotSubcommand {
       async (interaction) => {
         if (stopAfterCatch) collector.stop()
 
+        this.removeCooldown(ctx, ctx.author.id)
         await this.handleDecline(
           ctx,
           interaction,
@@ -65,6 +76,8 @@ abstract class BaseBotSubcommand {
     title: string,
     description: string
   ) {
+    await interaction.deferUpdate()
+
     const declinedEmbed = ctx.ui.embeds.error(title, {
       description,
     })
@@ -86,7 +99,7 @@ export abstract class BaseBotContextMenuSubcommand extends BaseBotSubcommand {
 }
 
 export abstract class BaseBotMinigame<
-  T extends Interaction,
+  T extends Interaction | CollectorInteraction = CollectorInteraction,
 > extends BaseBotSubcommand {
   public abstract run(interaction: T, ...args: unknown[]): Awaitable<void>
 }

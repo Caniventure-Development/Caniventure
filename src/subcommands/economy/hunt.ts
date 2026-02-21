@@ -14,9 +14,9 @@ export class HuntSubcommand extends BaseBotChatInputSubcommand {
     const { wait } = helpers
     const em = client.em.fork()
 
-    const user = (await utilities.userDocuments.getUser(author.id, {
+    const user = await utilities.userDocuments.forceGetUser(author.id, {
       populate: ['stomach'],
-    }))! // Confirmed not null by middleware.
+    })
     em.persist(user)
 
     const [size, space] = npc.size
@@ -69,9 +69,9 @@ export class HuntSubcommand extends BaseBotChatInputSubcommand {
     const adjective = random.item(adjectives)
     const baseMessage = `You spotted a ${size} ${adjective} ${species}`
     const waitingMessage =
-      "You're waiting for them to cross your path, imagining how good they will be..." // eslint-disable-line @stylistic/quotes
+      "You're waiting for them to cross your path, imagining how good they will be..."
     const pouncingMessage =
-      "They're in your sights, you pounce on them attempting to swallow them!" // eslint-disable-line @stylistic/quotes
+      "They're in your sights, you pounce on them attempting to swallow them!"
 
     const spottedEmbed = ui.embeds.info('Prey Spotted', {
       description: stripIndents`

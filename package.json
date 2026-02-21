@@ -1,21 +1,33 @@
 {
   "name": "caniventure",
+  "type": "module",
   "version": "0.0.1-alpha0.1",
   "description": "The cannibalistic economy bot",
   "main": "src/index.ts",
   "scripts": {
-    "start": "bun run src/index.ts",
-    "lint": "xo",
+    "check": "biome check .",
+    "commit": "cz",
+    "commit:all": "git add . && cz",
+    "format": "biome format .",
+    "lint": "biome lint .",
     "mikro-orm": "mikro-orm-esm",
-    "setup": "bun run setup.ts"
+    "prepare": "husky",
+    "setup": "bun run setup.ts",
+    "start": "bun run src/index.ts"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.4.3",
+    "@commitlint/cli": "^20.4.2",
+    "@commitlint/config-conventional": "^20.4.2",
+    "@commitlint/cz-commitlint": "^20.4.1",
+    "@commitlint/types": "^20.4.0",
     "@mikro-orm/cli": "^6.6.4",
     "@types/bun": "latest",
     "@types/common-tags": "^1.8.4",
-    "prettier": "^3.8.0",
-    "ts-node": "^10.9.2",
-    "xo": "^1.2.3"
+    "commitizen": "^4.3.1",
+    "husky": "^9.1.7",
+    "inquirer": "9",
+    "ts-node": "^10.9.2"
   },
   "dependencies": {
     "@discord-ui-kit/seyfert": "npm:@jsr/discord-ui-kit__seyfert@0.0.8",
@@ -40,11 +52,10 @@
   "imports": {
     "#base/*": "./src/*",
     "#components/*": "./src/components/*",
-    "#entities/*": "./src/entities/*",
+    "#entities/*": "./entities/*",
+    "#handlers/*": "./src/handlers/*",
     "#subcommands/*": "./src/subcommands/*",
     "#utilities/*": "./src/utilities/*"
   },
-  "trustedDependencies": [
-    "unrs-resolver"
-  ]
+  "trustedDependencies": ["unrs-resolver"]
 }

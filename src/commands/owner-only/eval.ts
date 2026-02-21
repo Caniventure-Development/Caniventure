@@ -11,7 +11,6 @@ const options = {
   code: createStringOption({
     description: 'The code to evaluate',
     required: true,
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     min_length: 1,
   }),
 }

@@ -1,5 +1,5 @@
-import type { CommandContext } from 'seyfert'
 import { Stopwatch } from '@sapphire/stopwatch'
+import type { CommandContext } from 'seyfert'
 import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
 
 export class PingSubcommand extends BaseBotChatInputSubcommand {

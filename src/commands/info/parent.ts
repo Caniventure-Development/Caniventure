@@ -1,10 +1,10 @@
-import { Declare, Command, AutoLoad } from 'seyfert'
+import { AutoLoad, Command, Declare } from 'seyfert'
 import { getGuildIds } from '#utilities/base.ts'
 
 @Declare({
   name: 'info',
   description: 'Info commands',
-  guildId: getGuildIds()
+  guildId: getGuildIds(),
 })
 @AutoLoad()
 export default class InfoGroup extends Command {}

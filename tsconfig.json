@@ -39,7 +39,8 @@
     "paths": {
       "#base/*": ["src/*"],
       "#components": ["./src/components/*"],
-      "#entities/*": ["src/entities/*"],
+      "#entities/*": ["entities/*"],
+      "#handlers/*": ["src/handlers/*"],
       "#subcommands/*": ["src/subcommands/*"],
       "#utilities/*": ["src/utilities/*"]
     }

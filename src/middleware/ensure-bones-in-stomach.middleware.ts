@@ -18,7 +18,7 @@ export const ensureBonesInStomachMiddleware = createMiddleware<void>(
 
     if (balance.bonesInStomach <= 0) {
       context.utilities.helpers.removeCooldown(context, author.id)
-      stop("You don't have any bones in your stomach!") // eslint-disable-line @stylistic/quotes
+      stop("You don't have any bones in your stomach!")
     }
 
     next()

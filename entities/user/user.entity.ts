@@ -8,14 +8,16 @@ import {
   OneToOne,
   Property,
 } from '@mikro-orm/core'
+import type { BaseClient } from 'seyfert/lib/client/base'
+import type { PartialCharacter } from '#base/types'
 import { DiscordEntity } from '../discord.entity'
 import { UserBalance } from './balance.entity'
 import { UserBio } from './bio.entity'
 import { UserCharacter } from './character.entity'
 import { UserSettings } from './settings.entity'
 import { UserStates } from './states.entity'
+import { UserStats } from './stats/stats.entity'
 import { UserStomach } from './stomach.entity'
-import type { PartialCharacter } from '#base/types.ts'
 
 @Entity({ tableName: 'users' })
 export class User extends DiscordEntity<
@@ -31,6 +33,7 @@ export class User extends DiscordEntity<
   | 'bio'
   | 'settings'
   | 'states'
+  | 'stats'
   | 'stomach'
 > {
   /**
@@ -72,7 +75,7 @@ export class User extends DiscordEntity<
 
   /**
    * Whether the user was swallowed whole and alive and is currently
-   * in a gurgling prison right now. Or if they're still out and about.
+   * in someone's gurgling gut right now. Or if they're still out and about.
    */
   @Property({ type: 'boolean', name: 'is_in_stomach', default: false })
   declare isInStomach: boolean
@@ -99,40 +102,74 @@ export class User extends DiscordEntity<
    */
   protected activeCharacterId: string
 
-  @OneToOne(() => UserBalance, (balance) => balance.user, {
-    cascade: [Cascade.ALL],
-    owner: true,
-  })
+  @OneToOne(
+    () => UserBalance,
+    (balance) => balance.user,
+    {
+      cascade: [Cascade.ALL],
+      owner: true,
+    }
+  )
   balance: UserBalance
 
-  @OneToOne(() => UserBio, (bio) => bio.user, {
-    cascade: [Cascade.ALL],
-    owner: true,
-  })
+  @OneToOne(
+    () => UserBio,
+    (bio) => bio.user,
+    {
+      cascade: [Cascade.ALL],
+      owner: true,
+    }
+  )
   bio: UserBio
 
-  @OneToMany(() => UserCharacter, (character) => character.owner, {
-    cascade: [Cascade.ALL],
-    orphanRemoval: true,
-  })
+  @OneToMany(
+    () => UserCharacter,
+    (character) => character.owner,
+    {
+      cascade: [Cascade.ALL],
+      orphanRemoval: true,
+    }
+  )
   protected internalCharacters = new Collection<UserCharacter>(this)
 
-  @OneToOne(() => UserSettings, (settings) => settings.user, {
-    cascade: [Cascade.ALL],
-    owner: true,
-  })
+  @OneToOne(
+    () => UserSettings,
+    (settings) => settings.user,
+    {
+      cascade: [Cascade.ALL],
+      owner: true,
+    }
+  )
   settings: UserSettings
 
-  @OneToOne(() => UserStates, (states) => states.user, {
-    cascade: [Cascade.ALL],
-    owner: true,
-  })
+  @OneToOne(
+    () => UserStates,
+    (states) => states.user,
+    {
+      cascade: [Cascade.ALL],
+      owner: true,
+    }
+  )
   states: UserStates
 
-  @OneToOne(() => UserStomach, (stomach) => stomach.user, {
-    cascade: [Cascade.ALL],
-    owner: true,
-  })
+  @OneToOne(
+    () => UserStats,
+    (stats) => stats.user,
+    {
+      cascade: [Cascade.ALL],
+      owner: true,
+    }
+  )
+  stats: UserStats
+
+  @OneToOne(
+    () => UserStomach,
+    (stomach) => stomach.user,
+    {
+      cascade: [Cascade.ALL],
+      owner: true,
+    }
+  )
   stomach: UserStomach
 
   constructor(discordId: string, characterToCreate: PartialCharacter) {
@@ -152,6 +189,7 @@ export class User extends DiscordEntity<
     this.bio = new UserBio()
     this.settings = new UserSettings()
     this.states = new UserStates()
+    this.stats = new UserStats()
     this.stomach = new UserStomach()
   }
 
@@ -186,12 +224,28 @@ export class User extends DiscordEntity<
   }
 
   public async setActiveCharacter(character: UserCharacter) {
+    if (this.settings.permadeathModeOn)
+      throw new Error(
+        'You cannot change the active character of a user in permadeath mode!'
+      )
+
     const characters = await this.getCharacters()
 
     if (!characters.getItems().includes(character))
       throw new Error('That character is not owned by this user!')
 
     this.activeCharacterId = character.characterId
+  }
+
+  public async getCaptor(client: BaseClient) {
+    if (!this.captorId) return null
+
+    const { users } = client
+    const userFromCache = await users.fetch(this.captorId)
+
+    if (userFromCache) return userFromCache
+
+    return users.fetch(this.captorId, true).catch(() => null)
   }
 
   public endDigestion(bonesEarned: number) {

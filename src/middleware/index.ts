@@ -9,6 +9,7 @@ import { ensureNotFullMiddleware } from './ensure-not-full.middleware.ts'
 import { ensureNotInPvpMiddleware } from './ensure-not-in-pvp.middleware.ts'
 import { ensureNotRegurgitatingMiddleware } from './ensure-not-regurgitating.middleware.ts'
 import { ensureNotSwallowedMiddleware } from './ensure-not-swallowed.middleware.ts'
+import { ensurePvpOnMiddleware } from './ensure-pvp-on.middleware.ts'
 import { ensureTutorialDoneMiddleware } from './ensure-tutorial-done.middleware.ts'
 import { ensureTutorialNotDoneMiddleware } from './ensure-tutorial-not-done.middleware.ts'
 import { ownerOnlyMiddleware } from './owner-only.middleware.ts'
@@ -25,6 +26,7 @@ const middlewares = {
   isNotInPvp: ensureNotInPvpMiddleware,
   isNotRegurgitating: ensureNotRegurgitatingMiddleware,
   isNotSwallowed: ensureNotSwallowedMiddleware,
+  isPvpOn: ensurePvpOnMiddleware,
   hasTutorialDone: ensureTutorialDoneMiddleware,
   hasTutorialNotDone: ensureTutorialNotDoneMiddleware,
   ownerOnly: ownerOnlyMiddleware,

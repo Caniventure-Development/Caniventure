@@ -1,9 +1,8 @@
-/* eslint-disable no-eval */
 import { Buffer } from 'node:buffer'
 import { env } from 'node:process'
 import util from 'node:util'
-import { AttachmentBuilder, Formatter, type CommandContext } from 'seyfert'
 import { Stopwatch } from '@sapphire/stopwatch'
+import { AttachmentBuilder, type CommandContext, Formatter } from 'seyfert'
 import type { APIEmbedFooter } from 'seyfert/lib/types/index'
 import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
 
@@ -16,21 +15,17 @@ export class EvalSubcommand extends BaseBotChatInputSubcommand {
       const variableRegex = /(const|let|var)\b/
 
       if (code.includes('await') && variableRegex.test(code)) {
-        // eslint-disable-next-line no-return-await, @typescript-eslint/no-unsafe-return
         return await eval(`(async () => {${code}})()`)
       }
 
       if (code.includes('await')) {
-        // eslint-disable-next-line no-return-await, @typescript-eslint/no-unsafe-return
         return await eval(`(async () => ${code})()`)
       }
 
       if (variableRegex.test(code)) {
-        // eslint-disable-next-line no-return-await, @typescript-eslint/no-unsafe-return
         return await eval(`(() => {${code}})()`)
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return eval(code)
     })
     executionTimeStopwatch.stop()
@@ -38,7 +33,6 @@ export class EvalSubcommand extends BaseBotChatInputSubcommand {
     const executionTime = executionTimeStopwatch.duration
     const footer: APIEmbedFooter = {
       text: `Took ${executionTime.toFixed(2)} milliseconds`,
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       icon_url: ctx.author.avatarURL({
         size: 128,
         extension: 'png',

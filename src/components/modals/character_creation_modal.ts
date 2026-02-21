@@ -39,7 +39,7 @@ export default class StartSubcommandCharacterCreationModal extends ModalCommand 
     if (!species) {
       const unknownSpeciesEmbed = ui.embeds.error('Invalid Species', {
         description:
-          "You provided an invalid species, this shouldn't be possible. Blame my creator.", // eslint-disable-line @stylistic/quotes
+          "You provided an invalid species, this shouldn't be possible. Blame my creator.",
       })
 
       await interaction.editOrReply({
@@ -51,7 +51,7 @@ export default class StartSubcommandCharacterCreationModal extends ModalCommand 
 
     const creatingEmbed = ui.embeds.info('Creating profile...', {
       description:
-        "That should be all for now, I'm creating your data now... Give me a minute...", // eslint-disable-line @stylistic/quotes
+        "That should be all for now, I'm creating your data now... Give me a minute...",
     })
 
     await interaction.editOrReply({

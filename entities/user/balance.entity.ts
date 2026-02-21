@@ -6,8 +6,13 @@ import { User } from './user.entity'
 @Check({ expression: 'bones_collected >= 0', name: 'bones_collected_check' })
 @Check({ expression: 'bones_in_stomach >= 0', name: 'bones_in_stomach_check' })
 @Check({ expression: 'money >= 0', name: 'money_check' })
-export class UserBalance extends BaseBotEntity<'bonesCollected' | 'bonesInStomach' | 'money'> {
-  @OneToOne(() => User, (user) => user.balance)
+export class UserBalance extends BaseBotEntity<
+  'bonesCollected' | 'bonesInStomach' | 'money'
+> {
+  @OneToOne(
+    () => User,
+    (user) => user.balance
+  )
   declare user: User
 
   @Property({ type: 'bigint', name: 'bones_collected', default: 0 })

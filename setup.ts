@@ -1,4 +1,4 @@
-import { mkdirSync, existsSync, cpSync, statSync } from 'node:fs'
+import { cpSync, existsSync, mkdirSync, statSync } from 'node:fs'
 import path from 'node:path'
 import colors from 'picocolors'
 

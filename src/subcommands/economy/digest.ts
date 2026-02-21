@@ -1,13 +1,10 @@
-/* eslint-disable no-await-in-loop */
-/* eslint-disable capitalized-comments */
-/* eslint-disable @stylistic/no-mixed-operators */
 import { Time } from '@sapphire/timestamp'
 import { stripIndents } from 'common-tags'
 import { type CommandContext, Formatter } from 'seyfert'
 import { TimestampStyle } from 'seyfert/lib/common'
+import npcs from '#base/npcs.ts'
 import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
 import StomachCharacter from '#utilities/stomach_character.ts'
-import npcs from '#base/npcs.ts'
 
 export class DigestSubcommand extends BaseBotChatInputSubcommand {
   public override async run(ctx: CommandContext) {
@@ -18,9 +15,9 @@ export class DigestSubcommand extends BaseBotChatInputSubcommand {
     const { helpers, random, userDocuments } = utilities
     const { wait } = helpers
 
-    const user = (await userDocuments.getUser(author.id, {
+    const user = await userDocuments.forceGetUser(author.id, {
       populate: ['balance', 'states', 'stomach'],
-    }))!
+    })
     em.persist(user)
 
     const { states, stomach } = user
@@ -64,7 +61,7 @@ export class DigestSubcommand extends BaseBotChatInputSubcommand {
     await wait(timeBetweenSwitches)
 
     const preyUnconsciousMessage =
-      "Your prey tried fighting against inevitable doom, but are now unconscious. They're at the mercy of your stomach now..." // eslint-disable-line @stylistic/quotes
+      "Your prey tried fighting against inevitable doom, but are now unconscious. They're at the mercy of your stomach now..."
     const preyUnconsciousEmbed = ui.embeds.info(null, {
       description: stripIndents`
         ${baseMessageDigestionUnderwayMessage}
@@ -106,7 +103,12 @@ export class DigestSubcommand extends BaseBotChatInputSubcommand {
 
       if (!user) continue
 
+      em.persist(user)
+
       const baseBonesEarned = 206
+
+      user.isInStomach = false
+      user.captorId = null
 
       if (user.balance.bonesInStomach > 0) {
         const bonesCollectedFromUser =

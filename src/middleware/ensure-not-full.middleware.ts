@@ -17,7 +17,7 @@ export const ensureNotFullMiddleware = createMiddleware<void>(
 
     if (stomach.currentSize >= stomach.capacity) {
       context.utilities.helpers.removeCooldown(context, author.id)
-      stop("You're full, don't try eating anything at your belly size!") // eslint-disable-line @stylistic/quotes
+      stop("You're full, don't try eating anything at your belly size!")
     }
 
     next()

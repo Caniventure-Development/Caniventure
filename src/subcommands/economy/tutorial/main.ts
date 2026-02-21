@@ -5,6 +5,9 @@ import type {
   CreateComponentCollectorResult,
 } from 'seyfert/lib/components/handler'
 import type { APIEmbedFooter } from 'seyfert/lib/types/index'
+import type { UserCharacter } from '#entities/user/character.entity.ts'
+import type { User } from '#entities/user/user.entity.ts'
+import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
 import type { TutorialSection, TutorialSectionContent } from './section'
 import {
   TutorialCharacterSection,
@@ -15,16 +18,13 @@ import {
   TutorialStomachSection,
   TutorialVoraciousSection,
 } from './sections/index.ts'
-import type { User } from '#entities/user/user.entity.ts'
-import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
-import type { UserCharacter } from '#base/entities/user/character.entity.ts'
 
 export class TutorialSubcommand extends BaseBotChatInputSubcommand {
   public override async run(ctx: CommandContext) {
     await ctx.deferReply()
 
     const { author, ui, utilities } = ctx
-    const user = (await utilities.userDocuments.getUser(author.id))!
+    const user = await utilities.userDocuments.forceGetUser(author.id)
     const character = await user.getActiveCharacter()
     const introSection = this.sections[0]
 
@@ -39,7 +39,7 @@ export class TutorialSubcommand extends BaseBotChatInputSubcommand {
     })
 
     const actionRow = ui.actionRows.multiComponents(
-      ui.buttons.primary(this.nextButtonId, "All right, let's go!"), // eslint-disable-line @stylistic/quotes
+      ui.buttons.primary(this.nextButtonId, "All right, let's go!"),
       ui.buttons.secondary(this.exitButtonId, 'I can do this alone, thanks')
     )
 

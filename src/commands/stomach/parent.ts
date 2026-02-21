@@ -5,7 +5,7 @@ import { getGuildIds } from '#utilities/base.ts'
 @Declare({
   name: 'stomach',
   description: 'Stomach commands',
-  guildId: getGuildIds()
+  guildId: getGuildIds(),
 })
 @Middlewares(['hasDocument'])
 export default class StomachGroup extends Command {}

@@ -1,6 +1,6 @@
 import { type CommandContext, Declare, Middlewares } from 'seyfert'
-import { ExtendedSubCommand } from '../extended_base.ts'
 import { ExtractSubcommand } from '#subcommands/economy/extract.ts'
+import { ExtendedSubCommand } from '../extended_base.ts'
 
 @Declare({
   name: 'extract',

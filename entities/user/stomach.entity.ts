@@ -15,7 +15,10 @@ import { User } from './user.entity'
 export class UserStomach extends BaseBotEntity<
   'capacity' | 'currentSize' | 'opponentsInside' | 'usersInside'
 > {
-  @OneToOne(() => User, (user) => user.stomach)
+  @OneToOne(
+    () => User,
+    (user) => user.stomach
+  )
   declare user: User
 
   @Property({ type: 'bigint', name: 'capacity', default: 1 })

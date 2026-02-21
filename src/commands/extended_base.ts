@@ -1,6 +1,6 @@
 import { Time } from '@sapphire/timestamp'
 import { stripIndents } from 'common-tags'
-import { SubCommand, type CommandContext } from 'seyfert'
+import { type CommandContext, SubCommand } from 'seyfert'
 import levels from '#base/levels.ts'
 
 export abstract class ExtendedSubCommand extends SubCommand {
@@ -67,7 +67,7 @@ export abstract class ExtendedSubCommand extends SubCommand {
         embeds: [levelUpEmbed],
       })
 
-      setTimeout(() => message.delete(), Time.Second * 10) // eslint-disable-line @typescript-eslint/promise-function-async
+      setTimeout(() => message.delete(), Time.Second * 10)
     }
 
     await em.flush()

@@ -7,8 +7,8 @@ import {
   Middlewares,
   Options,
 } from 'seyfert'
-import { ExtendedSubCommand } from '../extended_base.ts'
 import { EatSubcommand } from '#subcommands/economy/eat.ts'
+import { ExtendedSubCommand } from '../extended_base.ts'
 
 const options = {
   user: createUserOption({
@@ -20,6 +20,11 @@ const options = {
 @Declare({
   name: 'eat',
   description: 'Attempt to swallow another user',
+  botPermissions: [
+    'CreatePrivateThreads',
+    'ManageThreads',
+    'SendMessagesInThreads',
+  ],
 })
 @Cooldown({
   type: 'user',
@@ -36,6 +41,7 @@ const options = {
   'isNotDigesting',
   'isNotInPvp',
   'isNotSwallowed',
+  'isPvpOn',
 ])
 export default class EatSubCommand extends ExtendedSubCommand {
   public override async run(ctx: CommandContext<typeof options>) {

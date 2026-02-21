@@ -2,8 +2,8 @@ import { Time } from '@sapphire/timestamp'
 import type { Client } from 'seyfert'
 import {
   ActivityType,
-  PresenceUpdateStatus,
   type GatewayActivityUpdateData,
+  PresenceUpdateStatus,
 } from 'seyfert/lib/types'
 
 const presences: GatewayActivityUpdateData[] = [

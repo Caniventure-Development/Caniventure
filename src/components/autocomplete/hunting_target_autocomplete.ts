@@ -1,8 +1,8 @@
 import { titleCase } from '@luca/cases'
 import type { AutocompleteInteraction } from 'seyfert'
 import type { APIApplicationCommandOptionChoice } from 'seyfert/lib/types/index'
-import AutocompleteCommand from '../autocomplete.ts'
 import npcs from '#base/npcs.ts'
+import AutocompleteCommand from '../autocomplete.ts'
 
 export default class HuntingTargetAutocomplete extends AutocompleteCommand {
   public override async run(interaction: AutocompleteInteraction) {

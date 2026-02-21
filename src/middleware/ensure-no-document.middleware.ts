@@ -9,7 +9,15 @@ export const ensureNoDocumentMiddleware = createMiddleware<void>(
 
     if (!doesNotExist) {
       context.utilities.helpers.removeCooldown(context, author.id)
-      stop(error!)
+
+      if (!error) {
+        stop(
+          'You already have a document in the database! This command is only for users who do not have a document yet!'
+        )
+        return
+      }
+
+      stop(error)
     }
 
     next()

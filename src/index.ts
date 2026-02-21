@@ -1,8 +1,7 @@
-import { env } from 'node:process'
 import os from 'node:os'
 import path from 'node:path'
-import { UiClient, ProgressBarType } from '@discord-ui-kit/seyfert'
-import { ShardedStatfert, Statfert, StatfertPostable } from 'statfert'
+import { env } from 'node:process'
+import { ProgressBarType, UiClient } from '@discord-ui-kit/seyfert'
 import { type EntityManager, MikroORM } from '@mikro-orm/postgresql'
 import { CooldownManager } from '@slipher/cooldown'
 import {
@@ -11,10 +10,10 @@ import {
   type ParseMiddlewares,
   type UsingClient,
 } from 'seyfert'
-import { MessageFlags } from 'seyfert/lib/types/index'
-import { CHECK_FAILED_EMBED_TITLES } from './check_failed_embed_titles.constant.ts'
-import context from './context.ts'
+import { ShardedStatfert, type Statfert, StatfertPostable } from 'statfert'
 import { Colors } from './colors.ts'
+import context from './context.ts'
+import { onBotPermissionsFail, onMiddlewaresError } from './handlers/index.ts'
 import middlewares from './middleware/index.ts'
 import { startPresence } from './presence.ts'
 
@@ -22,22 +21,8 @@ const client = new Client({
   context,
   commands: {
     defaults: {
-      async onMiddlewaresError(context, error) {
-        const { ui, utilities } = context
-        const { random } = utilities
-
-        const failureEmbed = ui.embeds.error(
-          random.item(CHECK_FAILED_EMBED_TITLES),
-          {
-            description: error,
-          }
-        )
-
-        await context.editOrReply({
-          embeds: [failureEmbed],
-          flags: MessageFlags.Ephemeral,
-        })
-      },
+      onMiddlewaresError,
+      onBotPermissionsFail,
     },
   },
   gateway: {
@@ -70,6 +55,7 @@ client.start().then(async () => {
       'No Statcord API key was provided. Statfert will not be initialized.'
     )
 
+  // @ts-expect-error - Seyfert has problems, but this is completely okay. Nothing is gonna break, hopefully... (I have no hopes...)
   client.cooldown = new CooldownManager(client)
   client.orm = await MikroORM.init()
   client.em = client.orm.em.fork()
@@ -101,7 +87,6 @@ declare module 'seyfert' {
   }
 
   interface ExtendContext extends ReturnType<typeof context> {}
-  interface RegisteredMiddlewares extends ParseMiddlewares<
-    typeof middlewares
-  > {}
+  interface RegisteredMiddlewares
+    extends ParseMiddlewares<typeof middlewares> {}
 }

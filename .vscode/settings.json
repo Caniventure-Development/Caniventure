@@ -9,5 +9,9 @@
     "**/cache/": true,
     "**/node_modules/": true,
     "**/temp/": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports.biome": "explicit",
+    "source.fixAll.biome": "explicit"
   }
 }

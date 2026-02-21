@@ -1,12 +1,11 @@
-/* eslint-disable @stylistic/indent */
 import { Time } from '@sapphire/timestamp'
 import type { CommandContext } from 'seyfert'
 import type { CreateComponentCollectorResult } from 'seyfert/lib/components/handler'
+import type { User } from '#entities/user/user.entity.ts'
+import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
 import type { CaniventureStomachStatusPage } from './page_base'
 import preyPage from './pages/prey.ts'
 import startPage from './pages/start.ts'
-import type { User } from '#entities/user/user.entity.ts'
-import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
 
 export class StomachStatusSubcommand extends BaseBotChatInputSubcommand {
   public override async run(ctx: CommandContext) {
@@ -15,9 +14,9 @@ export class StomachStatusSubcommand extends BaseBotChatInputSubcommand {
     const { author, utilities } = ctx
     const { userDocuments } = utilities
 
-    const user = (await userDocuments.getUser(author.id, {
+    const user = await userDocuments.forceGetUser(author.id, {
       populate: ['balance', 'states', 'stomach'],
-    }))!
+    })
 
     const startingPageIndex = 0
     const message = await ctx.editResponse(
@@ -76,7 +75,7 @@ export class StomachStatusSubcommand extends BaseBotChatInputSubcommand {
 
       const pageLoader = pages[newIndex]
 
-      if (!pageLoader) throw new Error('Invalid page index ' + newIndex)
+      if (!pageLoader) throw new Error(`Invalid page index ${newIndex}`)
 
       const message = await interaction.editResponse(
         await this.loadPage(ctx, user, newIndex)
@@ -98,7 +97,7 @@ export class StomachStatusSubcommand extends BaseBotChatInputSubcommand {
   private async loadPage(ctx: CommandContext, user: User, index: number) {
     const pageLoader = this.pages[index]
 
-    if (!pageLoader) throw new Error('Invalid page index ' + index)
+    if (!pageLoader) throw new Error(`Invalid page index ${index}`)
 
     const pageNumber = index + 1
     const embed = await pageLoader(ctx.client, user, ctx.ui)

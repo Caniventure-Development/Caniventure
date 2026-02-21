@@ -10,7 +10,15 @@ export const ensureDocumentMiddleware = createMiddleware<void>(
 
     if (!exists) {
       context.utilities.helpers.removeCooldown(context, author.id)
-      stop(error!)
+
+      if (!error) {
+        stop(
+          'You do not have a document in the database! Please create one using `/economy start` before running this command!'
+        )
+        return
+      }
+
+      stop(error)
     }
 
     next()

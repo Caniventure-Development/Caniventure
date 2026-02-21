@@ -2,15 +2,15 @@ import { Time } from '@sapphire/timestamp'
 import { Cooldown } from '@slipher/cooldown'
 import {
   type CommandContext,
+  createStringOption,
   Declare,
   Middlewares,
   Options,
-  createStringOption,
 } from 'seyfert'
-import { ExtendedSubCommand } from '../extended_base.ts'
-import { HuntSubcommand } from '#subcommands/economy/hunt.ts'
 import npcs from '#base/npcs.ts'
 import HuntingTargetAutocomplete from '#components/autocomplete/hunting_target_autocomplete.ts'
+import { HuntSubcommand } from '#subcommands/economy/hunt.ts'
+import { ExtendedSubCommand } from '../extended_base.ts'
 
 const options = {
   target: createStringOption({
@@ -52,7 +52,7 @@ export default class HuntSubCommand extends ExtendedSubCommand {
     if (!npc) {
       await ctx.editOrReply({
         content:
-          "Invalid NPC Provided, this shouldn't be possible. Blame my creator", // eslint-disable-line @stylistic/quotes
+          "Invalid NPC Provided, this shouldn't be possible. Blame my creator",
       })
       return
     }

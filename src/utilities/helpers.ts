@@ -27,7 +27,6 @@ export class HelpersUtility extends BaseUtilityWithContext {
    * @param ms The amount of milliseconds to wait.
    */
   public async wait(ms: number): Promise<void> {
-    // eslint-disable-next-line no-promise-executor-return
     return new Promise((resolve) => setTimeout(resolve, ms))
   }
 
@@ -38,8 +37,10 @@ export class HelpersUtility extends BaseUtilityWithContext {
   ) {
     if (!('fullCommandName' in ctx)) return
 
+    const actualCommandName = ctx.fullCommandName as string
+
     const { fullCommandName } = ctx.client.handleCommand.getCommandFromContent(
-      ctx.fullCommandName.split(' ').filter(Boolean).slice(0, 3) // eslint-disable-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-call
+      actualCommandName.split(' ').filter(Boolean).slice(0, 3)
     )
 
     if (

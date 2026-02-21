@@ -1,5 +1,5 @@
-import { createEvent } from 'seyfert'
 import colors from 'picocolors'
+import { createEvent } from 'seyfert'
 
 export default createEvent({
   data: {

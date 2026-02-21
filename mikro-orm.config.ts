@@ -3,7 +3,7 @@ import { defineConfig, MemoryCacheAdapter } from '@mikro-orm/postgresql'
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection'
 import { SqlHighlighter } from '@mikro-orm/sql-highlighter'
 import { Time } from '@sapphire/timestamp'
-import 'dotenv/config' // eslint-disable-line import-x/no-unassigned-import
+import 'dotenv/config'
 
 const isDevelopment =
   (env.NODE_ENV ?? 'production').toLowerCase() === 'development'
@@ -29,7 +29,7 @@ export default defineConfig({
   metadataProvider: TsMorphMetadataProvider,
   debug: isDevelopment,
   entities: ['dist/entities/**/*.entity.js'],
-  entitiesTs: ['src/entities/**/*.entity.ts'],
+  entitiesTs: ['entities/**/*.entity.ts'],
   resultCache: {
     adapter: MemoryCacheAdapter,
     expiration: Time.Minute * 7.5,

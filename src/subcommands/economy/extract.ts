@@ -1,7 +1,6 @@
-/* eslint-disable @stylistic/quotes */
 import { Time } from '@sapphire/timestamp'
 import { stripIndents } from 'common-tags'
-import { Formatter, type CommandContext } from 'seyfert'
+import { type CommandContext, Formatter } from 'seyfert'
 import { TimestampStyle } from 'seyfert/lib/common'
 import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
 
@@ -15,9 +14,9 @@ export class ExtractSubcommand extends BaseBotChatInputSubcommand {
 
     const em = client.em.fork()
 
-    const user = (await userDocuments.getUser(author.id, {
+    const user = await userDocuments.forceGetUser(author.id, {
       populate: ['balance'],
-    }))!
+    })
     em.persist(user)
 
     const { balance } = user

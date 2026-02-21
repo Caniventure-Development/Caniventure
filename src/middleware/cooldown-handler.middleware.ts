@@ -4,6 +4,7 @@ import { COOLDOWN_MESSAGES } from '#base/cooldown_messages.constant.ts'
 
 export const cooldownMiddleware = createMiddleware<void>(
   async ({ context, next, stop }) => {
+    // @ts-expect-error - Seyfert has problems, but this is completely okay. Nothing is gonna break, hopefully... (I have no hopes...)
     const inCooldown = context.client.cooldown.context(context)
 
     if (typeof inCooldown === 'number') {

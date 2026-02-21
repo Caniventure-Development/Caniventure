@@ -1,4 +1,3 @@
-/* eslint-disable @stylistic/no-mixed-operators */
 import { BaseUtility } from './base.ts'
 
 export class RandomUtility extends BaseUtility {
@@ -10,7 +9,11 @@ export class RandomUtility extends BaseUtility {
     if (items.length === 0)
       throw new Error('Cannot get a random item out of an empty array!')
 
-    return items[Math.floor(Math.random() * items.length)]!
+    const item = items[Math.floor(Math.random() * items.length)]
+
+    if (!item) throw new Error('This should never happen, but got undefined!')
+
+    return item
   }
 
   /**

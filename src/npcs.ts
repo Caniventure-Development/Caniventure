@@ -1,4 +1,3 @@
-/* eslint-disable @stylistic/object-curly-newline */
 enum NpcSize {
   Tiny = 'tiny',
   Small = 'small',

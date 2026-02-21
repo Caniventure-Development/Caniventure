@@ -1,5 +1,5 @@
-import type { CaniventureStomachStatusPage } from '../page_base'
 import StomachCharacter from '#base/utilities/stomach_character.ts'
+import type { CaniventureStomachStatusPage } from '../page_base'
 
 const page: CaniventureStomachStatusPage = (_, user, ui) => {
   const { balance, states, stomach } = user

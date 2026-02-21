@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import { Result } from '@sapphire/result'
 import { commaListsAnd } from 'common-tags'
 import type { APIEmbedField } from 'seyfert/lib/types'

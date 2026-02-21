@@ -1,7 +1,6 @@
-/* eslint-disable @stylistic/object-curly-newline */
 import { titleCase } from '@luca/cases'
 import { Time } from '@sapphire/timestamp'
-import { Command, SubCommand, type CommandContext, type Embed } from 'seyfert'
+import { Command, type CommandContext, type Embed, SubCommand } from 'seyfert'
 import type { CreateComponentCollectorResult } from 'seyfert/lib/components/handler'
 import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
 
@@ -44,7 +43,13 @@ export class HelpSubcommand extends BaseBotChatInputSubcommand {
     }
 
     const startingIndex = 0
-    const startingEmbed = commandEmbeds[startingIndex]!
+    const startingEmbed = commandEmbeds[startingIndex]
+
+    if (!startingEmbed) {
+      await ctx.editOrReply({ content: 'There are no commands to show!' })
+      return
+    }
+
     const message = await ctx.editOrReply(
       {
         components: [
@@ -123,7 +128,7 @@ export class HelpSubcommand extends BaseBotChatInputSubcommand {
   private loadPage(ctx: CommandContext, embeds: Embed[], newIndex: number) {
     const page = embeds[newIndex]
 
-    if (!page) throw new Error('Invalid page index ' + newIndex)
+    if (!page) throw new Error(`Invalid page index ${newIndex}`)
 
     return {
       components: [this.buildComponents(ctx, newIndex, embeds.length)],

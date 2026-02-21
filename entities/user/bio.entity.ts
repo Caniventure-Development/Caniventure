@@ -4,7 +4,10 @@ import { User } from './user.entity'
 
 @Entity({ tableName: 'user_bios' })
 export class UserBio extends BaseBotEntity<'content'> {
-  @OneToOne(() => User, (user) => user.bio)
+  @OneToOne(
+    () => User,
+    (user) => user.bio
+  )
   declare user: User
 
   @Property({ type: 'varchar', length: 80, default: 'A mysterious predator' })
