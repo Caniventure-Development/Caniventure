@@ -1,6 +1,6 @@
 import { Check, Entity, Index, OneToOne, Property } from '@mikro-orm/core'
-import { BaseBotEntity } from '../base.entity'
-import { User } from './user.entity'
+import { BaseBotEntity } from '../base.entity.ts'
+import { User } from './user.entity.ts'
 
 @Entity({ tableName: 'user_balances' })
 @Check({ expression: 'bones_collected >= 0', name: 'bones_collected_check' })

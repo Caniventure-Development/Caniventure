@@ -1,6 +1,6 @@
 import { Check, Entity, Index, OneToOne, Property } from '@mikro-orm/core'
-import { BaseBotEntity } from '../../base.entity'
-import { UserStats } from './stats.entity'
+import { BaseBotEntity } from '../../base.entity.ts'
+import { UserStats } from './stats.entity.ts'
 
 @Entity({ tableName: 'user_hunting_stats' })
 @Check({ expression: 'hunts_done >= 0 AND hunts_won >= 0' })

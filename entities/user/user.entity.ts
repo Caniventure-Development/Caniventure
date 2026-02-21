@@ -10,14 +10,14 @@ import {
 } from '@mikro-orm/core'
 import type { BaseClient } from 'seyfert/lib/client/base'
 import type { PartialCharacter } from '#base/types'
-import { DiscordEntity } from '../discord.entity'
-import { UserBalance } from './balance.entity'
-import { UserBio } from './bio.entity'
-import { UserCharacter } from './character.entity'
-import { UserSettings } from './settings.entity'
-import { UserStates } from './states.entity'
-import { UserStats } from './stats/stats.entity'
-import { UserStomach } from './stomach.entity'
+import { DiscordEntity } from '../discord.entity.ts'
+import { UserBalance } from './balance.entity.ts'
+import { UserBio } from './bio.entity.ts'
+import { UserCharacter } from './character.entity.ts'
+import { UserSettings } from './settings.entity.ts'
+import { UserStates } from './states.entity.ts'
+import { UserStats } from './stats/stats.entity.ts'
+import { UserStomach } from './stomach.entity.ts'
 
 @Entity({ tableName: 'users' })
 export class User extends DiscordEntity<

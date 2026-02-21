@@ -1,5 +1,5 @@
 import { Entity, Index, Property } from '@mikro-orm/core'
-import { DiscordEntity } from '../discord.entity'
+import { DiscordEntity } from '../discord.entity.ts'
 
 @Entity({ tableName: 'blacklisted_ids' })
 export class BlacklistEntry extends DiscordEntity<'reason'> {

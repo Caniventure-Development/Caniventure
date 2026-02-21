@@ -1,6 +1,6 @@
 import { Check, Entity, Index, OneToOne, Property } from '@mikro-orm/core'
-import { BaseBotEntity } from '../base.entity'
-import { User } from './user.entity'
+import { BaseBotEntity } from '../base.entity.ts'
+import { User } from './user.entity.ts'
 
 @Entity({ tableName: 'user_stomachs' })
 @Check({ expression: 'capacity > 0', name: 'capacity_check' })

@@ -7,8 +7,8 @@ import {
   Property,
   Unique,
 } from '@mikro-orm/core'
-import { BaseBotEntity } from '../base.entity'
-import type { User } from './user.entity'
+import { BaseBotEntity } from '../base.entity.ts'
+import type { User } from './user.entity.ts'
 
 const defaultBio = 'A mysterious yet intriguing character'
 

@@ -1,6 +1,6 @@
 import { Entity, OneToOne, Property } from '@mikro-orm/core'
-import { BaseBotEntity } from '../base.entity'
-import { User } from './user.entity'
+import { BaseBotEntity } from '../base.entity.ts'
+import { User } from './user.entity.ts'
 
 @Entity({ tableName: 'user_settings' })
 export class UserSettings extends BaseBotEntity<

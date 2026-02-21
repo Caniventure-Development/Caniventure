@@ -1,5 +1,5 @@
 import { Check, Entity, Property } from '@mikro-orm/core'
-import { BaseBotEntity } from './base.entity'
+import { BaseBotEntity } from './base.entity.ts'
 
 @Entity({ abstract: true })
 @Check({ expression: "discord_id <> ''" })
