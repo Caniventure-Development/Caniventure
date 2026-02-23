@@ -59,7 +59,7 @@ export default abstract class StomachCharacter {
   public static atePlayer(): string {
     const atePlayerSounds = [
       '*GLORRRP!* Someone new inside!',
-      '*BIG GULP!* Player added!',
+      '*BIG GLORP!* Player added!',
       '*GLORP GLORP!* Welcome to the party!',
       '*massive gurgle!* Another one!',
       '*LOUD GLORRRRP~!* Got them!',

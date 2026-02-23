@@ -13,7 +13,7 @@ import {
   TutorialCharacterSection,
   TutorialHuntingSection,
   TutorialIntroSection,
-  TutorialPermadeathSection,
+  TutorialPermavoreSection,
   TutorialPreySection,
   TutorialStomachSection,
   TutorialVoraciousSection,
@@ -78,7 +78,7 @@ export class TutorialSubcommand extends BaseBotChatInputSubcommand {
     const tutorialOverEmbed = ui.embeds.success(
       `Tutorial ${wasExit ? 'Exited' : 'Finished'}`,
       {
-        description: `All right, the tutorial is over. Go ahead and enjoy Caniventure **${author.name}**, we won't judge! Have fun out there!`,
+        description: `All right, the tutorial is over. Go ahead and enjoy Vorasion **${author.name}**, we won't judge! Have fun out there!`,
       }
     )
 
@@ -176,7 +176,7 @@ export class TutorialSubcommand extends BaseBotChatInputSubcommand {
       new TutorialVoraciousSection(),
       new TutorialHuntingSection(),
       new TutorialPreySection(),
-      new TutorialPermadeathSection(),
+      new TutorialPermavoreSection(),
     ]
   }
 

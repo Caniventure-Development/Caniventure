@@ -7,7 +7,7 @@ export class TutorialCharacterSection extends TutorialSection {
       title: 'Your Character',
       description: stripIndents`
         Your character is basically a separate version of yourself, some way to be someone else during your usage of this bot.
-        **You created one when you joined Caniventure, and you can always
+        **You created one when you joined Vorasion, and you can always
         manage your characters by using the \`/character\` set of commands _(coming soon)_.**
 
         You named your first character **{character}** who is a **{species}**. Which is very intriguing,

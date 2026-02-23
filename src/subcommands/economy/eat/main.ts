@@ -54,7 +54,7 @@ export class EatSubcommand extends BaseBotChatInputSubcommand {
       this.clearCooldown(ctx)
 
       const noUserEmbed = ui.embeds.error('Invalid user', {
-        description: `${user.username} does not have a Caniventure profile, you can't eat them!`,
+        description: `${user.username} does not have a Vorasion profile, you can't eat them!`,
       })
 
       await ctx.editOrReply({ embeds: [noUserEmbed] })

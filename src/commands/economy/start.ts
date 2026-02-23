@@ -3,7 +3,8 @@ import { StartSubcommand } from '#subcommands/economy/start.ts'
 
 @Declare({
   name: 'start',
-  description: 'Start your cannibalistic adventure on Caniventure!',
+  description:
+    'Start understanding the unique parts of Vorasion by making a profile!',
 })
 @Middlewares(['hasNoDocument'])
 export default class StartSubCommand extends SubCommand {

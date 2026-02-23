@@ -26,7 +26,7 @@ export class TutorialVoraciousSection extends TutorialSection {
         they have to consent to the challenge, and respect is key. We're all here to have fun after all!
 
         But keep in mind, you're not always safe even with the
-        biggest stomach on the leaderboard... someone out there could see **YOU** ${timing}. The hunter can become the hunted!
+        biggest stomach on the leaderboard... someone out there could see **YOU** ${timing}.
 
         **Next is learning how to actually get that gurgling stomach some actual food to work with!**
       `,

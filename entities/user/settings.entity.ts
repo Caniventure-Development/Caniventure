@@ -4,7 +4,7 @@ import type { User } from './user.entity.ts'
 
 @Entity({ tableName: 'user_settings' })
 export class UserSettings extends BaseBotEntity<
-  'pvpOn' | 'permadeathModeOn' | 'allowMentions'
+  'pvpOn' | 'permavoreModeOn' | 'allowMentions'
 > {
   @OneToOne('User', (user: User) => user.settings)
   declare user: User
@@ -12,9 +12,16 @@ export class UserSettings extends BaseBotEntity<
   @Property({ type: 'boolean', name: 'pvp_on', default: false })
   declare pvpOn: boolean
 
-  @Property({ type: 'boolean', name: 'permadeath_mode_on', default: false })
-  declare permadeathModeOn: boolean
+  /**
+   * Whether this user can be permavored. This means if they're digested with this on,
+   * their character is gone. Forever.
+   */
+  @Property({ type: 'boolean', name: 'permavore_mode_on', default: false })
+  declare permavoreModeOn: boolean
 
+  /**
+   * Whether the bot can mention this user in the chat or not.
+   */
   @Property({ type: 'boolean', name: 'allow_mentions', default: false })
   declare allowMentions: boolean
 }

@@ -39,7 +39,7 @@ export class UserDocumentsUtility extends BaseUtilityWithContext {
 
   public async ensureUserExists(
     userId: string,
-    description = "You don't have a Caniventure profile, use the /economy start command!"
+    description = "You don't have a Vorasion profile, use the /economy start command!"
   ): Promise<[boolean, string | null]> {
     const user = await this.getUser(userId)
 
@@ -49,7 +49,7 @@ export class UserDocumentsUtility extends BaseUtilityWithContext {
 
   public async ensureUserDoesNotExist(
     userId: string,
-    description = "You already have a Caniventure profile, you don't need to create a new one!"
+    description = "You already have a Vorasion profile, you don't need to create a new one!"
   ): Promise<[boolean, string | null]> {
     const user = await this.getUser(userId)
 

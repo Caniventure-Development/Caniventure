@@ -1,4 +1,5 @@
 import { Buffer } from 'node:buffer'
+import { titleCase } from '@luca/cases'
 import { Time } from '@sapphire/timestamp'
 import {
   AttachmentBuilder,
@@ -9,13 +10,14 @@ import type { CollectorInteraction } from 'seyfert/lib/components/handler'
 import { ButtonStyle, TextInputStyle } from 'seyfert/lib/types'
 import { RULES } from '#base/bot_rules.constant.ts'
 import { CONSTANTS } from '#base/constants.ts'
+import { UserCharacterRole } from '#entities/user/character.entity.ts'
 import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
 
 export class StartSubcommand extends BaseBotChatInputSubcommand {
   public override async run(ctx: CommandContext) {
     await ctx.deferReply()
 
-    const rulesEmbed = ctx.ui.embeds.info('Welcome to Caniventure', {
+    const rulesEmbed = ctx.ui.embeds.info('Welcome to Vorasion', {
       description: RULES,
       footer: {
         text: 'Click on a button saying whether you agree or disagree to these rules. You have 1 minute.',
@@ -48,7 +50,7 @@ export class StartSubcommand extends BaseBotChatInputSubcommand {
       async (interaction) => this.handleStartCommandStepTwo(ctx, interaction),
       {
         embedDescription:
-          'Sorry, until you accept the rules, you will not be able to use Caniventure.',
+          'Sorry, until you accept the rules, you will not be able to use Vorasion.',
       }
     )
   }
@@ -123,10 +125,10 @@ export class StartSubcommand extends BaseBotChatInputSubcommand {
     const modal = ui.modals
       .create(
         characterCreationModalConstants['MODAL_ID'],
-        'Caniventure Character Creation'
+        'Vorasion Character Creation'
       )
       .withTextDisplay(
-        "Welcome to Caniventure, creating a character is very important to distinguish from small, simple minded humans! Let's create one!"
+        "Welcome to Vorasion, creating a character is very important to distinguish yourself from the small, simple minded humans! Let's create one!"
       )
       .withTextInput(characterCreationModalConstants['NAME_FIELD_ID'], {
         label: 'Character Name',
@@ -148,6 +150,13 @@ export class StartSubcommand extends BaseBotChatInputSubcommand {
         min: 1,
         max: 1,
         required: true,
+      })
+      .withStringSelect(characterCreationModalConstants['ROLE_FIELD_ID'], {
+        label: 'Character Role',
+        description: 'What role is your character?',
+        values: Object.values(UserCharacterRole).map((role) =>
+          new StringSelectOption().setLabel(titleCase(role)).setValue(role)
+        ),
       })
       .withTextInput(characterCreationModalConstants['BIO_FIELD_ID'], {
         label: 'Character Bio',

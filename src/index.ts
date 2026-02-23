@@ -28,11 +28,15 @@ const client = new Client({
   gateway: {
     properties: {
       os: os.platform(),
-      browser: 'Seyfert Bot',
+      browser: 'Visual Studio Code',
       device: 'desktop',
     },
   },
 }) as UsingClient & Client
+
+// I hate the current user agent for Seyfert, they don't get free advertisement from me. Lmao.
+client.rest.options.userAgent =
+  'Vorasion (https://github.com/Vorasion-Development/Vorasion)'
 
 client.setServices({
   middlewares,
@@ -87,6 +91,7 @@ declare module 'seyfert' {
   }
 
   interface ExtendContext extends ReturnType<typeof context> {}
+
   interface RegisteredMiddlewares
     extends ParseMiddlewares<typeof middlewares> {}
 }

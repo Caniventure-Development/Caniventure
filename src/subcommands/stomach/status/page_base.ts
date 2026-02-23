@@ -4,7 +4,7 @@ import type { Embed } from 'seyfert'
 import type { BaseClient } from 'seyfert/lib/client/base'
 import type { User } from '#entities/user/user.entity.ts'
 
-export type CaniventureStomachStatusPage = (
+export type VorasionStomachStatusPage = (
   client: BaseClient,
   user: User,
   ui: UiClient

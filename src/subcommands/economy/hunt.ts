@@ -3,12 +3,12 @@ import { Time } from '@sapphire/timestamp'
 import { stripIndents } from 'common-tags'
 import type { CommandContext } from 'seyfert'
 import { MessageFlags } from 'seyfert/lib/types'
-import type { CaniventureNpc } from '#base/npcs.ts'
+import type { VorasionNpc } from '#base/npcs.ts'
 import StomachCharacter from '#base/utilities/stomach_character.ts'
 import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
 
 export class HuntSubcommand extends BaseBotChatInputSubcommand {
-  public override async run(ctx: CommandContext, npc: CaniventureNpc) {
+  public override async run(ctx: CommandContext, npc: VorasionNpc) {
     const { author, client, ui, utilities } = ctx
     const { helpers, random } = utilities
     const { wait } = helpers
@@ -114,7 +114,7 @@ export class HuntSubcommand extends BaseBotChatInputSubcommand {
 
         ~~${pouncingMessage}~~
 
-        **Sadly, they were too slippery and got out your grasp and fled. Your stomach is grumbling sadly from this mishap.**
+        **Sadly, they were too slippery, got out your grasp, and fled. Your stomach is grumbling sadly from this mishap.**
 
         ${StomachCharacter.sad()}`,
       })

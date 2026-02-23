@@ -43,20 +43,8 @@ export class HelpSubcommand extends BaseBotChatInputSubcommand {
     }
 
     const startingIndex = 0
-    const startingEmbed = commandEmbeds[startingIndex]
-
-    if (!startingEmbed) {
-      await ctx.editOrReply({ content: 'There are no commands to show!' })
-      return
-    }
-
     const message = await ctx.editOrReply(
-      {
-        components: [
-          this.buildComponents(ctx, startingIndex, commandEmbeds.length),
-        ],
-        embeds: [startingEmbed],
-      },
+      this.loadPage(ctx, commandEmbeds, startingIndex),
       true
     )
 
@@ -130,9 +118,12 @@ export class HelpSubcommand extends BaseBotChatInputSubcommand {
 
     if (!page) throw new Error(`Invalid page index ${newIndex}`)
 
+    const pageNumber = newIndex + 1
     return {
       components: [this.buildComponents(ctx, newIndex, embeds.length)],
-      embeds: [page],
+      embeds: [
+        page.setFooter({ text: `Page ${pageNumber} of ${embeds.length}` }),
+      ],
     }
   }
 

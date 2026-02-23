@@ -13,7 +13,11 @@ import type { User } from './user.entity.ts'
   name: 'current_size_check_positive',
 })
 export class UserStomach extends BaseBotEntity<
-  'capacity' | 'currentSize' | 'opponentsInside' | 'usersInside'
+  | 'capacity'
+  | 'currentSize'
+  | 'opponentsInside'
+  | 'usersInside'
+  | 'digestionTime'
 > {
   @OneToOne('User', (user: User) => user.stomach)
   declare user: User

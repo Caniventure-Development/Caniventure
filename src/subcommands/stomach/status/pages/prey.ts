@@ -1,13 +1,13 @@
 import { Result } from '@sapphire/result'
 import { commaListsAnd } from 'common-tags'
 import type { APIEmbedField } from 'seyfert/lib/types'
-import type { CaniventureStomachStatusPage } from '../page_base'
+import type { VorasionStomachStatusPage } from '../page_base'
 
 function getNumberOfReverseEntries<T>(list: T[], amount: number) {
   return list.reverse().slice(0, amount)
 }
 
-const page: CaniventureStomachStatusPage = async (client, user, ui) => {
+const page: VorasionStomachStatusPage = async (client, user, ui) => {
   const { stomach } = user
 
   const opponents = stomach.opponentsInside

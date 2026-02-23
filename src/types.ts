@@ -6,6 +6,7 @@ import type {
   ModalSubmitInteraction,
   UserCommandInteraction,
 } from 'seyfert'
+import type { UserCharacterRole } from '#entities/user/character.entity.ts'
 
 export type InteractionType =
   | ChatInputCommandInteraction
@@ -18,5 +19,6 @@ export type InteractionType =
 export type PartialCharacter = {
   name: string
   species: string
+  role: UserCharacterRole
   bio?: string
 }

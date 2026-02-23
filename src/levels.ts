@@ -1,11 +1,11 @@
-type CaniventureLevel = {
+type VorasionLevel = {
   number: number
   experienceRequired: number
   capacityIncrease: number
 }
 
 // You're level 1 at the start, that's why this starts at 2.
-const levels: CaniventureLevel[] = [
+const levels: VorasionLevel[] = [
   {
     number: 2,
     experienceRequired: 1000,

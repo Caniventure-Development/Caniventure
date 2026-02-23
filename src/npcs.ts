@@ -1,4 +1,4 @@
-enum NpcSize {
+export enum NpcSize {
   Tiny = 'tiny',
   Small = 'small',
   Medium = 'medium',
@@ -6,14 +6,14 @@ enum NpcSize {
   Huge = 'huge',
 }
 
-export type CaniventureNpc = {
+export type VorasionNpc = {
   size: [NpcSize, number] // Shows the name of the weight and how much capacity they take up.
   species: string
   bones: number
   money: number
 }
 
-const npcs: CaniventureNpc[] = [
+const npcs: VorasionNpc[] = [
   { size: [NpcSize.Tiny, 1], species: 'micro dragon', bones: 20, money: 35 },
   { size: [NpcSize.Tiny, 1], species: 'fairy', bones: 20, money: 35 },
   { size: [NpcSize.Small, 2], species: 'rabbit', bones: 15, money: 25 },

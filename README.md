@@ -1,8 +1,8 @@
-# Caniventure
+# Vorasion
 
-Welcome to Caniventure, a brand new economy bot that does something most Discord bots never do. Try to be unique (I know, shots fired).
+Welcome to Vorasion, a brand new economy bot that does something most Discord bots never do. Try to be unique (I know, shots fired).
 
-**Most economy bots handle themselves by doing a `/work` -> `/beg` -> `/whatever`** system. **Not Caniventure.** You earn money by hunting living things and eating them alive.
+**Most economy bots handle themselves by doing a `/work` -> `/beg` -> `/whatever`** system. **Not Vorasion.** You earn money by hunting living things and eating them alive.
 
 ## Features
 
@@ -19,6 +19,6 @@ This bot is in alpha, so it's still being heavily developed. Stuff can change ov
 
 ## Created with
 
-- Seyfert
-- MikroORM
-- TypeScript
+- Seyfert (no link allowed here, for _[reasons](https://gist.github.com/lunaradev1/6bb5120dad4767c31cb7dcfabfeb1469)_)
+- [MikroORM](https://mikro-orm.io/)
+- [TypeScript](https://www.typescriptlang.org/)

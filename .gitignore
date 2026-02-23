@@ -5,3 +5,6 @@ certs/
 **/.idea/
 **/.env*
 !**/.env.example
+
+# Temporary Until Done
+INSPIRATIONS.md

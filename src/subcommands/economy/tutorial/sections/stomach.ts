@@ -6,7 +6,7 @@ export class TutorialStomachSection extends TutorialSection {
     return {
       title: 'Your Stomach',
       description: stripIndents`
-        Your stomach is your main weapon and tool when using Caniventure. Gurgling, groaning, glorping and ready to fill with acids, or just a comfy
+        Your stomach is your main weapon and tool when using Vorasion. Gurgling, groaning, glorping and ready to fill with acids, or just a comfy
         home for food you've eaten.
 
         Currently, it's extremely hungry and **normal food won't suffice its hunger.** **It wants something different...** something... **alive.**
@@ -15,7 +15,7 @@ export class TutorialStomachSection extends TutorialSection {
 
         **Checking Your Stomach:**
 
-        Use the \`/stomach status\` _(coming soon)_ command to check your stomach and its food (although it might feel weird the first time, just saying...)
+        Use the \`/stomach status\` command to check your stomach and its food (although it might feel weird the first time, just saying...)
 
         **Fate Decision:**
 

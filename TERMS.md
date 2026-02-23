@@ -1,8 +1,8 @@
-# Caniventure Terms
+# Vorasion Terms
 
-Caniventure is a free-to-use bot, but due to its niche nature and the fact it targets what some people call a kink, others call a fetish... we have some terms mainly to protect everyone that uses this bot.
+Vorasion is a free-to-use bot, but due to its niche nature and the fact it targets what some people call a kink, others call a fetish... we have some terms mainly to protect everyone that uses this bot.
 
-**By using Caniventure, you agree to these terms. Any violation of these terms may result in being blacklisted. Do not use Caniventure if you don't agree to these terms.**
+**By using Vorasion, you agree to these terms. Any violation of these terms may result in being blacklisted. Do not use Vorasion if you don't agree to these terms.**
 
 ## We allow
 
@@ -13,7 +13,7 @@ Caniventure is a free-to-use bot, but due to its niche nature and the fact it ta
 
 ## We do NOT allow
 
-- Using the bot for illegal purposes _(soliciting children, pornography, etc.)_.
+- Using the bot for illegal purposes _(e.g. soliciting children)_.
 - Exploiting any unintended mechanics of the bot.
 - Harassment, witch hunting or otherwise hurting people for using the bot. **Everyone who uses the bot is a person, remember that.**
 - Being Xenophobic or Discriminatory against people who use the bot. **Again, same rule applies!**

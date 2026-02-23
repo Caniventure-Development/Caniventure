@@ -1,31 +1,27 @@
-type CaniventureSpecies = {
+type VorasionSpecies = {
   id: string
   name: string
 }
 
-type CaniventureConstants = {
-  COLLECTOR_TIMED_OUT: 'time'
-  COOLDOWN_HIT: 'subcommandPreconditionCooldown'
-  DOCUMENT_NOT_FOUND_WHEN_EXPECTED: 'DocumentNotFoundWhenExpected'
-  DOCUMENT_FOUND_WHEN_NONE_EXPECTED: 'DocumentFoundWhenNotExpected'
+type VorasionConstants = {
+  COLLECTOR_TIMED_OUT: 'timeout'
   CHARACTER_CREATION: {
     MODAL_ID: string
     NAME_FIELD_ID: string
     BIO_FIELD_ID: string
+    ROLE_FIELD_ID: string
     SPECIES_FIELD_ID: string
   }
-  SPECIES_OPTIONS: CaniventureSpecies[]
+  SPECIES_OPTIONS: VorasionSpecies[]
 }
 
-export const CONSTANTS: Readonly<CaniventureConstants> = Object.freeze({
-  COLLECTOR_TIMED_OUT: 'time',
-  COOLDOWN_HIT: 'subcommandPreconditionCooldown',
-  DOCUMENT_NOT_FOUND_WHEN_EXPECTED: 'DocumentNotFoundWhenExpected',
-  DOCUMENT_FOUND_WHEN_NONE_EXPECTED: 'DocumentFoundWhenNotExpected',
+export const CONSTANTS: Readonly<VorasionConstants> = Object.freeze({
+  COLLECTOR_TIMED_OUT: 'timeout',
   CHARACTER_CREATION: {
     MODAL_ID: 'character-creation-modal',
     NAME_FIELD_ID: 'character-name',
     BIO_FIELD_ID: 'character-bio',
+    ROLE_FIELD_ID: 'character-role',
     SPECIES_FIELD_ID: 'character-species',
   },
   SPECIES_OPTIONS: [

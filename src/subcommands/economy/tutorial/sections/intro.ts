@@ -4,8 +4,8 @@ import { TutorialSection, type TutorialSectionContent } from '../section.ts'
 export class TutorialIntroSection extends TutorialSection {
   public override getContent(): TutorialSectionContent {
     return {
-      title: 'Caniventure Tutorial',
-      description: stripIndents`Welcome to Caniventure **{author}**! Or, as your current character is known... **{character}**!
+      title: 'Vorasion Tutorial',
+      description: stripIndents`Welcome to Vorasion, **{author}**! Or, as your current character is known... **{character}**!
             This whole command is meant to get you all set up to learn what this bot is about before you go all out on everything.
             Keep in mind this bot is still in development, and things are still subject to change.
 

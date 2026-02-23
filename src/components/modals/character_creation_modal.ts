@@ -1,6 +1,7 @@
 import { stripIndents } from 'common-tags'
 import { ModalCommand, type ModalContext } from 'seyfert'
 import { CONSTANTS } from '#base/constants.ts'
+import type { UserCharacterRole } from '#entities/user/character.entity.ts'
 
 export default class StartSubcommandCharacterCreationModal extends ModalCommand {
   private get characterCreationModalConstants() {
@@ -27,6 +28,10 @@ export default class StartSubcommandCharacterCreationModal extends ModalCommand 
       true
     ) as string[]
     const speciesId = speciesIdsSelected[0]
+    const role = interaction.getInputValue(
+      characterCreationModalConstants['ROLE_FIELD_ID'],
+      true
+    ) as UserCharacterRole
     const bio = interaction.getInputValue(
       characterCreationModalConstants['BIO_FIELD_ID'],
       false
@@ -62,6 +67,7 @@ export default class StartSubcommandCharacterCreationModal extends ModalCommand 
     const creationResult = await utilities.userDocuments.createUser(user.id, {
       name,
       species: species.name,
+      role,
       bio,
     })
 
@@ -82,7 +88,7 @@ export default class StartSubcommandCharacterCreationModal extends ModalCommand 
     }
 
     const doneEmbed = ui.embeds.success('All done!', {
-      description: stripIndents`Welcome to Caniventure **${user.name}** _(or... should I say **${name}**)_!
+      description: stripIndents`Welcome to Vorasion **${user.name}** _(or... should I say **${name}**)_!
         Make sure to use the \`/economy tutorial\` command before starting. Other commands won't work without it!`,
     })
 

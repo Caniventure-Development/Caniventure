@@ -3,7 +3,7 @@ import type { CommandContext } from 'seyfert'
 import type { CreateComponentCollectorResult } from 'seyfert/lib/components/handler'
 import type { User } from '#entities/user/user.entity.ts'
 import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
-import type { CaniventureStomachStatusPage } from './page_base'
+import type { VorasionStomachStatusPage } from './page_base'
 import preyPage from './pages/prey.ts'
 import startPage from './pages/start.ts'
 
@@ -152,7 +152,7 @@ export class StomachStatusSubcommand extends BaseBotChatInputSubcommand {
     ]
   }
 
-  private get pages(): CaniventureStomachStatusPage[] {
+  private get pages(): VorasionStomachStatusPage[] {
     return [startPage, preyPage]
   }
 }

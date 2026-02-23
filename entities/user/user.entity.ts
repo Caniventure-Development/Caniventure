@@ -96,10 +96,6 @@ export class User extends DiscordEntity<
     type: 'string',
     name: 'active_character_id',
   })
-  /**
-   * The characterId of the active character for this user. You shouldn't need to use this.
-   * Use `getActiveCharacter` instead.
-   */
   protected activeCharacterId: string
 
   @OneToOne(
@@ -179,6 +175,7 @@ export class User extends DiscordEntity<
       this,
       characterToCreate.name,
       characterToCreate.species,
+      characterToCreate.role,
       characterToCreate.bio
     )
 
@@ -224,10 +221,13 @@ export class User extends DiscordEntity<
   }
 
   public async setActiveCharacter(character: UserCharacter) {
-    if (this.settings.permadeathModeOn)
+    if (this.settings.permavoreModeOn)
       throw new Error(
         'You cannot change the active character of a user in permadeath mode!'
       )
+
+    if (character.isPermad)
+      throw new Error('This character is permavored, it cannot be made active!')
 
     const characters = await this.getCharacters()
 
@@ -237,6 +237,25 @@ export class User extends DiscordEntity<
     this.activeCharacterId = character.characterId
   }
 
+  /**
+   * Gets the Discord user from the cache or the API.
+   * @param client The Discord client, this is used to actually fetch the user
+   * @returns The Discord user or null if both attempts failed
+   */
+  public async getDiscord(client: BaseClient) {
+    const { users } = client
+    const userFromCache = await users.fetch(this.discordId)
+
+    if (userFromCache) return userFromCache
+
+    return users.fetch(this.discordId, true).catch(() => null)
+  }
+
+  /**
+   * Gets the Discord user of the person who devoured this user and has them in their gut.
+   * @param client The Discord client, this is used to actually fetch the user
+   * @returns The Discord user or null if both attempts failed, OR there's no captor.
+   */
   public async getCaptor(client: BaseClient) {
     if (!this.captorId) return null
 

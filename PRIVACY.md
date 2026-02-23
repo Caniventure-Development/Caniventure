@@ -1,10 +1,10 @@
-# Caniventure Privacy Policy
+# Vorasion Privacy Policy
 
-Caniventure collects some data about its users and guilds that it's a part of.
+Vorasion collects some data about its users and guilds that it's a part of.
 This should explain **what** and **why** we collect what we do.
 
-**By using Caniventure or logging into its website, you agree to this policy. If
-you do not agree, please discontinue use of Caniventure!**
+**By using Vorasion or logging into its website _(coming soon)_, you agree to this policy. If
+you do not agree, please discontinue use of Vorasion!**
 
 <details>
     <summary>Users</summary>
@@ -16,7 +16,7 @@ you do not agree, please discontinue use of Caniventure!**
         <li><strong>When logged into the site (coming soon, maybe), we collect what guilds you're in</strong></li>
     </ul>
     <h2>Why do we collect this data?</h2>
-    <p>We collect this data so you can be able to use Caniventure as the economy bot it is, without it, the bot would just be a glorified <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program" target="_blank" rel="noopener noreferrer">ping bot</a>.</p>
+    <p>We collect this data so you can be able to use Vorasion as the economy bot it is, without it, the bot would just be a glorified <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program" target="_blank" rel="noopener noreferrer">ping bot</a>.</p>
     <h2>How do we use this data?</h2>
     <p>We use this data to:</p>
     <ul>
@@ -26,7 +26,7 @@ you do not agree, please discontinue use of Caniventure!**
     <h2>Do we share this data with anyone else?</h2>
     <p><strong>Absolutely not.</strong> Your data is only shared <strong>to us</strong>, the developers. No one else is getting your data in the database, we do not sell data to anyone. <strong>Period.</strong></p>
     <h2>Can I have my data deleted, and if so, how?</h2>
-    <p><strong>Of course!</strong> We provide a <code>/economy reset</code> which will <strong>delete all your data from the database after confirmation</strong>! Feel free to use that if you no longer want to use Caniventure.</p>
+    <p><strong>Of course!</strong> We provide a <code>/economy reset</code> which will <strong>delete all your data from the database after confirmation</strong>! Feel free to use that if you no longer want to use Vorasion.</p>
 </details>
 
 <details>
@@ -39,3 +39,7 @@ you do not agree, please discontinue use of Caniventure!**
 
 Concerns are valid. Please feel free to reach out to us via the
 [Support Server](https://discord.gg/HQn5cyrG3a) if you have any questions.
+
+---
+
+This document was last updated on **02/22/26 - 8:26 PM EST**.
