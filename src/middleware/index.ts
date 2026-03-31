@@ -3,6 +3,8 @@ import { ensureBellyEmptyMiddleware } from './ensure-belly-empty.middleware.ts'
 import { ensureBellyOccupiedMiddleware } from './ensure-belly-occupied.middleware.ts'
 import { ensureBonesInStomachMiddleware } from './ensure-bones-in-stomach.middleware.ts'
 import { ensureDocumentMiddleware } from './ensure-document.middleware.ts'
+import { ensureCharacterIsNotPredatorMiddleware } from './ensure-is-not-predator.middleware.ts'
+import { ensureCharacterIsNotPreyMiddleware } from './ensure-is-not-prey.middleware.ts'
 import { ensureNoDocumentMiddleware } from './ensure-no-document.middleware.ts'
 import { ensureNotDigestingMiddleware } from './ensure-not-digesting.middleware.ts'
 import { ensureNotFullMiddleware } from './ensure-not-full.middleware.ts'
@@ -15,9 +17,11 @@ import { ensureTutorialNotDoneMiddleware } from './ensure-tutorial-not-done.midd
 import { ownerOnlyMiddleware } from './owner-only.middleware.ts'
 
 const middlewares = {
-  cooldown: cooldownMiddleware,
   bellyEmpty: ensureBellyEmptyMiddleware,
   bellyOccupied: ensureBellyOccupiedMiddleware,
+  cooldown: cooldownMiddleware,
+  characterNotPred: ensureCharacterIsNotPredatorMiddleware,
+  characterNotPrey: ensureCharacterIsNotPreyMiddleware,
   hasBonesInStomach: ensureBonesInStomachMiddleware,
   hasDocument: ensureDocumentMiddleware,
   hasNoDocument: ensureNoDocumentMiddleware,

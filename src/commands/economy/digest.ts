@@ -26,6 +26,6 @@ import { ExtendedSubCommand } from '../extended_base.ts'
 ])
 export default class DigestSubCommand extends ExtendedSubCommand {
   public override async run(ctx: CommandContext) {
-    await new DigestSubcommand().run(ctx)
+    new DigestSubcommand().run(ctx)
   }
 }

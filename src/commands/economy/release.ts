@@ -26,6 +26,6 @@ import { ExtendedSubCommand } from '../extended_base.ts'
 ])
 export default class ReleaseSubCommand extends ExtendedSubCommand {
   public override async run(ctx: CommandContext) {
-    await new ReleaseSubcommand().run(ctx)
+    new ReleaseSubcommand().run(ctx)
   }
 }

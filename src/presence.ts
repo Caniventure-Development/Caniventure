@@ -11,6 +11,18 @@ const presences: GatewayActivityUpdateData[] = [
     name: 'the predators',
     type: ActivityType.Watching,
   },
+  {
+    name: 'everyone',
+    type: ActivityType.Watching,
+  },
+  {
+    name: 'with a great hunger',
+    type: ActivityType.Watching,
+  },
+  {
+    name: 'with my prey',
+    type: ActivityType.Playing,
+  },
 ]
 
 const setRandomPresence = (client: Client) => {
@@ -29,7 +41,5 @@ const setRandomPresence = (client: Client) => {
 export const startPresence = (client: Client) => {
   setRandomPresence(client)
 
-  setInterval(() => {
-    setRandomPresence(client)
-  }, Time.Minute * 5)
+  setInterval(() => setRandomPresence(client), Time.Minute * 5)
 }

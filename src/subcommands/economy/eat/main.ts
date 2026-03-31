@@ -1,14 +1,14 @@
 import { Time } from '@sapphire/timestamp'
-import type { CommandContext, InteractionGuildMember, User } from 'seyfert'
+import { stripIndents } from 'common-tags'
+import type { CommandContext } from 'seyfert'
 import { MessageFlags } from 'seyfert/lib/types'
+import type { AnySeyfertUser } from '#base/types.ts'
+import StomachCharacter from '#base/utilities/stomach_character.ts'
 import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
 import { EatSubcommandDiceMinigame } from './dice.minigame'
 
 export class EatSubcommand extends BaseBotChatInputSubcommand {
-  public override async run(
-    ctx: CommandContext,
-    user: InteractionGuildMember | User
-  ) {
+  public override async run(ctx: CommandContext, user: AnySeyfertUser) {
     const getUserMention = this.getUserMention
     await ctx.deferReply()
 
@@ -45,7 +45,9 @@ export class EatSubcommand extends BaseBotChatInputSubcommand {
       return
     }
 
-    const predator = await userDocuments.forceGetUser(author.id)
+    const predator = await userDocuments.forceGetUser(author.id, {
+      populate: ['stomach'],
+    })
     const prey = await userDocuments.getUser(user.id, {
       populate: ['settings', 'states'],
     })
@@ -121,12 +123,20 @@ export class EatSubcommand extends BaseBotChatInputSubcommand {
           name: 'Decline',
           value:
             'If you decline, the predator will go away and you will both be safe... for now.',
+          inline: true,
+        },
+        {
+          name: 'Third Option',
+          value:
+            "If you choose the third button, you're giving your body to the predator.",
+          inline: true,
         },
       ],
     })
 
     const acceptCustomId = 'accept'
     const declineCustomId = 'decline'
+    const devourMeCustomId = 'vore-me-pls'
     const actionRow = ui.actionRows.multiComponents(
       ui.buttons.success(acceptCustomId, "Sure, let's do this!"),
       ui.buttons.danger(
@@ -134,11 +144,17 @@ export class EatSubcommand extends BaseBotChatInputSubcommand {
         "I'd rather not be someone's lunch today, thanks"
       )
     )
+    const devouringActionRow = ui.actionRows.singleComponent(
+      ui.buttons.secondary(
+        devourMeCustomId,
+        'Can we just skip the pleasantries?'
+      )
+    )
 
     const shouldGetResponseBack = true
     const message = await ctx.editOrReply(
       {
-        components: [actionRow],
+        components: [actionRow, devouringActionRow],
         content: prey.settings.allowMentions ? getUserMention(user) : null,
         embeds: [preyConfirmationEmbed],
       },
@@ -169,6 +185,32 @@ export class EatSubcommand extends BaseBotChatInputSubcommand {
       async (interaction) => {
         await interaction.deferUpdate()
 
+        if (interaction.customId === devourMeCustomId) {
+          const em = client.em.fork()
+          em.persist(predator).persist(prey)
+
+          const predActiveCharacter = await predator.getActiveCharacter()
+          const preyActiveCharacter = await prey.getActiveCharacter()
+
+          predator.stomach.addUser(user.id)
+          prey.setCaptor(author.id)
+          const devouredEmbed = ui.embeds.success('Prey Devoured', {
+            description: stripIndents`
+            **${preyActiveCharacter.name}** just wanted to be a free meal for **${predActiveCharacter.name}**, so they just dived into their open maw and got gulped down!
+            Have fun in there!
+
+            ${StomachCharacter.atePlayer()}`,
+          })
+
+          await em.flush()
+          await interaction.editOrReply({
+            components: [],
+            content: null,
+            embeds: [devouredEmbed],
+          })
+          return
+        }
+
         const gameUnderwayEmbed = ui.embeds.info('Game Underway', {
           description: `The PvP battle between ${getUserMention(
             author
@@ -177,6 +219,7 @@ export class EatSubcommand extends BaseBotChatInputSubcommand {
 
         await interaction.editOrReply({
           components: [],
+          content: null,
           embeds: [gameUnderwayEmbed],
         })
 
@@ -186,7 +229,7 @@ export class EatSubcommand extends BaseBotChatInputSubcommand {
         ])
       },
       {
-        agreeCustomId: acceptCustomId,
+        agreeCustomId: [acceptCustomId, devourMeCustomId],
         disagreeCustomId: declineCustomId,
         embedTitle: 'Challenge Declined',
         embedDescription: `${getUserMention(user)} has declined the PvP challenge. Better luck next time, ${getUserMention(

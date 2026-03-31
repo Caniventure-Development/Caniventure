@@ -4,19 +4,17 @@ import { stripIndents } from 'common-tags'
 import type {
   CommandContext,
   Embed,
-  InteractionGuildMember,
   ListenerOptions,
   Message,
-  User as SeyfertUser,
   ThreadChannel,
 } from 'seyfert'
 import type { CollectorInteraction } from 'seyfert/lib/components/handler'
 import { ChannelType } from 'seyfert/lib/types'
+import type { AnySeyfertUser } from '#base/types.ts'
 import StomachCharacter from '#base/utilities/stomach_character.ts'
 import type { User } from '#entities/user/user.entity.ts'
 import { BaseBotMinigame } from '#subcommands/index.ts'
 
-type AnySeyfertUser = InteractionGuildMember | SeyfertUser
 type EatSubcommandDiceMinigamePredator = [AnySeyfertUser, User]
 type EatSubcommandDiceMinigamePrey = [AnySeyfertUser, User]
 type EatSubcommandDiceMinigameUsers = [
@@ -31,8 +29,8 @@ export class EatSubcommandDiceMinigame extends BaseBotMinigame {
     users: EatSubcommandDiceMinigameUsers
   ) {
     const [predatorGroup, preyGroup] = users
-    const [author, predator] = predatorGroup
-    const [user, prey] = preyGroup
+    const [_predatorUser, predator] = predatorGroup
+    const [_preyUser, prey] = preyGroup
 
     if (predator.states.isInPvp || prey.states.isInPvp) {
       this.removeCooldown(ctx, ctx.author.id)
@@ -46,8 +44,8 @@ export class EatSubcommandDiceMinigame extends BaseBotMinigame {
     }
 
     const [predThreadGroup, preyThreadGroup] = await this.createThreads(
-      author,
-      user,
+      predatorGroup,
+      preyGroup,
       ctx
     )
     const [predThread, predMessage] = predThreadGroup
@@ -557,11 +555,12 @@ export class EatSubcommandDiceMinigame extends BaseBotMinigame {
 
     await helpers.wait(Time.Second * 10)
 
+    if (predator.stomach === undefined) await predator.populate(['stomach'])
+
     predator.stomach.addUser(loser.id)
     predator.states.isInPvp = false
     prey.states.isInPvp = false
-    prey.isInStomach = true
-    prey.captorId = winner.id
+    prey.setCaptor(winner.id)
 
     const stomachText = StomachCharacter.atePlayer()
 
@@ -596,15 +595,23 @@ export class EatSubcommandDiceMinigame extends BaseBotMinigame {
   }
 
   private async createThreads(
-    predatorUser: AnySeyfertUser,
-    preyUser: AnySeyfertUser,
+    predatorGroup: EatSubcommandDiceMinigamePredator,
+    preyGroup: EatSubcommandDiceMinigamePredator,
     ctx: CommandContext
   ): Promise<[[ThreadChannel, Message], [ThreadChannel, Message]]> {
+    const [predatorUser, predatorDocument] = predatorGroup
+    const [preyUser, preyDocument] = preyGroup
+
     const { client, ui } = ctx
     const { threads } = client
     const channelId = ctx.channelId
     const threadChannelType = ChannelType.PrivateThread
     const autoArchiveDuration = 60
+
+    const [predatorActiveCharacter, preyActiveCharacter] = await Promise.all([
+      predatorDocument.getActiveCharacter(),
+      preyDocument.getActiveCharacter(),
+    ])
 
     const predThread = await threads.create(channelId, {
       auto_archive_duration: autoArchiveDuration,
@@ -621,7 +628,7 @@ export class EatSubcommandDiceMinigame extends BaseBotMinigame {
     })
 
     const startingMessage = ui.embeds.info('Welcome in!', {
-      description: `This is where the dice minigame will take place! The predator (${predatorUser.username}) will play in their thread, and the prey (${preyUser.username}) will play in theirs. The loser is lunch. Have fun, the game will start soon!`,
+      description: `This is where the dice minigame will take place! The predator (${predatorActiveCharacter.name}) will play in their thread, and the prey (${preyActiveCharacter.name}) will play in theirs. The loser is lunch. Have fun, the game will start soon!`,
     })
 
     const [_memAdd1, _memAdd2, predMessage, preyMessage] = await Promise.all([

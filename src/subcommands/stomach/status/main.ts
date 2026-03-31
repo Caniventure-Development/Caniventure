@@ -1,6 +1,7 @@
 import { Time } from '@sapphire/timestamp'
 import type { CommandContext } from 'seyfert'
 import type { CreateComponentCollectorResult } from 'seyfert/lib/components/handler'
+import { ComponentType } from '#base/types.ts'
 import type { User } from '#entities/user/user.entity.ts'
 import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
 import type { VorasionStomachStatusPage } from './page_base'
@@ -26,7 +27,7 @@ export class StomachStatusSubcommand extends BaseBotChatInputSubcommand {
     const collector = utilities.collectors.create(
       ctx.interaction,
       message,
-      'button',
+      ComponentType.Button,
       {
         timeout: Time.Minute * 5,
       }
@@ -57,7 +58,7 @@ export class StomachStatusSubcommand extends BaseBotChatInputSubcommand {
       const newCollector = ctx.utilities.collectors.create(
         ctx.interaction,
         message,
-        'button',
+        ComponentType.Button,
         {
           timeout: Time.Minute * 5,
         }
@@ -84,7 +85,7 @@ export class StomachStatusSubcommand extends BaseBotChatInputSubcommand {
       const newCollector = ctx.utilities.collectors.create(
         ctx.interaction,
         message,
-        'button',
+        ComponentType.Button,
         {
           timeout: Time.Minute * 5,
         }

@@ -1,7 +1,10 @@
 import { CooldownType } from '@slipher/cooldown'
 import type { AnyContext, Interaction } from 'seyfert'
 import { MessageFlags } from 'seyfert/lib/types'
+import { UserCharacterMeasurementSystem } from '#entities/user/character.entity.ts'
 import { BaseUtilityWithContext } from './base.ts'
+
+type UnitType = 'height' | 'weight'
 
 export class HelpersUtility extends BaseUtilityWithContext {
   public async handleNotImplemented<T extends Interaction>(
@@ -12,12 +15,8 @@ export class HelpersUtility extends BaseUtilityWithContext {
       description: message,
     })
 
-    const basePayload = {
-      embeds: [notImplementedEmbed],
-    }
-
     await interaction.editOrReply({
-      ...basePayload,
+      embeds: [notImplementedEmbed],
       flags: MessageFlags.Ephemeral,
     })
   }
@@ -54,5 +53,29 @@ export class HelpersUtility extends BaseUtilityWithContext {
     ctx.client.cooldown.resource.remove(
       `${fullCommandName}:${cooldownType}:${id}`
     )
+  }
+
+  public unitToImperial(
+    value: number,
+    unit: UserCharacterMeasurementSystem,
+    type: UnitType
+  ) {
+    if (unit === UserCharacterMeasurementSystem.Imperial) return value
+
+    return type === 'height'
+      ? Math.round(value * 0.393701) // cm -> inches
+      : Math.round(value * 2.20462) // kg -> lbs
+  }
+
+  public unitToMetric(
+    value: number,
+    unit: UserCharacterMeasurementSystem,
+    type: UnitType
+  ) {
+    if (unit === UserCharacterMeasurementSystem.Metric) return value
+
+    return type === 'height'
+      ? Math.round(value * 2.54) // inches -> cm
+      : Math.round(value * 0.453592) // lbs -> kg
   }
 }

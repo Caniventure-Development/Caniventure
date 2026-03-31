@@ -1,26 +1,38 @@
-import { Check, Entity, Index, OneToOne, Property } from '@mikro-orm/core'
+import { defineEntity, p } from '@mikro-orm/core'
 import { BaseBotEntity } from '../base.entity.ts'
-import type { User } from './user.entity.ts'
+import { User } from './user.entity.ts'
 
-@Entity({ tableName: 'user_balances' })
-@Check({ expression: 'bones_collected >= 0', name: 'bones_collected_check' })
-@Check({ expression: 'bones_in_stomach >= 0', name: 'bones_in_stomach_check' })
-@Check({ expression: 'money >= 0', name: 'money_check' })
-export class UserBalance extends BaseBotEntity<
-  'bonesCollected' | 'bonesInStomach' | 'money'
-> {
-  @OneToOne('User', (user: User) => user.balance)
-  declare user: User
+const BalanceSchema = defineEntity({
+  name: 'UserBalance',
+  extends: BaseBotEntity,
+  properties: {
+    user: () => p.oneToOne(User).mappedBy('balance'),
+    bonesCollected: p.bigint('number').name('bones_collected').default(0),
+    bonesInStomach: p.bigint('number').name('bones_in_stomach').default(0),
+    money: p.bigint('number').name('money').default(0),
+  },
+  tableName: 'user_balances',
+  checks: [
+    {
+      expression: (columns) => `${columns.bonesCollected} >= 0`,
+      name: 'const_bones_collected_non_negative',
+    },
+    {
+      expression: (columns) => `${columns.bonesInStomach} >= 0`,
+      name: 'const_bones_in_stomach_non_negative',
+    },
+    {
+      expression: (columns) => `${columns.money} >= 0`,
+      name: 'const_money_non_negative',
+    },
+  ],
+  indexes: [
+    { name: 'indx_bones_collected', properties: ['bonesCollected'] },
+    { name: 'indx_bones_in_stomach', properties: ['bonesInStomach'] },
+    { name: 'indx_money', properties: ['money'] },
+  ],
+})
 
-  @Property({ type: 'bigint', name: 'bones_collected', default: 0 })
-  @Index()
-  declare bonesCollected: number
+export class UserBalance extends BalanceSchema.class {}
 
-  @Property({ type: 'bigint', name: 'bones_in_stomach', default: 0 })
-  @Index()
-  declare bonesInStomach: number
-
-  @Property({ type: 'bigint', name: 'money', default: 0 })
-  @Index()
-  declare money: number
-}
+BalanceSchema.setClass(UserBalance)

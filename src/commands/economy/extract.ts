@@ -18,6 +18,6 @@ import { ExtendedSubCommand } from '../extended_base.ts'
 ])
 export default class ExtractSubCommand extends ExtendedSubCommand {
   public override async run(ctx: CommandContext) {
-    await new ExtractSubcommand().run(ctx)
+    new ExtractSubcommand().run(ctx)
   }
 }

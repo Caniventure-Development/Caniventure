@@ -1,26 +1,27 @@
-import { Cascade, Entity, OneToOne } from '@mikro-orm/core'
-import { BaseBotEntity } from '../../base.entity.ts'
-import type { User } from '../user.entity.ts'
+import { Cascade, defineEntity, p } from '@mikro-orm/core'
+import { BaseBotEntity } from '#entities/base.entity.ts'
+import { User } from '../user.entity.ts'
 import { UserHuntingStats } from './hunting.entity.ts'
+import { UserStomachStats } from './stomach.entity.ts'
 
-@Entity({ tableName: 'user_stats' })
-export class UserStats extends BaseBotEntity<'hunting'> {
-  @OneToOne('User', (user: User) => user.stats)
-  declare user: User
+const StatsSchema = defineEntity({
+  name: 'UserStats',
+  extends: BaseBotEntity,
+  properties: {
+    user: () => p.oneToOne(User).mappedBy('stats'),
+    hunting: () => p.oneToOne(UserHuntingStats).owner().cascade(Cascade.ALL),
+    stomach: () => p.oneToOne(UserStomachStats).owner().cascade(Cascade.ALL),
+  },
+  tableName: 'user_stats',
+})
 
-  @OneToOne(
-    () => UserHuntingStats,
-    (huntingStats) => huntingStats.stats,
-    {
-      cascade: [Cascade.ALL],
-      owner: true,
-    }
-  )
-  hunting: UserHuntingStats
-
+export class UserStats extends StatsSchema.class {
   constructor() {
     super()
 
     this.hunting = new UserHuntingStats()
+    this.stomach = new UserStomachStats()
   }
 }
+
+StatsSchema.setClass(UserStats)

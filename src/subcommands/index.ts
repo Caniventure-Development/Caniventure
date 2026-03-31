@@ -1,27 +1,22 @@
 import type { Awaitable } from '@sapphire/utilities'
 import { CooldownType } from '@slipher/cooldown'
-import {
-  type CommandContext,
-  Formatter,
-  type Interaction,
-  type InteractionGuildMember,
-  type User,
-} from 'seyfert'
+import { type CommandContext, Formatter, type Interaction } from 'seyfert'
 import type {
   CollectorInteraction,
   CreateComponentCollectorResult,
 } from 'seyfert/lib/components/handler'
+import type { AnySeyfertUser } from '#base/types.ts'
 
-type EnsureAgreedOptions = {
-  agreeCustomId?: string
-  disagreeCustomId?: string
+export type EnsureAgreedOptions = {
+  agreeCustomId?: string | string[]
+  disagreeCustomId?: string | string[]
   embedTitle?: string
   embedDescription?: string
   stopAfterCatch?: boolean
 }
 
 abstract class BaseBotSubcommand {
-  public getUserMention(user: InteractionGuildMember | User) {
+  public getUserMention(user: AnySeyfertUser) {
     return Formatter.userMention(user.id)
   }
 

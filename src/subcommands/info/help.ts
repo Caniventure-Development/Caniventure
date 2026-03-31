@@ -2,6 +2,7 @@ import { titleCase } from '@luca/cases'
 import { Time } from '@sapphire/timestamp'
 import { Command, type CommandContext, type Embed, SubCommand } from 'seyfert'
 import type { CreateComponentCollectorResult } from 'seyfert/lib/components/handler'
+import { ComponentType } from '#base/types.ts'
 import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
 
 const getSubcommands = (cmd: Command) =>
@@ -51,7 +52,7 @@ export class HelpSubcommand extends BaseBotChatInputSubcommand {
     const collector = utilities.collectors.create(
       ctx.interaction,
       message,
-      'button',
+      ComponentType.Button,
       {
         timeout: Time.Minute * 5,
       }
@@ -80,7 +81,7 @@ export class HelpSubcommand extends BaseBotChatInputSubcommand {
       const newCollector = ctx.utilities.collectors.create(
         ctx.interaction,
         message,
-        'button',
+        ComponentType.Button,
         {
           timeout: Time.Minute * 5,
         }
@@ -103,7 +104,7 @@ export class HelpSubcommand extends BaseBotChatInputSubcommand {
       const newCollector = ctx.utilities.collectors.create(
         ctx.interaction,
         message,
-        'button',
+        ComponentType.Button,
         {
           timeout: Time.Minute * 5,
         }

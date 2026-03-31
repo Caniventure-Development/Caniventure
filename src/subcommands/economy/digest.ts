@@ -33,6 +33,7 @@ export class DigestSubcommand extends BaseBotChatInputSubcommand {
     )
 
     const baseMessage = 'Your stomach gurgles, eager to break down this meal...'
+    const counterMessage = `Your belly is working out **${stomach.currentSize}** prey...`
     const baseMessageDigestionUnderwayMessage =
       'Your stomach lets out large groans while working at your prey...'
     const acidsRisingMessage = 'The acids start filling your prison...'
@@ -44,6 +45,8 @@ export class DigestSubcommand extends BaseBotChatInputSubcommand {
     const startingEmbed = ui.embeds.info(null, {
       description: stripIndents`
         ${baseMessage}
+
+        ${counterMessage}
 
         **${acidsRisingMessage}**
 
@@ -65,6 +68,8 @@ export class DigestSubcommand extends BaseBotChatInputSubcommand {
     const preyUnconsciousEmbed = ui.embeds.info(null, {
       description: stripIndents`
         ${baseMessageDigestionUnderwayMessage}
+
+        ${counterMessage}
 
         ~~${acidsRisingMessage}~~
 
@@ -92,7 +97,7 @@ export class DigestSubcommand extends BaseBotChatInputSubcommand {
 
     for (const opponent of opponentsInside) {
       const opponentNameSplit = opponent.split(' ')
-      const size = opponentNameSplit.at(0) as NpcSize // e.g. Small Rabbit -> Small
+      const size = opponentNameSplit.at(0)?.toLowerCase() as NpcSize // e.g. Small Rabbit -> Small
       const species = opponentNameSplit.at(-1) // e.g. Small Rabbit -> Rabbit
       const npc = npcs.find(
         (npc) => npc.species.toLowerCase() === species?.toLowerCase()
@@ -128,6 +133,9 @@ export class DigestSubcommand extends BaseBotChatInputSubcommand {
           minimum = 110
           maximum = 181
           break
+
+        default:
+          continue // Invalid NpcSize, move to the next NPC.
       }
 
       weightGain += random.next(minimum, maximum)
@@ -210,6 +218,8 @@ export class DigestSubcommand extends BaseBotChatInputSubcommand {
     let description = stripIndents`
         ${baseMessageDigestionUnderwayMessage}
 
+        ~~${counterMessage}~~
+
         ~~${acidsRisingMessage}~~
 
         ~~${preyUnconsciousMessage}~~
@@ -219,11 +229,11 @@ export class DigestSubcommand extends BaseBotChatInputSubcommand {
       `
 
     if (weightGain > 0)
-      description += stripIndents`\n
+      description += `\n\n
        Your character also feels a bit heavier from all the extra pudge, **they gained ${weightGain} pounds from their meal.**
     `
 
-    description += stripIndents`\n
+    description += `\n\n
       ${StomachCharacter.digested()}
     `
 

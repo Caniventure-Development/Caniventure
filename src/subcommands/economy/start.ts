@@ -1,29 +1,33 @@
 import { Buffer } from 'node:buffer'
-import { titleCase } from '@luca/cases'
 import { Time } from '@sapphire/timestamp'
-import {
-  AttachmentBuilder,
-  type CommandContext,
-  StringSelectOption,
-} from 'seyfert'
+import { AttachmentBuilder, type CommandContext } from 'seyfert'
 import type { CollectorInteraction } from 'seyfert/lib/components/handler'
-import { ButtonStyle, TextInputStyle } from 'seyfert/lib/types'
+import { ButtonStyle } from 'seyfert/lib/types'
 import { RULES } from '#base/bot_rules.constant.ts'
-import { CONSTANTS } from '#base/constants.ts'
-import { UserCharacterRole } from '#entities/user/character.entity.ts'
-import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
+import { CONSTANTS, startCollectorId } from '#base/constants.ts'
+import { storedCollectors } from '#base/stored-collectors.ts'
+import { ComponentType } from '#base/types.ts'
+import {
+  BaseBotChatInputSubcommand,
+  type EnsureAgreedOptions,
+} from '#subcommands/index.ts'
+
+const rulesTimeoutMultiplier = 3
+const rulesTimeout = Time.Minute * rulesTimeoutMultiplier
 
 export class StartSubcommand extends BaseBotChatInputSubcommand {
   public override async run(ctx: CommandContext) {
     await ctx.deferReply()
 
-    const rulesEmbed = ctx.ui.embeds.info('Welcome to Vorasion', {
+    const { ui } = ctx
+
+    const rulesEmbed = ui.embeds.info('Welcome to Vorasion', {
       description: RULES,
       footer: {
-        text: 'Click on a button saying whether you agree or disagree to these rules. You have 1 minute.',
+        text: this.timeoutText,
       },
     })
-    const actionRow = ctx.ui.actionRows.predefined.confirmCancel(
+    const actionRow = ui.actionRows.predefined.confirmCancel(
       'agree',
       'disagree',
       'I Agree',
@@ -38,9 +42,9 @@ export class StartSubcommand extends BaseBotChatInputSubcommand {
     const collector = ctx.utilities.collectors.create(
       ctx.interaction,
       message,
-      'button',
+      ComponentType.Button,
       {
-        timeout: Time.Minute,
+        timeout: rulesTimeout,
       }
     )
 
@@ -48,10 +52,7 @@ export class StartSubcommand extends BaseBotChatInputSubcommand {
       ctx,
       collector,
       async (interaction) => this.handleStartCommandStepTwo(ctx, interaction),
-      {
-        embedDescription:
-          'Sorry, until you accept the rules, you will not be able to use Vorasion.',
-      }
+      this.decliningOptions
     )
   }
 
@@ -71,7 +72,7 @@ export class StartSubcommand extends BaseBotChatInputSubcommand {
       description:
         'You have clicked the agree button, this means you understand the idea of this bot and are fine with it. You have one last chance to turn back, **ARE YOU SURE YOU AGREE WITH THE RULES?**',
       footer: {
-        text: 'You have 1 minute to respond.',
+        text: this.timeoutText,
       },
     })
 
@@ -93,14 +94,18 @@ export class StartSubcommand extends BaseBotChatInputSubcommand {
     const collector = ctx.utilities.collectors.create(
       ctx.interaction,
       message,
-      'button',
+      ComponentType.Button,
       {
-        timeout: Time.Minute,
+        timeout: rulesTimeout,
       }
     )
 
-    await this.ensureAgreed(ctx, collector, async (interaction) =>
-      this.handleStartCommandCharacterCreation(ctx, interaction)
+    await this.ensureAgreed(
+      ctx,
+      collector,
+      async (interaction) =>
+        this.handleStartCommandCharacterCreation(ctx, interaction),
+      this.decliningOptions
     )
   }
 
@@ -114,62 +119,14 @@ export class StartSubcommand extends BaseBotChatInputSubcommand {
 
     const creatingEmbed = ui.embeds.info('Character Creation', {
       description:
-        "All right! You've been warned, let's get through the rest of the setup. Next, you must set up a character! Click the button below to open a modal!",
+        "All right! You've been warned, let's get through the rest of the setup. Next, you must set up a character! Click the button below to open the character creation modal!",
       footer: {
         text: "You have 10 minutes to run through the modal. This message will update when you're done.",
       },
     })
+    const modal = ctx.utilities.modals.characterCreationModal(ctx)
 
-    const characterCreationModalConstants = CONSTANTS['CHARACTER_CREATION']
-    const speciesOptions = CONSTANTS['SPECIES_OPTIONS']
-    const modal = ui.modals
-      .create(
-        characterCreationModalConstants['MODAL_ID'],
-        'Vorasion Character Creation'
-      )
-      .withTextDisplay(
-        "Welcome to Vorasion, creating a character is very important to distinguish yourself from the small, simple minded humans! Let's create one!"
-      )
-      .withTextInput(characterCreationModalConstants['NAME_FIELD_ID'], {
-        label: 'Character Name',
-        placeholder: 'Dumara',
-        description: 'Give us a name for your character!',
-        style: TextInputStyle.Short,
-        max: 50,
-        required: true,
-      })
-      .withStringSelect(characterCreationModalConstants['SPECIES_FIELD_ID'], {
-        label: 'Character Species',
-        description: 'What species is your character?',
-        values: speciesOptions
-          .sort((a, b) => a.name.localeCompare(b.name)) // Alphabetical order
-          .map((species) =>
-            new StringSelectOption().setLabel(species.name).setValue(species.id)
-          ),
-        placeholder: 'Select one from here...',
-        min: 1,
-        max: 1,
-        required: true,
-      })
-      .withStringSelect(characterCreationModalConstants['ROLE_FIELD_ID'], {
-        label: 'Character Role',
-        description: 'What role is your character?',
-        values: Object.values(UserCharacterRole).map((role) =>
-          new StringSelectOption().setLabel(titleCase(role)).setValue(role)
-        ),
-      })
-      .withTextInput(characterCreationModalConstants['BIO_FIELD_ID'], {
-        label: 'Character Bio',
-        description: 'A simple bio of your character, this is optional.',
-        placeholder:
-          'A soft, sweet, fluffy dragon with a big heart and an even bigger stomach.',
-        style: TextInputStyle.Paragraph,
-        max: 256,
-        required: false,
-      })
-      .build()
-
-    const modalOpeningId = 'open-modal'
+    const modalOpeningId = CONSTANTS['OPEN_MODAL_ID']
     const actionRow = ui.actionRows.singleComponent(
       ui.buttons.primary(modalOpeningId, 'Open Creation Modal')
     )
@@ -183,15 +140,26 @@ export class StartSubcommand extends BaseBotChatInputSubcommand {
     const collector = ctx.utilities.collectors.create(
       ctx.interaction,
       message,
-      'button',
+      ComponentType.Button,
       {
         timeout: Time.Minute * 10,
       }
     )
+    storedCollectors.set(startCollectorId(ctx.author.id), collector)
 
-    collector.run(modalOpeningId, async (interaction) => {
-      collector.stop('Caught interaction!')
+    collector.run(modalOpeningId, async (interaction) =>
       interaction.modal(modal)
-    })
+    )
+  }
+
+  private get decliningOptions(): EnsureAgreedOptions {
+    return {
+      embedDescription:
+        'Sorry, until you accept the rules, you will not be able to use Vorasion.',
+    }
+  }
+
+  private get timeoutText() {
+    return `You have ${rulesTimeoutMultiplier} minutes to respond.`
   }
 }

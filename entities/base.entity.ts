@@ -1,38 +1,30 @@
-import {
-  BaseEntity,
-  Entity,
-  Index,
-  OptionalProps,
-  PrimaryKey,
-  Property,
-} from '@mikro-orm/core'
+import { defineEntity, p, raw } from '@mikro-orm/core'
 
-@Entity({ abstract: true })
-export abstract class BaseBotEntity<Optional = never> extends BaseEntity {
-  [OptionalProps]?: 'id' | 'createdAt' | 'updatedAt' | Optional
+const BaseSchema = defineEntity({
+  name: 'BaseBotEntity',
+  abstract: true,
+  properties: {
+    id: p.integer().primary().autoincrement(),
+    /**
+     * When this entity was created
+     */
+    createdAt: p
+      .datetime()
+      .name('created_at')
+      .onCreate(() => new Date())
+      .default(raw('now()')),
+    /**
+     * When this entity was last updated
+     */
+    updatedAt: p
+      .datetime()
+      .name('updated_at')
+      .onUpdate(() => new Date())
+      .default(raw('now()')),
+  },
+  indexes: [{ properties: ['createdAt'] }, { properties: ['updatedAt'] }],
+})
 
-  @PrimaryKey({ autoincrement: true })
-  declare id: number
+export abstract class BaseBotEntity extends BaseSchema.class {}
 
-  /**
-   * When this entity was created
-   */
-  @Property({
-    type: 'datetime',
-    name: 'created_at',
-    onCreate: () => new Date(),
-  })
-  @Index()
-  createdAt: Date = new Date()
-
-  /**
-   * When this entity was last updated
-   */
-  @Property({
-    type: 'datetime',
-    name: 'updated_at',
-    onUpdate: () => new Date(),
-  })
-  @Index()
-  updatedAt: Date = new Date()
-}
+BaseSchema.setClass(BaseBotEntity)

@@ -1,0 +1,21 @@
+services:
+  vorasion_db:
+    image: postgres:18
+    container_name: vorasion_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=supersecure
+      - POSTGRES_DB=vorasion
+    volumes:
+      - db_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d vorasion"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  db_data:

@@ -1,5 +1,8 @@
 import { stripIndents } from 'common-tags'
+import { RandomUtility } from '#base/utilities/random.ts'
 import { TutorialSection, type TutorialSectionContent } from '../section.ts'
+
+const random = new RandomUtility()
 
 export class TutorialVoraciousSection extends TutorialSection {
   public override getContent(): TutorialSectionContent {
@@ -11,7 +14,7 @@ export class TutorialVoraciousSection extends TutorialSection {
       'for their evening dinner',
       'as just another late-night craving',
     ]
-    const timing = timings[Math.floor(Math.random() * timings.length)]
+    const timing = random.item(timings)
 
     return {
       title: 'Being Voracious',

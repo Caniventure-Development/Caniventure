@@ -1,45 +1,41 @@
-import { Check, Entity, Index, OneToOne, Property } from '@mikro-orm/core'
+import { defineEntity, p } from '@mikro-orm/core'
 import { BaseBotEntity } from '../base.entity.ts'
-import type { User } from './user.entity.ts'
+import { User } from './user.entity.ts'
 
-@Entity({ tableName: 'user_stomachs' })
-@Check({ expression: 'capacity > 0', name: 'capacity_check' })
-@Check({
-  expression: 'current_size <= capacity',
-  name: 'current_size_check_not_full',
+const StomachSchema = defineEntity({
+  name: 'UserStomach',
+  extends: BaseBotEntity,
+  properties: {
+    user: () => p.oneToOne(User).mappedBy('stomach'),
+    capacity: p.bigint('number').name('capacity').default(1),
+    currentSize: p.bigint('number').name('current_size').default(0),
+    opponentsInside: p.array().name('opponents_inside').default<string[]>([]),
+    usersInside: p.array().name('users_inside').default<string[]>([]),
+    digestionTime: p.decimal('number').name('digestion_time').default(180),
+  },
+  checks: [
+    {
+      expression: (columns) => `${columns.capacity} > 0`,
+      name: 'const_capacity_non_zero',
+    },
+    {
+      expression: (columns) => `${columns.currentSize} <= ${columns.capacity}`,
+      name: 'const_current_size_not_full',
+    },
+    {
+      expression: (columns) => `${columns.currentSize} >= 0`,
+      name: 'const_current_size_positive',
+    },
+  ],
+  indexes: [
+    { properties: ['capacity'] },
+    { properties: ['currentSize'] },
+    { properties: ['digestionTime'] },
+  ],
+  tableName: 'user_stomachs',
 })
-@Check({
-  expression: 'current_size >= 0',
-  name: 'current_size_check_positive',
-})
-export class UserStomach extends BaseBotEntity<
-  | 'capacity'
-  | 'currentSize'
-  | 'opponentsInside'
-  | 'usersInside'
-  | 'digestionTime'
-> {
-  @OneToOne('User', (user: User) => user.stomach)
-  declare user: User
 
-  @Property({ type: 'bigint', name: 'capacity', default: 1 })
-  @Index()
-  declare capacity: number
-
-  @Property({ type: 'bigint', name: 'current_size', default: 0 })
-  @Index()
-  declare currentSize: number
-
-  @Property({ type: 'array', name: 'opponents_inside', default: [] })
-  declare opponentsInside: string[]
-
-  @Property({ type: 'array', name: 'users_inside', default: [] })
-  declare usersInside: string[]
-
-  @Property({ type: 'decimal', name: 'digestion_time', default: 180 })
-  @Index()
-  declare digestionTime: number
-
+export class UserStomach extends StomachSchema.class {
   public addOpponent(name: string, size: number) {
     this.currentSize += size
     this.opponentsInside.push(name)
@@ -56,3 +52,5 @@ export class UserStomach extends BaseBotEntity<
     this.usersInside = []
   }
 }
+
+StomachSchema.setClass(UserStomach)

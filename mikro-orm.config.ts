@@ -1,12 +1,18 @@
 import { env } from 'node:process'
-import { defineConfig, MemoryCacheAdapter } from '@mikro-orm/postgresql'
-import { TsMorphMetadataProvider } from '@mikro-orm/reflection'
+import { Migrator } from '@mikro-orm/migrations'
+import {
+  DataloaderType,
+  defineConfig,
+  MemoryCacheAdapter,
+} from '@mikro-orm/postgresql'
+import { SeedManager } from '@mikro-orm/seeder'
 import { SqlHighlighter } from '@mikro-orm/sql-highlighter'
 import { Time } from '@sapphire/timestamp'
 import 'dotenv/config'
 
 const isDevelopment =
   (env.NODE_ENV ?? 'production').toLowerCase() === 'development'
+const fileGlob = '!(*.d).{js,ts}'
 
 if (
   !env['DATABASE_NAME'] ||
@@ -26,14 +32,27 @@ export default defineConfig({
   password: env['DATABASE_PASSWORD'],
   host: env['DATABASE_HOST'],
   port: Number(env['DATABASE_PORT']),
-  metadataProvider: TsMorphMetadataProvider,
   debug: isDevelopment,
-  entities: ['dist/entities/**/*.entity.js'],
-  entitiesTs: ['entities/**/*.entity.ts'],
+  // The line below is not really gonna be used, but don't remove it.
+  // Otherwise MikroORM is gonna complain.
+  entities: ['./dist/entities/**/*.entity.js'],
+  entitiesTs: ['./entities/**/*.entity.ts'],
+  extensions: [Migrator, SeedManager],
   resultCache: {
     adapter: MemoryCacheAdapter,
-    expiration: Time.Minute * 10,
-    global: Time.Minute,
+    expiration: Time.Second * 3,
+    global: true, // Enable the cache globally and set it to our expiration time
   },
-  highlighter: new SqlHighlighter(),
+  dataloader: DataloaderType.ALL,
+  highlighter: isDevelopment ? new SqlHighlighter() : undefined,
+  migrations: {
+    path: './dist/migrations/',
+    pathTs: './src/migrations/',
+    glob: fileGlob,
+  },
+  seeder: {
+    path: './dist/seeders/',
+    pathTs: './src/seeders/',
+    glob: fileGlob,
+  },
 })

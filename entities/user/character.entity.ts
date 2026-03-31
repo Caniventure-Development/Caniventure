@@ -1,17 +1,7 @@
 import { kebabCase } from '@luca/cases'
-import {
-  Check,
-  Entity,
-  Enum,
-  Index,
-  ManyToOne,
-  Property,
-  Unique,
-} from '@mikro-orm/core'
+import { defineEntity, p } from '@mikro-orm/core'
 import { BaseBotEntity } from '../base.entity.ts'
-import type { User } from './user.entity.ts'
-
-const defaultBio = 'A mysterious yet intriguing character'
+import { User } from './user.entity.ts'
 
 export enum UserCharacterRole {
   Pred = 'pred',
@@ -19,79 +9,51 @@ export enum UserCharacterRole {
   Switch = 'switch',
 }
 
+export enum UserCharacterMeasurementSystem {
+  Imperial = 'imperial',
+  Metric = 'metric',
+}
+
+const defaultBio = 'A mysterious yet intriguing character'
+const defaultHeight = 12
 const defaultWeight = 300
 
-@Entity({ tableName: 'user_characters' })
-@Check({ expression: "character_id <> ''", name: 'id_not_empty_check' })
-@Check({ expression: "name <> ''", name: 'name_not_empty_check' })
-@Check({ expression: 'weight >= 0', name: 'weight_not_negative_check' })
-@Unique({ properties: ['owner', 'characterId'] })
-export class UserCharacter extends BaseBotEntity<
-  'weight' | 'initialWeight' | 'isPermad' | 'digestedBy'
-> {
-  @ManyToOne('User')
-  owner: User
+const CharacterSchema = defineEntity({
+  name: 'UserCharacter',
+  extends: BaseBotEntity,
+  properties: {
+    owner: () => p.manyToOne(User),
+    characterId: p.string().name('character_id'),
+    name: p.string().name('name'),
+    species: p.string().name('species'),
+    role: p.enum(() => UserCharacterRole).nativeEnumName('character_role'),
+    bio: p.string().length(1_000).name('bio').default(defaultBio),
+    height: p.integer().name('height').default(defaultHeight),
+    initialHeight: p.integer().name('initial_height').default(defaultHeight),
+    weight: p.integer().name('weight').default(defaultWeight),
+    initialWeight: p.integer().name('initial_weight').default(defaultWeight),
+    isPermad: p.boolean().name('is_permad').default(false),
+    digestedBy: p.string().name('digested_by').nullable().default(null),
+  },
+  tableName: 'user_characters',
+  checks: [
+    {
+      expression: (columns) => `${columns.characterId} <> ''`,
+      name: 'const_id_not_empty',
+    },
+    {
+      expression: (columns) => `${columns.name} <> ''`,
+      name: 'const_name_not_empty',
+    },
+    {
+      expression: (columns) => `${columns.weight} >= 0`,
+      name: 'const_weight_non_negative',
+    },
+  ],
+  uniques: [{ properties: ['owner', 'characterId'] }],
+})
 
-  @Property({ type: 'string', name: 'character_id' })
-  characterId: string
-
-  @Property({ type: 'string', name: 'name' })
-  name: string
-
-  @Property({
-    type: 'string',
-    name: 'species',
-  })
-  species: string
-
-  @Enum(() => UserCharacterRole)
-  role: UserCharacterRole
-
-  @Property({
-    type: 'varchar',
-    length: 256,
-    name: 'bio',
-    default: defaultBio,
-  })
-  bio: string
-
-  /**
-   * How heavy this character is in pounds.
-   * Yes, I'm an American, deal with it. Lmao.
-   */
-  @Property({
-    type: 'integer',
-    name: 'weight',
-    default: defaultWeight,
-  })
-  @Index()
-  declare weight: number
-
-  @Property({
-    type: 'integer',
-    name: 'initial_weight',
-    default: defaultWeight,
-  })
-  declare initialWeight: number
-
-  /**
-   * Whether this character is permavored, AKA digested by a predator while having `settings.permavoreModeOn` set to true.
-   * If this is true, the character cannot be made active.
-   */
-  @Property({ type: 'boolean', name: 'is_permad', default: false })
-  declare isPermad: boolean
-
-  /**
-   * The Discord ID of the predator that digested this character, if any
-   */
-  @Property({
-    type: 'string',
-    name: 'digested_by',
-    nullable: true,
-    default: null,
-  })
-  declare digestedBy: string | null
-
+export class UserCharacter extends CharacterSchema.class {
   constructor(
     owner: User,
     name: string,
@@ -119,3 +81,5 @@ export class UserCharacter extends BaseBotEntity<
     this.owner.settings.permavoreModeOn = false
   }
 }
+
+CharacterSchema.setClass(UserCharacter)

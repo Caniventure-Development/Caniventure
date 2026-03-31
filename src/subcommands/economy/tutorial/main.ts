@@ -5,6 +5,7 @@ import type {
   CreateComponentCollectorResult,
 } from 'seyfert/lib/components/handler'
 import type { APIEmbedFooter } from 'seyfert/lib/types/index'
+import { ComponentType } from '#base/types.ts'
 import type { UserCharacter } from '#entities/user/character.entity.ts'
 import type { User } from '#entities/user/user.entity.ts'
 import { BaseBotChatInputSubcommand } from '#subcommands/index.ts'
@@ -51,7 +52,7 @@ export class TutorialSubcommand extends BaseBotChatInputSubcommand {
     const collector = utilities.collectors.create(
       ctx.interaction,
       message,
-      'button',
+      ComponentType.Button,
       {
         timeout: Time.Minute * 3,
       }
@@ -141,7 +142,7 @@ export class TutorialSubcommand extends BaseBotChatInputSubcommand {
       collector = utilities.collectors.create(
         ctx.interaction,
         message,
-        'button',
+        ComponentType.Button,
         {
           timeout: Time.Minute * 3,
         }

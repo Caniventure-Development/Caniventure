@@ -1,27 +1,19 @@
-import { Entity, OneToOne, Property } from '@mikro-orm/core'
+import { defineEntity, p } from '@mikro-orm/core'
 import { BaseBotEntity } from '../base.entity.ts'
-import type { User } from './user.entity.ts'
+import { User } from './user.entity.ts'
 
-@Entity({ tableName: 'user_settings' })
-export class UserSettings extends BaseBotEntity<
-  'pvpOn' | 'permavoreModeOn' | 'allowMentions'
-> {
-  @OneToOne('User', (user: User) => user.settings)
-  declare user: User
+const SettingsSchema = defineEntity({
+  name: 'UserSettings',
+  extends: BaseBotEntity,
+  properties: {
+    user: () => p.oneToOne(User).mappedBy('settings'),
+    pvpOn: p.boolean().name('pvp_on').default(false),
+    permavoreModeOn: p.boolean().name('permavore_mode_on').default(false),
+    allowMentions: p.boolean().name('allow_mentions').default(false),
+  },
+  tableName: 'user_settings',
+})
 
-  @Property({ type: 'boolean', name: 'pvp_on', default: false })
-  declare pvpOn: boolean
+export class UserSettings extends SettingsSchema.class {}
 
-  /**
-   * Whether this user can be permavored. This means if they're digested with this on,
-   * their character is gone. Forever.
-   */
-  @Property({ type: 'boolean', name: 'permavore_mode_on', default: false })
-  declare permavoreModeOn: boolean
-
-  /**
-   * Whether the bot can mention this user in the chat or not.
-   */
-  @Property({ type: 'boolean', name: 'allow_mentions', default: false })
-  declare allowMentions: boolean
-}
+SettingsSchema.setClass(UserSettings)

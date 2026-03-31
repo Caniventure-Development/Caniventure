@@ -1,7 +1,7 @@
 import os from 'node:os'
 import path from 'node:path'
 import { env } from 'node:process'
-import { ProgressBarType, UiClient } from '@discord-ui-kit/seyfert'
+import { UiClient } from '@discord-ui-kit/seyfert'
 import { type EntityManager, MikroORM } from '@mikro-orm/postgresql'
 import { CooldownManager } from '@slipher/cooldown'
 import {
@@ -11,11 +11,12 @@ import {
   type UsingClient,
 } from 'seyfert'
 import { ShardedStatfert, type Statfert, StatfertPostable } from 'statfert'
-import { Colors } from './colors.ts'
+import mikroOrmConfig from '../mikro-orm.config.ts'
 import context from './context.ts'
 import { onBotPermissionsFail, onMiddlewaresError } from './handlers/index.ts'
 import middlewares from './middleware/index.ts'
 import { startPresence } from './presence.ts'
+import uiOptions from './ui_options.ts'
 
 const client = new Client({
   context,
@@ -43,8 +44,8 @@ client.setServices({
 })
 
 client.start().then(async () => {
-  const statcordApiKey = env['STATCORD_KEY']
   startPresence(client)
+  const statcordApiKey = env['STATCORD_KEY']
 
   if (statcordApiKey) {
     client.statfert = new ShardedStatfert(client, statcordApiKey)
@@ -61,14 +62,9 @@ client.start().then(async () => {
 
   // @ts-expect-error - Seyfert has problems, but this is completely okay. Nothing is gonna break, hopefully... (I have no hopes...)
   client.cooldown = new CooldownManager(client)
-  client.orm = await MikroORM.init()
+  client.orm = await MikroORM.init(mikroOrmConfig)
   client.em = client.orm.em.fork()
-  client.ui = new UiClient({
-    colors: new Colors(),
-    progressBar: {
-      type: ProgressBarType.EMOJI,
-    },
-  })
+  client.ui = new UiClient(uiOptions)
 
   const baseCachePath = path.join(import.meta.dirname, '..', 'cache')
   const isDevelopment = env['NODE_ENV'] === 'development'

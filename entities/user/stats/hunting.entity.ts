@@ -1,18 +1,29 @@
-import { Check, Entity, Index, OneToOne, Property } from '@mikro-orm/core'
-import { BaseBotEntity } from '../../base.entity.ts'
-import type { UserStats } from './stats.entity.ts'
+import { defineEntity, p } from '@mikro-orm/core'
+import { BaseBotEntity } from '#entities/base.entity.ts'
+import { UserStats } from './stats.entity.ts'
 
-@Entity({ tableName: 'user_hunting_stats' })
-@Check({ expression: 'hunts_done >= 0 AND hunts_won >= 0' })
-export class UserHuntingStats extends BaseBotEntity<'huntsDone' | 'huntsWon'> {
-  @OneToOne('UserStats', (stats: UserStats) => stats.hunting)
-  declare stats: UserStats
+const HuntingStatsSchema = defineEntity({
+  name: 'UserHuntingStats',
+  extends: BaseBotEntity,
+  properties: {
+    stats: () => p.oneToOne(UserStats).mappedBy('hunting'),
+    huntsDone: p.integer().name('hunts_done').default(0),
+    huntsWon: p.integer().name('hunts_won').default(0),
+  },
+  checks: [
+    {
+      expression: (columns) => `${columns.huntsDone} >= 0`,
+      name: 'const_hunts_done_non_negative',
+    },
+    {
+      expression: (columns) => `${columns.huntsWon} >= 0`,
+      name: 'const_hunts_won_non_negative',
+    },
+  ],
+  indexes: [{ properties: ['huntsDone'] }, { properties: ['huntsWon'] }],
+  tableName: 'user_hunting_stats',
+})
 
-  @Property({ type: 'integer', name: 'hunts_done', default: 0 })
-  @Index()
-  declare huntsDone: number
+export class UserHuntingStats extends HuntingStatsSchema.class {}
 
-  @Property({ type: 'integer', name: 'hunts_won', default: 0 })
-  @Index()
-  declare huntsWon: number
-}
+HuntingStatsSchema.setClass(UserHuntingStats)

@@ -57,6 +57,6 @@ export default class HuntSubCommand extends ExtendedSubCommand {
       return
     }
 
-    await new HuntSubcommand().run(ctx, npc)
+    new HuntSubcommand().run(ctx, npc)
   }
 }

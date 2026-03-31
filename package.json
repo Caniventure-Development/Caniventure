@@ -1,7 +1,7 @@
 {
   "name": "vorasion",
   "type": "module",
-  "version": "0.0.1-alpha0.5",
+  "version": "0.0.1-alpha",
   "description": "A Discord economy bot with a voracious attitude",
   "main": "src/index.ts",
   "scripts": {
@@ -10,7 +10,8 @@
     "commit:all": "git add . && cz",
     "format": "biome format .",
     "lint": "biome lint .",
-    "mikro-orm": "mikro-orm-esm",
+    "mikro-orm": "mikro-orm",
+    "migrate": "mikro-orm migration:create",
     "prepare": "husky",
     "setup": "bun run setup.ts",
     "start": "bun run src/index.ts"
@@ -21,20 +22,22 @@
     "@commitlint/config-conventional": "^20.4.2",
     "@commitlint/cz-commitlint": "^20.4.1",
     "@commitlint/types": "^20.4.0",
-    "@mikro-orm/cli": "^6.6.4",
+    "@mikro-orm/cli": "^7.0.6",
+    "@swc-node/register": "^1.11.1",
+    "@swc/core": "^1.15.18",
     "@types/bun": "latest",
     "@types/common-tags": "^1.8.4",
     "commitizen": "^4.3.1",
     "husky": "^9.1.7",
-    "inquirer": "9",
-    "ts-node": "^10.9.2"
+    "inquirer": "9"
   },
   "dependencies": {
     "@discord-ui-kit/seyfert": "npm:@jsr/discord-ui-kit__seyfert@0.0.9",
     "@luca/cases": "npm:@jsr/luca__cases",
-    "@mikro-orm/core": "^6.6.4",
-    "@mikro-orm/postgresql": "^6.6.4",
-    "@mikro-orm/reflection": "^6.6.4",
+    "@mikro-orm/core": "^7.0.6",
+    "@mikro-orm/migrations": "^7.0.6",
+    "@mikro-orm/postgresql": "^7.0.6",
+    "@mikro-orm/seeder": "^7.0.6",
     "@mikro-orm/sql-highlighter": "^1.0.1",
     "@sapphire/discord-utilities": "^4.0.0",
     "@sapphire/result": "^2.8.0",
@@ -43,11 +46,12 @@
     "@sapphire/utilities": "^3.18.2",
     "@slipher/cooldown": "https://pkg.pr.new/tiramisulabs/extra/@slipher/cooldown@91dc6b4",
     "common-tags": "^1.8.2",
+    "dataloader": "^2.2.3",
     "dotenv": "^17.2.3",
     "picocolors": "^1.1.1",
+    "reflect-metadata": "^0.2.2",
     "seyfert": "^4.2.0",
-    "statfert": "^0.0.2",
-    "ts-morph": "^27.0.2"
+    "statfert": "^0.0.2"
   },
   "imports": {
     "#base/*": "./src/*",
@@ -58,6 +62,7 @@
     "#utilities/*": "./src/utilities/*"
   },
   "trustedDependencies": [
+    "@swc/core",
     "unrs-resolver"
   ],
   "config": {

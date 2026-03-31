@@ -4,7 +4,7 @@ export const RULES: Readonly<string> = Object.freeze(stripIndents`
     ${commaListsOr`
         # Vorasion Rules
 
-        Welcome to Vorasion, the cannibalistic economy bot. This is a bot meant
+        Welcome to Vorasion, a Discord bot with a voracious attitude. This is a bot meant
         to bring some uniqueness to economy bots on Discord, by being a bot based around eating living things (aka vore), this bot is absolutely not
         for everyone, and has some rules. You are able to decline, and you won't be bothered by this bot until you agree.
 

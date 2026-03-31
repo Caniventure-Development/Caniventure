@@ -2,6 +2,7 @@ import { Time } from '@sapphire/timestamp'
 import { stripIndents } from 'common-tags'
 import { type CommandContext, SubCommand } from 'seyfert'
 import levels from '#base/levels.ts'
+import StomachCharacter from '#base/utilities/stomach_character.ts'
 
 export abstract class ExtendedSubCommand extends SubCommand {
   // Useful for while I'm testing the command. :)
@@ -47,7 +48,7 @@ export abstract class ExtendedSubCommand extends SubCommand {
     )
 
     if (nextLevel && user.experience >= nextLevel.experienceRequired) {
-      await user.populate(['stomach'])
+      if (user.stomach === undefined) await user.populate(['stomach'])
       const { capacityIncrease, number } = nextLevel
 
       user.level += 1
@@ -57,7 +58,9 @@ export abstract class ExtendedSubCommand extends SubCommand {
         description: stripIndents`
         You have leveled up from level ${currentUserLevel} to ${number}! Your stomach has gotten bigger and can hold ${capacityIncrease} more ${capacityIncrease === 1 ? 'person' : 'people'}!
 
-        **Well done ${author.name}!**`,
+        **Well done ${author.name}!**
+
+        ${StomachCharacter.happy()}`,
         footer: {
           text: 'This message will automatically self destruct in 10 seconds.',
         },

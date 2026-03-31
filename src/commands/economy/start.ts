@@ -8,7 +8,7 @@ import { StartSubcommand } from '#subcommands/economy/start.ts'
 })
 @Middlewares(['hasNoDocument'])
 export default class StartSubCommand extends SubCommand {
-  async run(ctx: CommandContext) {
-    await new StartSubcommand().run(ctx)
+  public override async run(ctx: CommandContext) {
+    new StartSubcommand().run(ctx)
   }
 }

@@ -26,10 +26,23 @@ export const ensureNotSwallowedMiddleware = createMiddleware<void>(
 
       const captor = await user.getCaptor(client)
 
+      if (!captor) {
+        stop(baseMessage)
+        return
+      }
+
+      const captorDocument = await user.getCaptorDocument(context)
+      const baseMessageWithUsername = `You were swallowed by **${captor.username}**, this command won't work while you're inside their gurgling gut!`
+
+      if (!captorDocument) {
+        stop(baseMessageWithUsername)
+        return
+      }
+
+      const captorActiveCharacter = await captorDocument.getActiveCharacter()
+
       stop(
-        captor
-          ? `You were swallowed by ${captor.username}, this command won't work while you're inside their gurgling gut!`
-          : baseMessage
+        `You were swallowed by **${captorActiveCharacter.name}** (${captor.username}), this command won't work while you're inside their gurgling gut!`
       )
     }
 

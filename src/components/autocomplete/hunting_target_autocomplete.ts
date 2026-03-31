@@ -5,22 +5,30 @@ import npcs from '#base/npcs.ts'
 import AutocompleteCommand from '../autocomplete.ts'
 
 export default class HuntingTargetAutocomplete extends AutocompleteCommand {
-  public override async run(interaction: AutocompleteInteraction) {
+  public override run(interaction: AutocompleteInteraction) {
     const focused = interaction.getInput().toLowerCase()
 
     const matches = npcs
-      .filter(
-        (npc) =>
+      .filter((npc) => {
+        const [sizeName, sizeNum] = npc.size
+
+        return (
           npc.species.toLowerCase().includes(focused) ||
-          npc.size[0].toLowerCase().includes(focused) ||
-          npc.size[1] === Number(focused)
-      )
+          sizeName.toLowerCase().includes(focused) ||
+          sizeNum === Number(focused)
+        )
+      })
       .sort((a, b) => a.size[1] - b.size[1]) // Ascending
       .slice(0, 25)
-      .map<APIApplicationCommandOptionChoice>((npc) => ({
-        name: `${titleCase(npc.species)} (${npc.size[0]}, takes ${npc.size[1]} space)`,
-        value: npc.species,
-      }))
+      .map<APIApplicationCommandOptionChoice>((npc) => {
+        const { species, size } = npc
+        const [sizeName, sizeNum] = size
+
+        return {
+          name: `${titleCase(species)} (${sizeName}, takes ${sizeNum} space)`,
+          value: species,
+        }
+      })
 
     return interaction.respond(matches)
   }

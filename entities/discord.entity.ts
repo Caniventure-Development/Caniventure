@@ -1,20 +1,25 @@
-import { Check, Entity, Property } from '@mikro-orm/core'
+import { defineEntity, p } from '@mikro-orm/core'
 import { BaseBotEntity } from './base.entity.ts'
 
-@Entity({ abstract: true })
-@Check({ expression: "discord_id <> ''" })
-export abstract class DiscordEntity<
-  Optional = never,
-> extends BaseBotEntity<Optional> {
-  /**
-   * The ID of the entity on Discord
-   */
-  @Property({ type: 'string', name: 'discord_id', unique: true })
-  discordId: string
+const DiscordSchema = defineEntity({
+  name: 'DiscordEntity',
+  extends: BaseBotEntity,
+  abstract: true,
+  properties: {
+    /**
+     * The ID for this entity on Discord
+     */
+    discordId: p.string().name('discord_id').unique().check("discord_id <> ''"),
+  },
+  indexes: [{ properties: ['discordId'] }],
+})
 
+export abstract class DiscordEntity extends DiscordSchema.class {
   constructor(discordId: string) {
     super()
 
     this.discordId = discordId
   }
 }
+
+DiscordSchema.setClass(DiscordEntity)

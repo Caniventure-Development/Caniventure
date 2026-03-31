@@ -1,0 +1,3090 @@
+{
+  "name": "public",
+  "namespaces": [
+    "public"
+  ],
+  "tables": [
+    {
+      "name": "blacklisted_ids",
+      "schema": "public",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int4",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "discord_id": {
+          "name": "discord_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": 255,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "moderator_id": {
+          "name": "moderator_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 255,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "reason": {
+          "name": "reason",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 255,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "created_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "blacklisted_ids_created_at_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "discord_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "blacklisted_ids_discord_id_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "discord_id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "blacklisted_ids_discord_id_unique",
+          "unique": true,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "moderator_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "blacklisted_ids_moderator_id_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "blacklisted_ids_pkey",
+          "unique": true,
+          "primary": true
+        },
+        {
+          "columnNames": [
+            "updated_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "blacklisted_ids_updated_at_index",
+          "unique": false,
+          "primary": false
+        }
+      ],
+      "checks": [
+        {
+          "name": "blacklisted_ids_discord_id_check",
+          "columnName": "discord_id",
+          "definition": "CHECK (((discord_id)::text <> ''::text))",
+          "expression": "discord_id <> ''::text"
+        }
+      ],
+      "foreignKeys": {},
+      "nativeEnums": {
+        "character_role": {
+          "name": "character_role",
+          "schema": "public",
+          "items": [
+            "pred",
+            "prey",
+            "switch"
+          ]
+        },
+        "cost_type": {
+          "name": "cost_type",
+          "schema": "public",
+          "items": [
+            "bones",
+            "money"
+          ]
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "shop_item_costs",
+      "schema": "public",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int4",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "type": {
+          "name": "type",
+          "type": "cost_type",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [
+            "bones",
+            "money"
+          ],
+          "mappedType": "unknown",
+          "nativeEnumName": "cost_type"
+        },
+        "amount": {
+          "name": "amount",
+          "type": "int8",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 64,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "bigint"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "amount"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "shop_item_costs_amount_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "created_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "shop_item_costs_created_at_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "shop_item_costs_pkey",
+          "unique": true,
+          "primary": true
+        },
+        {
+          "columnNames": [
+            "updated_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "shop_item_costs_updated_at_index",
+          "unique": false,
+          "primary": false
+        }
+      ],
+      "checks": [
+        {
+          "name": "const_amount_not_zero",
+          "columnName": "amount",
+          "definition": "CHECK ((amount > 0))",
+          "expression": "amount > 0"
+        }
+      ],
+      "foreignKeys": {},
+      "nativeEnums": {
+        "character_role": {
+          "name": "character_role",
+          "schema": "public",
+          "items": [
+            "pred",
+            "prey",
+            "switch"
+          ]
+        },
+        "cost_type": {
+          "name": "cost_type",
+          "schema": "public",
+          "items": [
+            "bones",
+            "money"
+          ]
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "shop_items",
+      "schema": "public",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int4",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "item_id": {
+          "name": "item_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 255,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 255,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 255,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "cost_id": {
+          "name": "cost_id",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "cost_id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "shop_items_cost_id_unique",
+          "unique": true,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "created_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "shop_items_created_at_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "shop_items_pkey",
+          "unique": true,
+          "primary": true
+        },
+        {
+          "columnNames": [
+            "updated_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "shop_items_updated_at_index",
+          "unique": false,
+          "primary": false
+        }
+      ],
+      "checks": [
+        {
+          "name": "const_description_not_empty",
+          "columnName": "description",
+          "definition": "CHECK (((description)::text <> ''::text))",
+          "expression": "description <> ''::text"
+        },
+        {
+          "name": "const_item_id_not_empty",
+          "columnName": "item_id",
+          "definition": "CHECK (((item_id)::text <> ''::text))",
+          "expression": "item_id <> ''::text"
+        },
+        {
+          "name": "const_name_not_empty",
+          "columnName": "name",
+          "definition": "CHECK (((name)::text <> ''::text))",
+          "expression": "name <> ''::text"
+        }
+      ],
+      "foreignKeys": {
+        "shop_items_cost_id_foreign": {
+          "columnNames": [
+            "cost_id"
+          ],
+          "constraintName": "shop_items_cost_id_foreign",
+          "localTableName": "public.shop_items",
+          "referencedTableName": "public.shop_item_costs",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "no action",
+          "deleteRule": "no action"
+        }
+      },
+      "nativeEnums": {
+        "character_role": {
+          "name": "character_role",
+          "schema": "public",
+          "items": [
+            "pred",
+            "prey",
+            "switch"
+          ]
+        },
+        "cost_type": {
+          "name": "cost_type",
+          "schema": "public",
+          "items": [
+            "bones",
+            "money"
+          ]
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "user_balances",
+      "schema": "public",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int4",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "bones_collected": {
+          "name": "bones_collected",
+          "type": "int8",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 64,
+          "scale": 0,
+          "default": "0",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "bigint"
+        },
+        "bones_in_stomach": {
+          "name": "bones_in_stomach",
+          "type": "int8",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 64,
+          "scale": 0,
+          "default": "0",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "bigint"
+        },
+        "money": {
+          "name": "money",
+          "type": "int8",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 64,
+          "scale": 0,
+          "default": "0",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "bigint"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "bones_collected"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "indx_bones_collected",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "bones_in_stomach"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "indx_bones_in_stomach",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "money"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "indx_money",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "created_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_balances_created_at_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_balances_pkey",
+          "unique": true,
+          "primary": true
+        },
+        {
+          "columnNames": [
+            "updated_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_balances_updated_at_index",
+          "unique": false,
+          "primary": false
+        }
+      ],
+      "checks": [
+        {
+          "name": "const_bones_collected_non_negative",
+          "columnName": "bones_collected",
+          "definition": "CHECK ((bones_collected >= 0))",
+          "expression": "bones_collected >= 0"
+        },
+        {
+          "name": "const_bones_in_stomach_non_negative",
+          "columnName": "bones_in_stomach",
+          "definition": "CHECK ((bones_in_stomach >= 0))",
+          "expression": "bones_in_stomach >= 0"
+        },
+        {
+          "name": "const_money_non_negative",
+          "columnName": "money",
+          "definition": "CHECK ((money >= 0))",
+          "expression": "money >= 0"
+        }
+      ],
+      "foreignKeys": {},
+      "nativeEnums": {
+        "character_role": {
+          "name": "character_role",
+          "schema": "public",
+          "items": [
+            "pred",
+            "prey",
+            "switch"
+          ]
+        },
+        "cost_type": {
+          "name": "cost_type",
+          "schema": "public",
+          "items": [
+            "bones",
+            "money"
+          ]
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "user_bios",
+      "schema": "public",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int4",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "content": {
+          "name": "content",
+          "type": "varchar(80)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 80,
+          "precision": null,
+          "scale": null,
+          "default": "'A mysterious predator'",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "created_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_bios_created_at_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_bios_pkey",
+          "unique": true,
+          "primary": true
+        },
+        {
+          "columnNames": [
+            "updated_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_bios_updated_at_index",
+          "unique": false,
+          "primary": false
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {},
+      "nativeEnums": {
+        "character_role": {
+          "name": "character_role",
+          "schema": "public",
+          "items": [
+            "pred",
+            "prey",
+            "switch"
+          ]
+        },
+        "cost_type": {
+          "name": "cost_type",
+          "schema": "public",
+          "items": [
+            "bones",
+            "money"
+          ]
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "user_characters",
+      "schema": "public",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int4",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "character_id": {
+          "name": "character_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 255,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 255,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "species": {
+          "name": "species",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 255,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "role": {
+          "name": "role",
+          "type": "character_role",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [
+            "pred",
+            "prey",
+            "switch"
+          ],
+          "mappedType": "unknown",
+          "nativeEnumName": "character_role"
+        },
+        "bio": {
+          "name": "bio",
+          "type": "varchar(1000)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 1000,
+          "precision": null,
+          "scale": null,
+          "default": "'A mysterious yet intriguing character'",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "height": {
+          "name": "height",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": "12",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "initial_height": {
+          "name": "initial_height",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": "12",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "weight": {
+          "name": "weight",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": "300",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "initial_weight": {
+          "name": "initial_weight",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": "300",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "is_permad": {
+          "name": "is_permad",
+          "type": "bool",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": "false",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "boolean"
+        },
+        "digested_by": {
+          "name": "digested_by",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 255,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "created_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_characters_created_at_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "owner_id",
+            "character_id"
+          ],
+          "composite": true,
+          "constraint": true,
+          "keyName": "user_characters_owner_id_character_id_unique",
+          "unique": true,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_characters_pkey",
+          "unique": true,
+          "primary": true
+        },
+        {
+          "columnNames": [
+            "updated_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_characters_updated_at_index",
+          "unique": false,
+          "primary": false
+        }
+      ],
+      "checks": [
+        {
+          "name": "const_id_not_empty",
+          "columnName": "character_id",
+          "definition": "CHECK (((character_id)::text <> ''::text))",
+          "expression": "character_id <> ''::text"
+        },
+        {
+          "name": "const_name_not_empty",
+          "columnName": "name",
+          "definition": "CHECK (((name)::text <> ''::text))",
+          "expression": "name <> ''::text"
+        },
+        {
+          "name": "const_weight_non_negative",
+          "columnName": "weight",
+          "definition": "CHECK ((weight >= 0))",
+          "expression": "weight >= 0"
+        }
+      ],
+      "foreignKeys": {
+        "user_characters_owner_id_foreign": {
+          "columnNames": [
+            "owner_id"
+          ],
+          "constraintName": "user_characters_owner_id_foreign",
+          "localTableName": "public.user_characters",
+          "referencedTableName": "public.users",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "no action",
+          "deleteRule": "no action"
+        }
+      },
+      "nativeEnums": {
+        "character_role": {
+          "name": "character_role",
+          "schema": "public",
+          "items": [
+            "pred",
+            "prey",
+            "switch"
+          ]
+        },
+        "cost_type": {
+          "name": "cost_type",
+          "schema": "public",
+          "items": [
+            "bones",
+            "money"
+          ]
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "user_hunting_stats",
+      "schema": "public",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int4",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "hunts_done": {
+          "name": "hunts_done",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": "0",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "hunts_won": {
+          "name": "hunts_won",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": "0",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "created_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_hunting_stats_created_at_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "hunts_done"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_hunting_stats_hunts_done_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "hunts_won"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_hunting_stats_hunts_won_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_hunting_stats_pkey",
+          "unique": true,
+          "primary": true
+        },
+        {
+          "columnNames": [
+            "updated_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_hunting_stats_updated_at_index",
+          "unique": false,
+          "primary": false
+        }
+      ],
+      "checks": [
+        {
+          "name": "const_hunts_done_non_negative",
+          "columnName": "hunts_done",
+          "definition": "CHECK ((hunts_done >= 0))",
+          "expression": "hunts_done >= 0"
+        },
+        {
+          "name": "const_hunts_won_non_negative",
+          "columnName": "hunts_won",
+          "definition": "CHECK ((hunts_won >= 0))",
+          "expression": "hunts_won >= 0"
+        }
+      ],
+      "foreignKeys": {},
+      "nativeEnums": {
+        "character_role": {
+          "name": "character_role",
+          "schema": "public",
+          "items": [
+            "pred",
+            "prey",
+            "switch"
+          ]
+        },
+        "cost_type": {
+          "name": "cost_type",
+          "schema": "public",
+          "items": [
+            "bones",
+            "money"
+          ]
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "user_inventory_items",
+      "schema": "public",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int4",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "holder_id": {
+          "name": "holder_id",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "item_id": {
+          "name": "item_id",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "int8",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 64,
+          "scale": 0,
+          "default": "0",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "bigint"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "created_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_inventory_items_created_at_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "item_id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "user_inventory_items_item_id_unique",
+          "unique": true,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_inventory_items_pkey",
+          "unique": true,
+          "primary": true
+        },
+        {
+          "columnNames": [
+            "updated_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_inventory_items_updated_at_index",
+          "unique": false,
+          "primary": false
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "user_inventory_items_holder_id_foreign": {
+          "columnNames": [
+            "holder_id"
+          ],
+          "constraintName": "user_inventory_items_holder_id_foreign",
+          "localTableName": "public.user_inventory_items",
+          "referencedTableName": "public.users",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "no action",
+          "deleteRule": "no action"
+        },
+        "user_inventory_items_item_id_foreign": {
+          "columnNames": [
+            "item_id"
+          ],
+          "constraintName": "user_inventory_items_item_id_foreign",
+          "localTableName": "public.user_inventory_items",
+          "referencedTableName": "public.shop_items",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "no action",
+          "deleteRule": "no action"
+        }
+      },
+      "nativeEnums": {
+        "character_role": {
+          "name": "character_role",
+          "schema": "public",
+          "items": [
+            "pred",
+            "prey",
+            "switch"
+          ]
+        },
+        "cost_type": {
+          "name": "cost_type",
+          "schema": "public",
+          "items": [
+            "bones",
+            "money"
+          ]
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "user_settings",
+      "schema": "public",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int4",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "pvp_on": {
+          "name": "pvp_on",
+          "type": "bool",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": "false",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "boolean"
+        },
+        "permavore_mode_on": {
+          "name": "permavore_mode_on",
+          "type": "bool",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": "false",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "boolean"
+        },
+        "allow_mentions": {
+          "name": "allow_mentions",
+          "type": "bool",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": "false",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "boolean"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "created_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_settings_created_at_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_settings_pkey",
+          "unique": true,
+          "primary": true
+        },
+        {
+          "columnNames": [
+            "updated_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_settings_updated_at_index",
+          "unique": false,
+          "primary": false
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {},
+      "nativeEnums": {
+        "character_role": {
+          "name": "character_role",
+          "schema": "public",
+          "items": [
+            "pred",
+            "prey",
+            "switch"
+          ]
+        },
+        "cost_type": {
+          "name": "cost_type",
+          "schema": "public",
+          "items": [
+            "bones",
+            "money"
+          ]
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "user_states",
+      "schema": "public",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int4",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "is_digesting": {
+          "name": "is_digesting",
+          "type": "bool",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": "false",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "boolean"
+        },
+        "is_regurgitating": {
+          "name": "is_regurgitating",
+          "type": "bool",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": "false",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "boolean"
+        },
+        "is_in_pvp": {
+          "name": "is_in_pvp",
+          "type": "bool",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": "false",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "boolean"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "created_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_states_created_at_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_states_pkey",
+          "unique": true,
+          "primary": true
+        },
+        {
+          "columnNames": [
+            "updated_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_states_updated_at_index",
+          "unique": false,
+          "primary": false
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {},
+      "nativeEnums": {
+        "character_role": {
+          "name": "character_role",
+          "schema": "public",
+          "items": [
+            "pred",
+            "prey",
+            "switch"
+          ]
+        },
+        "cost_type": {
+          "name": "cost_type",
+          "schema": "public",
+          "items": [
+            "bones",
+            "money"
+          ]
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "user_stats",
+      "schema": "public",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int4",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "hunting_id": {
+          "name": "hunting_id",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "stomach_id": {
+          "name": "stomach_id",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "created_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_stats_created_at_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "hunting_id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "user_stats_hunting_id_unique",
+          "unique": true,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_stats_pkey",
+          "unique": true,
+          "primary": true
+        },
+        {
+          "columnNames": [
+            "stomach_id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "user_stats_stomach_id_unique",
+          "unique": true,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "updated_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_stats_updated_at_index",
+          "unique": false,
+          "primary": false
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "user_stats_hunting_id_foreign": {
+          "columnNames": [
+            "hunting_id"
+          ],
+          "constraintName": "user_stats_hunting_id_foreign",
+          "localTableName": "public.user_stats",
+          "referencedTableName": "public.user_hunting_stats",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "no action",
+          "deleteRule": "no action"
+        },
+        "user_stats_stomach_id_foreign": {
+          "columnNames": [
+            "stomach_id"
+          ],
+          "constraintName": "user_stats_stomach_id_foreign",
+          "localTableName": "public.user_stats",
+          "referencedTableName": "public.user_stomach_stats",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "no action",
+          "deleteRule": "no action"
+        }
+      },
+      "nativeEnums": {
+        "character_role": {
+          "name": "character_role",
+          "schema": "public",
+          "items": [
+            "pred",
+            "prey",
+            "switch"
+          ]
+        },
+        "cost_type": {
+          "name": "cost_type",
+          "schema": "public",
+          "items": [
+            "bones",
+            "money"
+          ]
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "user_stomach_stats",
+      "schema": "public",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int4",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "prey_captured": {
+          "name": "prey_captured",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": "0",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "prey_digested": {
+          "name": "prey_digested",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": "0",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "created_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_stomach_stats_created_at_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_stomach_stats_pkey",
+          "unique": true,
+          "primary": true
+        },
+        {
+          "columnNames": [
+            "prey_captured"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_stomach_stats_prey_captured_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "prey_digested"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_stomach_stats_prey_digested_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "updated_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_stomach_stats_updated_at_index",
+          "unique": false,
+          "primary": false
+        }
+      ],
+      "checks": [
+        {
+          "name": "const_prey_captured_non_negative",
+          "columnName": "prey_captured",
+          "definition": "CHECK ((prey_captured >= 0))",
+          "expression": "prey_captured >= 0"
+        },
+        {
+          "name": "const_prey_digested_non_negative",
+          "columnName": "prey_digested",
+          "definition": "CHECK ((prey_digested >= 0))",
+          "expression": "prey_digested >= 0"
+        }
+      ],
+      "foreignKeys": {},
+      "nativeEnums": {
+        "character_role": {
+          "name": "character_role",
+          "schema": "public",
+          "items": [
+            "pred",
+            "prey",
+            "switch"
+          ]
+        },
+        "cost_type": {
+          "name": "cost_type",
+          "schema": "public",
+          "items": [
+            "bones",
+            "money"
+          ]
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "user_stomachs",
+      "schema": "public",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int4",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "capacity": {
+          "name": "capacity",
+          "type": "int8",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 64,
+          "scale": 0,
+          "default": "1",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "bigint"
+        },
+        "current_size": {
+          "name": "current_size",
+          "type": "int8",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 64,
+          "scale": 0,
+          "default": "0",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "bigint"
+        },
+        "opponents_inside": {
+          "name": "opponents_inside",
+          "type": "text[]",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": "'{}'",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "array"
+        },
+        "users_inside": {
+          "name": "users_inside",
+          "type": "text[]",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": "'{}'",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "array"
+        },
+        "digestion_time": {
+          "name": "digestion_time",
+          "type": "numeric(10,0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": "180",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "decimal"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "capacity"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_stomachs_capacity_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "created_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_stomachs_created_at_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "current_size"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_stomachs_current_size_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "digestion_time"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_stomachs_digestion_time_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_stomachs_pkey",
+          "unique": true,
+          "primary": true
+        },
+        {
+          "columnNames": [
+            "updated_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "user_stomachs_updated_at_index",
+          "unique": false,
+          "primary": false
+        }
+      ],
+      "checks": [
+        {
+          "name": "const_capacity_non_zero",
+          "columnName": "capacity",
+          "definition": "CHECK ((capacity > 0))",
+          "expression": "capacity > 0"
+        },
+        {
+          "name": "const_current_size_not_full",
+          "columnName": "current_size",
+          "definition": "CHECK ((current_size <= capacity))",
+          "expression": "current_size <= capacity"
+        },
+        {
+          "name": "const_current_size_positive",
+          "columnName": "current_size",
+          "definition": "CHECK ((current_size >= 0))",
+          "expression": "current_size >= 0"
+        }
+      ],
+      "foreignKeys": {},
+      "nativeEnums": {
+        "character_role": {
+          "name": "character_role",
+          "schema": "public",
+          "items": [
+            "pred",
+            "prey",
+            "switch"
+          ]
+        },
+        "cost_type": {
+          "name": "cost_type",
+          "schema": "public",
+          "items": [
+            "bones",
+            "money"
+          ]
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "users",
+      "schema": "public",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int4",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": "now()",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "discord_id": {
+          "name": "discord_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": 255,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "level": {
+          "name": "level",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": "1",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "experience": {
+          "name": "experience",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": "0",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "double_bones_active": {
+          "name": "double_bones_active",
+          "type": "bool",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": "false",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "boolean"
+        },
+        "has_done_tutorial": {
+          "name": "has_done_tutorial",
+          "type": "bool",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": "false",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "boolean"
+        },
+        "is_in_stomach": {
+          "name": "is_in_stomach",
+          "type": "bool",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": "false",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "boolean"
+        },
+        "captor_id": {
+          "name": "captor_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 255,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "balance_id": {
+          "name": "balance_id",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "bio_id": {
+          "name": "bio_id",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "settings_id": {
+          "name": "settings_id",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "states_id": {
+          "name": "states_id",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "stats_id": {
+          "name": "stats_id",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "stomach_id": {
+          "name": "stomach_id",
+          "type": "int4",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": null,
+          "precision": 32,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "active_character_id": {
+          "name": "active_character_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 255,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "balance_id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "users_balance_id_unique",
+          "unique": true,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "bio_id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "users_bio_id_unique",
+          "unique": true,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "captor_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "users_captor_id_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "created_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "users_created_at_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "discord_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "users_discord_id_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "discord_id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "users_discord_id_unique",
+          "unique": true,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "experience"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "users_experience_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "level"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "users_level_index",
+          "unique": false,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "users_pkey",
+          "unique": true,
+          "primary": true
+        },
+        {
+          "columnNames": [
+            "settings_id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "users_settings_id_unique",
+          "unique": true,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "states_id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "users_states_id_unique",
+          "unique": true,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "stats_id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "users_stats_id_unique",
+          "unique": true,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "stomach_id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "users_stomach_id_unique",
+          "unique": true,
+          "primary": false
+        },
+        {
+          "columnNames": [
+            "updated_at"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "users_updated_at_index",
+          "unique": false,
+          "primary": false
+        }
+      ],
+      "checks": [
+        {
+          "name": "blacklisted_ids_discord_id_check",
+          "columnName": "discord_id",
+          "definition": "CHECK (((discord_id)::text <> ''::text))",
+          "expression": "discord_id <> ''::text"
+        },
+        {
+          "name": "const_experience_valid",
+          "columnName": "experience",
+          "definition": "CHECK ((experience >= 0))",
+          "expression": "experience >= 0"
+        },
+        {
+          "name": "const_level_valid",
+          "columnName": "level",
+          "definition": "CHECK ((level >= 1))",
+          "expression": "level >= 1"
+        }
+      ],
+      "foreignKeys": {
+        "users_balance_id_foreign": {
+          "columnNames": [
+            "balance_id"
+          ],
+          "constraintName": "users_balance_id_foreign",
+          "localTableName": "public.users",
+          "referencedTableName": "public.user_balances",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "no action",
+          "deleteRule": "no action"
+        },
+        "users_bio_id_foreign": {
+          "columnNames": [
+            "bio_id"
+          ],
+          "constraintName": "users_bio_id_foreign",
+          "localTableName": "public.users",
+          "referencedTableName": "public.user_bios",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "no action",
+          "deleteRule": "no action"
+        },
+        "users_settings_id_foreign": {
+          "columnNames": [
+            "settings_id"
+          ],
+          "constraintName": "users_settings_id_foreign",
+          "localTableName": "public.users",
+          "referencedTableName": "public.user_settings",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "no action",
+          "deleteRule": "no action"
+        },
+        "users_states_id_foreign": {
+          "columnNames": [
+            "states_id"
+          ],
+          "constraintName": "users_states_id_foreign",
+          "localTableName": "public.users",
+          "referencedTableName": "public.user_states",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "no action",
+          "deleteRule": "no action"
+        },
+        "users_stats_id_foreign": {
+          "columnNames": [
+            "stats_id"
+          ],
+          "constraintName": "users_stats_id_foreign",
+          "localTableName": "public.users",
+          "referencedTableName": "public.user_stats",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "no action",
+          "deleteRule": "no action"
+        },
+        "users_stomach_id_foreign": {
+          "columnNames": [
+            "stomach_id"
+          ],
+          "constraintName": "users_stomach_id_foreign",
+          "localTableName": "public.users",
+          "referencedTableName": "public.user_stomachs",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "no action",
+          "deleteRule": "no action"
+        }
+      },
+      "nativeEnums": {
+        "character_role": {
+          "name": "character_role",
+          "schema": "public",
+          "items": [
+            "pred",
+            "prey",
+            "switch"
+          ]
+        },
+        "cost_type": {
+          "name": "cost_type",
+          "schema": "public",
+          "items": [
+            "bones",
+            "money"
+          ]
+        }
+      },
+      "comment": null
+    }
+  ],
+  "views": [],
+  "nativeEnums": {
+    "character_role": {
+      "name": "character_role",
+      "schema": "public",
+      "items": [
+        "pred",
+        "prey",
+        "switch"
+      ]
+    },
+    "cost_type": {
+      "name": "cost_type",
+      "schema": "public",
+      "items": [
+        "bones",
+        "money"
+      ]
+    }
+  }
+}

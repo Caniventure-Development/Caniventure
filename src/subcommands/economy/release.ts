@@ -11,9 +11,9 @@ export class ReleaseSubcommand extends BaseBotChatInputSubcommand {
     await ctx.deferReply()
 
     const { author, client, ui, utilities } = ctx
-    const em = client.em.fork()
     const { helpers, random, userDocuments } = utilities
     const { wait } = helpers
+    const em = client.em.fork()
 
     const user = await userDocuments.forceGetUser(author.id, {
       populate: ['balance', 'states', 'stomach'],
@@ -96,6 +96,7 @@ export class ReleaseSubcommand extends BaseBotChatInputSubcommand {
     })
 
     user.endRelease(moneyEarned)
+    states.isRegurgitating = false
 
     await ctx.editOrReply({
       embeds: [doneEmbed],

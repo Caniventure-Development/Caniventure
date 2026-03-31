@@ -45,8 +45,6 @@ const options = {
 ])
 export default class EatSubCommand extends ExtendedSubCommand {
   public override async run(ctx: CommandContext<typeof options>) {
-    this.exclude()
-
-    await new EatSubcommand().run(ctx, ctx.options.user)
+    new EatSubcommand().run(ctx, ctx.options.user)
   }
 }

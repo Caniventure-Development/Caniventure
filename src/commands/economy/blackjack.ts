@@ -24,6 +24,6 @@ import { ExtendedSubCommand } from '../extended_base.ts'
 ])
 export default class BlackjackSubCommand extends ExtendedSubCommand {
   public override async run(ctx: CommandContext) {
-    await ctx.editOrReply({ content: 'Coming soon!' })
+    await ctx.utilities.helpers.handleNotImplemented(ctx.interaction)
   }
 }

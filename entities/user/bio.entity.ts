@@ -1,12 +1,17 @@
-import { Entity, OneToOne, Property } from '@mikro-orm/core'
+import { defineEntity, p } from '@mikro-orm/core'
 import { BaseBotEntity } from '../base.entity.ts'
-import type { User } from './user.entity.ts'
+import { User } from './user.entity.ts'
 
-@Entity({ tableName: 'user_bios' })
-export class UserBio extends BaseBotEntity<'content'> {
-  @OneToOne('User', (user: User) => user.bio)
-  declare user: User
+const userBioSchema = defineEntity({
+  name: 'UserBio',
+  extends: BaseBotEntity,
+  properties: {
+    user: () => p.oneToOne(User).mappedBy('bio'),
+    content: p.string().length(80).default('A mysterious predator'),
+  },
+  tableName: 'user_bios',
+})
 
-  @Property({ type: 'varchar', length: 80, default: 'A mysterious predator' })
-  declare content: string
-}
+export class UserBio extends userBioSchema.class {}
+
+userBioSchema.setClass(UserBio)

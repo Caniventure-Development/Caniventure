@@ -1,4 +1,5 @@
 import { createMiddleware } from 'seyfert'
+import StomachCharacter from '#base/utilities/stomach_character.ts'
 
 export const ensureNotFullMiddleware = createMiddleware<void>(
   async ({ context, next, stop }) => {
@@ -17,7 +18,9 @@ export const ensureNotFullMiddleware = createMiddleware<void>(
 
     if (stomach.currentSize >= stomach.capacity) {
       context.utilities.helpers.removeCooldown(context, author.id)
-      stop("You're full, don't try eating anything at your belly size!")
+      stop(
+        `You're full, don't try eating anything at your belly size!\n\n${StomachCharacter.full()}`
+      )
     }
 
     next()

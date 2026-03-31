@@ -8,7 +8,7 @@ import { TutorialSubcommand } from '#subcommands/economy/tutorial.ts'
 })
 @Middlewares(['hasDocument', 'hasTutorialNotDone'])
 export default class TutorialSubCommand extends SubCommand {
-  async run(ctx: CommandContext) {
-    await new TutorialSubcommand().run(ctx)
+  public override async run(ctx: CommandContext) {
+    new TutorialSubcommand().run(ctx)
   }
 }

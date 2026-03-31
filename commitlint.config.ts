@@ -7,7 +7,7 @@ export default {
     'type-enum': [
       RuleConfigSeverity.Error,
       'always',
-      ['gulp', 'belch', 'digest', 'rumble', 'pudge', 'squirm'],
+      ['gulp', 'belch', 'digest', 'churn', 'pudge', 'squirm'],
     ],
     'scope-case': [RuleConfigSeverity.Error, 'always', 'lower-case'],
     'body-case': [RuleConfigSeverity.Error, 'always', 'sentence-case'],
@@ -15,6 +15,7 @@ export default {
     'body-max-line-length': [RuleConfigSeverity.Error, 'always', 400],
     'footer-leading-blank': [RuleConfigSeverity.Warning, 'always'],
     'footer-max-line-length': [RuleConfigSeverity.Error, 'always', 100],
+    'header-min-length': [RuleConfigSeverity.Warning, 'always', 10],
     'header-max-length': [RuleConfigSeverity.Error, 'always', 100],
     'header-trim': [RuleConfigSeverity.Error, 'always'],
     'subject-case': [
@@ -27,47 +28,47 @@ export default {
     'type-case': [RuleConfigSeverity.Error, 'always', 'lower-case'],
     'type-empty': [RuleConfigSeverity.Error, 'never'],
   },
-  prompts: {
+  prompt: {
     settings: {},
     messages: {
       skip: ':skip',
-      max: 'upper %d chars',
-      min: '%d chars at least',
-      emptyWarning: 'can not be empty',
-      upperLimitWarning: 'over limit',
-      lowerLimitWarning: 'below limit',
+      max: 'max of %d chars',
+      min: '%d chars required at least',
+      emptyWarning: 'I need something to melt, give me something!',
+      upperLimitWarning: "Too much food, that's gonna overstuff me!",
+      lowerLimitWarning: 'Barely even a snack, give me more!',
     },
     questions: {
       type: {
-        description: "Select the type of change that you're committing:",
+        description: "Select the type of change that you're committing",
         enum: {
           gulp: {
-            description: 'Adding something new',
+            description: 'Adding more prey to the belly',
             title: 'Gulp',
             emoji: '🟢',
           },
           belch: {
-            description: 'Removing something',
+            description: 'Expelled some garbage',
             title: 'Belch',
             emoji: '💨',
           },
           digest: {
-            description: 'Refactoring existing code',
+            description: 'Softening up the code, easier to melt',
             title: 'Digest',
             emoji: '🌀',
           },
-          rumble: {
-            description: 'Fixing a bug',
-            title: 'Rumble',
+          churn: {
+            description: 'Getting through them, melted another soft spot',
+            title: 'Churn',
             emoji: '🔧',
           },
           pudge: {
-            description: 'Completed/polished code',
+            description: 'A new layer of stuff for the bot',
             title: 'Pudge',
             emoji: '✨',
           },
           squirm: {
-            description: 'Work in progress',
+            description: 'Still alive in there, still working on it',
             title: 'Squirm',
             emoji: '🔄',
           },

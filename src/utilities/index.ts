@@ -1,5 +1,6 @@
 export * from './collectors.ts'
 export * from './helpers.ts'
+export * from './modals.ts'
 export * from './random.ts'
 export * from './results.ts'
 export * from './user_documents.ts'

@@ -9,9 +9,8 @@ import type {
   CreateComponentCollectorResult,
 } from 'seyfert/lib/components/handler'
 import { MessageFlags } from 'seyfert/lib/types/index'
+import { ComponentType } from '#base/types.ts'
 import { BaseUtilityWithContext } from './base.ts'
-
-type ComponentType = 'button' | 'select'
 
 export class CollectorsUtility extends BaseUtilityWithContext {
   public timedOutEmbed(
@@ -52,12 +51,12 @@ export class CollectorsUtility extends BaseUtilityWithContext {
     if (interaction.message.id !== expectedMessageId) return false
 
     switch (componentType) {
-      case 'button': {
+      case ComponentType.Button: {
         if (!interaction.isButton()) return false
         break
       }
 
-      case 'select': {
+      case ComponentType.SelectMenu: {
         if (
           !(
             interaction.isChannelSelectMenu() ||

@@ -12,7 +12,8 @@ export class TutorialPermavoreSection extends TutorialSection {
         All right, what happens when you tell the bot to turn on permavore mode? You're gonna get warned, mainly about a couple things:
 
         - 1. This mode **CANNOT** be turned off once turned on.
-        - 2. Once you're digested by another pred, your current character is gone. Just another layer of pudge on their captor.
+        - 2. You **CANNOT** switch characters once it's turned on.
+        - 3. Once you're digested by another pred, your current character is gone. Just another layer of pudge on their captor.
 
         However this does come with a nice benefit, 2x the bones/money you would've normally gotten (although more benefits may come later)!
 
