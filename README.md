@@ -1,3 +1,10 @@
+# Discontinued
+
+Due to Seyfert problems, I am discontinuing this version of the Vorasion source code. I will be moving the project to Nx, Angular and NestJS.
+Please bear with me, there will be a new repo on the organization.
+
+---
+
 <center>
 <img src="./images/icon.png" alt="Vorasion Icon" width="100" height="100" />
 <h1>Vorasion</h1>
