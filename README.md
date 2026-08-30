@@ -1,6 +1,6 @@
 # Discontinued
 
-Due to Seyfert problems, I am discontinuing this version of the Vorasion source code. I will be moving the project to Nx, Angular and NestJS.
+Due to Seyfert problems, I am discontinuing this version of the Vorasion source code. The project will be moved to Sapphire, which might take a bit.
 Please bear with me, there will be a new repo on the organization.
 
 ---
